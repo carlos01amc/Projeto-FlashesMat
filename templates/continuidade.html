@@ -1,11 +1,12 @@
 {% extends "base.html" %}
 {%block content%}
 <div style="text-align:center">
-<p>
-<form action="/continuidade/">
-    funcao: <input type="text" />
-    <input type="submit" name="form" value="Submit" />
-</form>
-</p>
+    <form action="#" method="post">
+        <p>Digite a sua funcao:</p>
+        <p><input type="text" name="fn" /></p>
+        <p>Digite o ponto:</p>
+        <p><input type="text" name = "pt" /></p>
+        <p><input type="submit" value="submit" /></p>
+    </form>
 </div>
 {%endblock%}
