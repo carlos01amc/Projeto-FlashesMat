@@ -27,9 +27,9 @@ def continuidade():
         ponto = float(ponto)
         
         if is_continuous_at(func,ponto):
-            print("...")
+            print("é continua")
         else:
-            print("nao")
+            print("nao é continua")
 
         x_values = np.linspace(ponto - 10, ponto + 10, 1000)
         y_values = create_function(func, x_values)
