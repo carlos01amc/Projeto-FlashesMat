@@ -1,30 +1,180 @@
 {% extends "base.html" %}
-{% block content%}
-<div style="text-align:center">
-    <h1>Bem vindo ao nosso portal</h1>
-    <p></p>
-    <img src="https://i0.wp.com/www.sabra.org.br/site/wp-content/uploads/2019/05/matematica-e-musica-como-relacionar-os-dois-20181024171547.jpg.jpg?fit=800%2C533&ssl=1"
-        width="800" height="533" alt="">
-    <p></p>
-</div>
-<div class="container">
-    <h4> Resumo </h4>
-    <div class="card-body">
-        <p></p>
-        <p> A aplicação é uma ferramenta de auxílio ao aprendizado de matemática para alunos universitários. </p>
 
-        <p> Ela permite a
-            visualização de gráficos e teoremas de diversas áreas da matemática, como cálculo, álgebra, análise,
-            estatística, entre outras.</p>
-
-        <p>Com a ajuda da aplicação, os alunos podem explorar conceitos matemáticos de forma interativa e visual, o que
-            facilita a compreensão e a memorização desses conceitos.</p>
-
-        <p> A aplicação oferece uma ampla variedade de recursos,
-            como animações, gráficos, exemplos entre outros. </p>
-        <p></p>
+{% block content %}
+<div class="hero-section">
+    <div class="container">
+        <div class="hero-content">
+            <h1>Aprenda Matemática de Forma Divertida e Interativa</h1>
+            <p>Com nossa aplicação, você pode explorar conceitos matemáticos complexos de forma fácil e divertida.</p>
+            <div class="hero-buttons">
+                <a href="#" class="btn btn-primary">Comece Agora</a>
+            </div>
+        </div>
     </div>
 </div>
 
+<div class="features-section">
+    <div class="container">
+        <h2 class="section-title">Recursos da Aplicação</h2>
+        <div class="row">
+            <div class="col-lg-4 col-md-6">
+                <div class="feature-box">
+                    <i class="fas fa-chalkboard"></i>
+                    <h3>Exemplos</h3>
+                    <p>Veja exemplos práticos de como aplicar os conceitos matemáticos em situações reais.</p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="feature-box">
+                    <i class="fas fa-chart-bar"></i>
+                    <h3>Gráficos</h3>
+                    <p>Visualize funções e dados de forma gráfica para melhor compreensão dos conceitos.</p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="feature-box">
+                    <i class="fas fa-gamepad"></i>
+                    <h3>Interatividade</h3>
+                    <p>Brinque com gráficos 2D e 3D e veja as suas tranformações acontecer em tempo real</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
+<div class="cta-section">
+    <div class="container">
+        <h2 class="section-title">Experimente a Nossa Aplicação Hoje Mesmo!</h2>
+        <p>A tua prima de 4</p>
+        <a href="#" class="btn btn-primary">Saiba mais</a>
+    </div>
+</div>
+
+<style>
+    .hero-section {
+        background-image: url('https://coolbackgrounds.io/images/backgrounds/index/compute-ea4c57a4.png');
+        background-size: cover;
+        background-position: center;
+        padding: 80px 0;
+    }
+
+    .hero-content {
+        color: #fff;
+        max-width: 600px;
+        margin: 0 auto;
+        text-align: center;
+    }
+
+    .hero-content h1 {
+        font-size: 48px;
+        margin-bottom: 20px;
+    }
+
+    .hero-content p {
+        font-size: 24px;
+        margin-bottom: 40px;
+    }
+
+    .hero-buttons {
+        display: flex;
+        justify-content: center;
+    }
+
+    .btn {
+        display: inline-block;
+        padding: 12px 30px;
+        font-size: 18px;
+        font-weight: 600;
+        border-radius: 5px;
+        text-align: center;
+        margin: 0 10px;
+        transition: all 0.3s ease;
+    }
+
+    .btn {
+        border-radius: 20px;
+    }
+
+
+
+    .btn:hover {
+        transform: translateY(-3px);
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+    }
+
+    .btn-primary:hover {
+        background-color: #0062cc;
+    }
+
+    .btn-secondary {
+        background-color: #fff;
+        color: #007bff;
+        border: 2px solid #007bff;
+    }
+
+    .btn-secondary:hover {
+        background-color: #007bff;
+        color: #fff;
+    }
+
+    .features-section {
+        padding: 80px 0;
+    }
+
+    .section-title {
+        text-align: center;
+        margin-bottom: 50px;
+    }
+
+    .feature-box {
+        background-color: #fff;
+        border-radius: 5px;
+        padding: 40px 30px;
+        text-align: center;
+        margin-bottom: 30px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .feature-box i {
+        font-size: 48px;
+        margin-bottom: 20px;
+        color: #007bff;
+    }
+
+    .feature-box h3 {
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+
+    .feature-box p {
+        font-size: 18px;
+        line-height: 1.5;
+    }
+
+    .cta-section {
+        background-color: #f5f5f5;
+        padding: 80px 0;
+    }
+
+    .cta-section h2 {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .cta-section p {
+        text-align: center;
+        font-size: 18px;
+        margin-bottom: 50px;
+    }
+
+    .cta-section .btn-primary {
+        display: block;
+        margin: 0 auto;
+    }
+</style>
 {% endblock %}
