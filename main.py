@@ -27,6 +27,10 @@ def menu():
 def criadores():
     return render_template("creatores.html")
 
+@app.route("/sabermais/")
+def sabe():
+    return render_template("sabermais.html")
+
 @app.route("/continuidade/", methods = ["POST", "GET"])
 def continuidade():
     if request.method == "POST":
