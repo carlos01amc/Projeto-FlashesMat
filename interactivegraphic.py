@@ -1,61 +1,14 @@
-from flask import Flask, redirect,request, url_for, render_template, send_file,flash
-import sys
-from appc import is_continuous_at, create_function
-import sympy
-import numpy as np
 import matplotlib
 matplotlib.use('Agg')
-import plotly.graph_objs as go
-from matplotlib.widgets import Slider
 import matplotlib.pyplot as plt
+import numpy as np
+from matplotlib.widgets import Slider
 import io
 import base64
+from flask import Flask, render_template, request, send_file
 
 app = Flask(__name__)
-app.secret_key = "hello"
 
-
-@app.route("/")
-def home():
-    return render_template("index.html")
-
-@app.route("/menu")
-def menu():
-    return render_template("menu.html")
-
-@app.route("/criadores/")
-def criadores():
-    return render_template("creatores.html")
-
-@app.route("/continuidade/", methods = ["POST", "GET"])
-def continuidade():
-    if request.method == "POST":
-        func = request.form["fn"]
-        ponto = request.form["pt"]
-        
-        func = sympy.sympify(func)
-        func = sympy.lambdify('x',func)
-         
-        ponto = float(ponto)
-        
-        if is_continuous_at(func,ponto):
-            flash("é continua", "info")
-        else:
-            flash("nao é continua", "info")
-
-        x_values = np.linspace(ponto - 10, ponto + 10, 1000)
-        y_values = create_function(func, x_values)
-
-        trace = go.Scatter(x=x_values, y=y_values)
-        layout = go.Layout(title="Gráfico da função", xaxis=dict(title="x"), yaxis=dict(title="y"))
-        fig = go.Figure(data=[trace], layout=layout)
-        fig.show()
-        
-        return render_template("/continuidade.html")
-    else:
-        return render_template("/continuidade.html")
-
-@app.route('/interactive-graphic')
 def interactive_graphic():
     # Define the data
     x = np.linspace(0, 10, 100)
@@ -96,11 +49,11 @@ def interactive_graphic():
     
     # Generate the HTML code for the plot
     html = f'<img id="plot" src="send_file(buffer, mimetype=''image/png'')" />'
+    print(f'freq = {freq}')
 
     # Render the template with the HTML code for the plot
     return render_template('interactive-graphic.html', html=html)
 
-@app.route('/plot/<float:freq>')
 def plot_im(freq):
     # Define the data
     x = np.linspace(0, 10, 100)
@@ -118,7 +71,5 @@ def plot_im(freq):
     # Return the image as a response
     return send_file(buffer, mimetype='image/png')
 
-
-
-if __name__ == "__main__":
+if __name__ == '__main__':
     app.run(debug=True)
