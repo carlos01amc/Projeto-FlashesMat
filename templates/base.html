@@ -7,17 +7,27 @@
     <title> Portal</title>
 
     <style>
-        .nav-item {
-            color: blue;
-            font-size: 17px;
-        }
-
         .navbar {
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
-        .dropdown-menu a {
-            border-radius: 50px;
+        .my-btn {
+            display: inline-block;
+            padding: 12px 30px;
+            font-size: 18px;
+            font-weight: 600;
+            border-radius: 5px;
+            text-align: center;
+            margin: 0 10px;
+            transition: all 0.3s ease;
+        }
+
+        .my-btn {
+            border-radius: 20px;
+        }
+
+        .my-btn:hover {
+            transform: translateY(-3px);
         }
     </style>
 </head>
@@ -31,12 +41,12 @@
                 width="90" height="90" alt="">
             </h1>Universidade do Minho</h1>
         </a>
+    </nav>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-    </nav>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
@@ -49,7 +59,7 @@
                     </a>
                     <div class="dropdown-menu active" aria-labelledby="navbarDropdownMenuLink">
                         <a class="dropdown-item" href="/continuidade">Continuidade</a>
-                        <a class="dropdown-item" href="#">Outra funcao</a>
+                        <a class="dropdown-item" href="/interactive-graphic">Gráfico Exemplo</a>
                         <a class="dropdown-item" href="#">Outra funcao</a>
                     </div>
                 <li class="nav-item dropdown active">
@@ -76,7 +86,7 @@
             </ul>
             <form class="form-inline my-2 my-lg-0">
                 <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                <button class="my-btn btn-primary my-2 my-sm-0" type="submit">Search</button>
             </form>
         </div>
     </nav>
