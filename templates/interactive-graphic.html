@@ -20,7 +20,8 @@
             // Update the plot when the slider is changed
             $('input[type="range"]').on('input', function () {
                 var freq = $(this).val();
-                $('#plot').attr('src', '/plot/' + freq);
+                var x = parseFloat(freq).toFixed(1)
+                $('#plot').attr('src', '/plot/' + x);
             });
         });
     </script>
