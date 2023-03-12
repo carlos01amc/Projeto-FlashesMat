@@ -12,6 +12,7 @@ import io
 import base64
 
 app = Flask(__name__)
+# secret key for user input exchange
 app.secret_key = "hello"
 
 
