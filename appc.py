@@ -3,6 +3,7 @@ import plotly.graph_objs as go
 import numpy as np
 import sys
 
+
 """x**2 if x >= 0 else -x**2"""
 
 def create_function(f, x):

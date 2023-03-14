@@ -10,14 +10,34 @@ from matplotlib.widgets import Slider
 import matplotlib.pyplot as plt
 import io
 import base64
+from flask_wtf import FlaskForm
+from wtforms import EmailField, SubmitField, PasswordField
+from wtforms.validators import DataRequired, Email
+
 
 app = Flask(__name__)
-# secret key for user input exchange
 app.secret_key = "hello"
 
+class NameForm(FlaskForm):
+    user = EmailField("Username: ", validators = [Email(), DataRequired()])
+    password = PasswordField("Password: ", validators = [DataRequired()])
+    submit = SubmitField("login")
+
+@app.route("/login/", methods = ['GET', 'POST'])
+def home():
+    user = None
+    password = None
+    form = NameForm()
+    if form.validate_on_submit():
+        user = form.user.data
+        form.user.data = ''
+        password = form.password.data
+        form.password.data = ''
+        
+    return render_template("login.html", user = user, form = form, password = password)
 
 @app.route("/")
-def home():
+def login():
     return render_template("index.html")
 
 @app.route("/menu")
@@ -55,6 +75,7 @@ def continuidade():
         layout = go.Layout(title="Gráfico da função", xaxis=dict(title="x"), yaxis=dict(title="y"))
         fig = go.Figure(data=[trace], layout=layout)
         fig.show()
+        
         
         return render_template("/continuidade.html")
     else:
