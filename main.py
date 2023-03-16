@@ -13,7 +13,10 @@ import base64
 from flask_wtf import FlaskForm
 from wtforms import EmailField, SubmitField, PasswordField
 from wtforms.validators import DataRequired, Email
+import sqlite3
+conn = sqlite3.connect('blog.db')
 
+#shift+alt+f -> format code
 
 app = Flask(__name__)
 app.secret_key = "hello"
@@ -42,7 +45,12 @@ def login():
 
 @app.route("/menu")
 def menu():
-    return render_template("menu.html")
+    conn = sqlite3.connect("blog.db")
+    c = conn.cursor()
+    c.execute("SELECT * FROM posts")
+    posts = c.fetchall()
+    conn.close()
+    return render_template("menu.html", posts=posts)
 
 @app.route("/criadores/")
 def criadores():
@@ -144,6 +152,27 @@ def plot_im(freq):
     # Return the image as a response
     return send_file(buffer, mimetype='image/png')
 
+@app.route("/new-post", methods=["GET", "POST"])
+def new_post():
+    if request.method == "POST":
+        title = request.form["title"]
+        content = request.form["content"]
+        conn = sqlite3.connect("blog.db")
+        c = conn.cursor()
+        c.execute("INSERT INTO posts (title, content) VALUES (?, ?)", (title, content))
+        conn.commit()
+        conn.close()
+        return redirect("/")
+    return render_template("new_post.html")
+
+@app.route("/post/<int:post_id>")
+def post(post_id):
+    conn = sqlite3.connect("blog.db")
+    c = conn.cursor()
+    c.execute("SELECT * FROM posts WHERE id=?", (post_id,))
+    post = c.fetchone()
+    conn.close()
+    return render_template("post.html", post=post)
 
 
 if __name__ == "__main__":
