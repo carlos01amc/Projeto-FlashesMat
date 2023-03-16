@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <!DOCTYPE html>
+  <html>
+    <head>
+      <title>Create New Post</title>
+    </head>
+    <body>
+      <div class="container">
+        <h1>Create New Post</h1>
+        <form method="post" action="/new-post">
+          <label>Title:</label><br>
+          <input type="text" name="title"><br><br>
+          <label>Content:</label><br>
+          <textarea name="content"></textarea><br><br>
+          <input type="submit" value="Submit">
+        </form>
+      </div>
+    </body>
+  </html>
+{% endblock %}
