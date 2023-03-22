@@ -10,8 +10,14 @@
 
 <body>
   <h1>{{ post[1] }}</h1>
+  <p>{{ post[4] }}</p>
   <p>{{ post[2] }}</p>
+  {% if post[3] %}
+  {% set file_path = post[3].split('static', 1)[-1].lstrip('\\/') %}
+  <img src="{{ '../static/' ~ file_path }}" alt="">
+  {% endif %}
 </body>
 
 </html>
-{%endblock%}
+
+{% endblock %}
