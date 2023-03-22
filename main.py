@@ -85,13 +85,17 @@ def new_post():
         title = request.form["title"]
         content = request.form["content"]
         file = request.files["file"]
-        filename = secure_filename(file.filename)
-        file_path = os.path.join(app.config["UPLOAD_FOLDER"], filename)
-        file.save(file_path)
+        if file:
+            filename = secure_filename(file.filename)
+            file_path = os.path.join(app.config["UPLOAD_FOLDER"], filename)
+            file.save(file_path)
+            file_url = file_path
+        else:
+            file_url = None
         conn = sqlite3.connect("database.db")
         c = conn.cursor()
         c.execute("INSERT INTO posts (title, content,file_url) VALUES (?, ?, ?)",
-                  (title, content, file_path))
+                  (title, content, file_url))
         conn.commit()
         conn.close()
         return redirect("/")
