@@ -22,14 +22,6 @@ class LogForm(FlaskForm):
     submit = SubmitField("login")
 
 
-@app.route('/admin/dashboard')
-def admin_dashboard():
-    if 'email' in session and session['tipo'] == 'admin':
-        return render_template('admin_dashboard.html')
-    else:
-        abort(401)
-
-
 @app.route("/login/", methods=['GET', 'POST'])
 def login():
 
