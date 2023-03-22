@@ -1,25 +1,23 @@
-from flask import Flask, redirect,request, url_for, render_template, send_file,flash
-import sympy
-import numpy as np
-import matplotlib
-matplotlib.use('Agg')
-import plotly.graph_objs as go
-from matplotlib.widgets import Slider
-import matplotlib.pyplot as plt
-import io
+from flask import Flask, redirect,request, url_for, render_template, session
+import os
 from flask_wtf import FlaskForm
-from wtforms import EmailField, SubmitField, PasswordField
+from wtforms import EmailField, SubmitField, PasswordField, StringField
 from wtforms.validators import DataRequired, Email
+import hashlib
+from werkzeug.utils import secure_filename
 import sqlite3
-conn = sqlite3.connect('blog.db')
+
+conn = sqlite3.connect('database.db')
 
 #shift+alt+f -> format code
 
 app = Flask(__name__)
-app.secret_key = "hello"
+app.secret_key = os.urandom(24)
+app.config["UPLOAD_FOLDER"] = r'C:\Users\carlo\OneDrive\Ambiente de Trabalho\UM\3ano2s\Projeto\static' 
 
 class NameForm(FlaskForm):
-    user = EmailField("Username: ", validators = [Email(), DataRequired()])
+    name = StringField("Nome: ", validators=[DataRequired()])
+    user = EmailField("Email: ", validators = [Email(), DataRequired()])
     password = PasswordField("Password: ", validators = [DataRequired()])
     submit = SubmitField("login")
 
@@ -42,7 +40,7 @@ def login():
 
 @app.route("/menu")
 def menu():
-    conn = sqlite3.connect("blog.db")
+    conn = sqlite3.connect("database.db")
     c = conn.cursor()
     c.execute("SELECT * FROM posts")
     posts = c.fetchall()
@@ -62,9 +60,13 @@ def new_post():
     if request.method == "POST":
         title = request.form["title"]
         content = request.form["content"]
-        conn = sqlite3.connect("blog.db")
+        file = request.files["file"]
+        filename = secure_filename(file.filename)
+        file_path = os.path.join(app.config["UPLOAD_FOLDER"], filename)
+        file.save(file_path)
+        conn = sqlite3.connect("database.db")
         c = conn.cursor()
-        c.execute("INSERT INTO posts (title, content) VALUES (?, ?)", (title, content))
+        c.execute("INSERT INTO posts (title, content,file_url) VALUES (?, ?, ?)", (title, content,file_path))
         conn.commit()
         conn.close()
         return redirect("/")
@@ -72,7 +74,7 @@ def new_post():
 
 @app.route("/post/<int:post_id>")
 def post(post_id):
-    conn = sqlite3.connect("blog.db")
+    conn = sqlite3.connect("database.db")
     c = conn.cursor()
     c.execute("SELECT * FROM posts WHERE id=?", (post_id,))
     post = c.fetchone()
