@@ -8,8 +8,10 @@
   </head>
   <body>
     <h1>Funcionalidades</h1>
+    {% if 'email' in session %}
     <a class="my-btn btn-primary" href="/new-post">Create New Post</a>
     <ul>
+      {% endif %}
       {% for post in posts %}
         <li><a href="/post/{{ post[0] }}">{{ post[1] }}</a></li>
       {% endfor %}

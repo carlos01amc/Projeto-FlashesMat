@@ -1,28 +1,14 @@
 {% extends "base.html" %}
 {% block content %}
 
-<div class="container">
-        {% if user %}
-        <h1> Bem vindo {{ user }} !!</h1>
-
-        {%else%}
-        <h1> Login </h1>
-        <br />
-        <form method="POST">
-            {{form.hidden_tag()}}
-
-            {{form.user.label(class="form-label")}}
-            {{form.user(class="form-control")}}
-            <br/>
-            {{form.password.label(class="form-label")}}
-            {{form.password(class="form-control")}}
-            <br />
-            {{form.submit(class="btn btn-primary")}}
-        </form>
-        {%endif%}
-</div>
-
-
+<h2>Login</h2>
+<form method="POST" action="{{ url_for('login') }}">
+   <label>E-mail:</label>
+   <input type="text" name="email" class="form-control"><br>
+   <label>Senha:</label>
+   <input type="password" name="senha" class="form-control"><br>
+   <input type="submit" value="Login" class="btn btn-primary">
+</form>
 
 {%endblock%}
 
