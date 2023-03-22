@@ -81,6 +81,9 @@ def sabe():
 
 @app.route("/new-post", methods=["GET", "POST"])
 def new_post():
+    if 'email' not in session or session['tipo'] != 'admin':
+        return 'Acesso negado!'
+    
     if request.method == "POST":
         title = request.form["title"]
         content = request.form["content"]
