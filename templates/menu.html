@@ -1,24 +1,36 @@
 {% extends "base.html" %}
+
 {% block content %}
-<!DOCTYPE html>
+<html>
 
 <head>
-    <div class="container">
-    <title>My Blog</title>
-  </head>
-  <body>
-    <h1>Funcionalidades</h1>
-    {% if 'email' in session %}
-    <a class="my-btn btn-primary" href="/new-post">Create New Post</a>
-    <ul>
-      {% endif %}
-      {% for post in posts %}
-        <li><a href="/post/{{ post[0] }}">{{ post[1] }}</a></li>
+  <title>My Blog</title>
+</head>
+
+<body>
+
+
+  {% if 'email' in session %}
+  <a class="my-btn btn-primary" href="/new-post">Create New Post</a>
+  {% endif %}
+  <ul>
+
+    {% for post in posts %}
+    <div class="features-section">
+      <div class="container">
+        <div class="col-lg-4 col-md-6">
+          <div class="feature-box">
+            <i class="fas fa-chalkboard"></i>
+            <h3><a href="/post/{{ post[0] }}">{{ post[1] }}</a></h3>
+            <p>Resumo</p>
+          </div>
+        </div>
+      </div>
       {% endfor %}
-    </ul>
-  </body>
+  </ul>
 
-</div>
+</body>
 
+</html>
 
 {% endblock %}
