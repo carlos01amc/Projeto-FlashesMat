@@ -15,6 +15,7 @@ app = Flask(__name__)
 app.secret_key = os.urandom(24)
 app.config["UPLOAD_FOLDER"] = r'C:\Users\carlo\OneDrive\Ambiente de Trabalho\UM\3ano2s\Projeto\static\upload'
 
+
 class LogForm(FlaskForm):
     mail = EmailField("Email: ", validators=[Email(), DataRequired()])
     password = PasswordField("Password: ", validators=[DataRequired()])
@@ -45,17 +46,19 @@ def login():
         else:
             return 'E-mail não encontrado!'
     else:
-        return render_template('login.html')
+        return render_template('login.html',can_edit=False)
+
 
 @app.route('/logout/', methods=['GET', 'POST'])
 def logout():
     session.pop('email', None)
     session.pop('tipo', None)
-    return redirect(url_for('home'))
+    return redirect(url_for('home',can_edit=False))
+
 
 @app.route("/")
 def home():
-    return render_template("index.html")
+    return render_template("index.html",can_edit=False)
 
 
 @app.route("/menu")
@@ -65,24 +68,24 @@ def menu():
     c.execute("SELECT * FROM posts")
     posts = c.fetchall()
     conn.close()
-    return render_template("menu.html", posts=posts)
+    return render_template("menu.html",can_edit=False, posts=posts)
 
 
 @app.route("/criadores/")
 def criadores():
-    return render_template("creatores.html")
+    return render_template("creatores.html",can_edit=False)
 
 
 @app.route("/sabermais/")
 def sabe():
-    return render_template("sabermais.html")
+    return render_template("sabermais.html",can_edit=False)
 
 
 @app.route("/new-post", methods=["GET", "POST"])
 def new_post():
     if 'email' not in session or session['tipo'] != 'admin':
         return 'Acesso negado!'
-    
+
     if request.method == "POST":
         title = request.form["title"]
         content = request.form["content"]
@@ -101,7 +104,7 @@ def new_post():
         conn.commit()
         conn.close()
         return redirect("/")
-    return render_template("new_post.html")
+    return render_template("new_post.html",can_edit=False)
 
 
 @app.route("/post/<int:post_id>")
@@ -111,7 +114,51 @@ def post(post_id):
     c.execute("SELECT * FROM posts WHERE id=?", (post_id,))
     post = c.fetchone()
     conn.close()
-    return render_template("post.html", post=post)
+
+    can_edit = False
+    if 'email' in session and session['tipo'] == 'admin':
+        can_edit = True
+
+    return render_template("post.html", post=post,can_edit=can_edit)
+
+
+@app.route("/edit-post/<int:post_id>", methods=["GET", "POST"])
+def edit_post(post_id):
+    if 'email' not in session or session['tipo'] != 'admin':
+        return 'Acesso negado!'
+    
+    can_edit = False
+    if 'email' in session and session['tipo'] == 'admin':
+        can_edit = True
+
+    conn = sqlite3.connect("database.db")
+    c = conn.cursor()
+    c.execute("SELECT * FROM posts WHERE id=?", (post_id,))
+    post = c.fetchone()
+
+    if request.method == "POST":
+        title = request.form["title"]
+        content = request.form["content"]
+        file = request.files["file"]
+        if file:
+            filename = secure_filename(file.filename)
+            file_path = os.path.join(app.config["UPLOAD_FOLDER"], filename)
+            file.save(file_path)
+            file_url = file_path
+        else:
+            file_url = None
+        c.execute("UPDATE posts SET title=?, content=?, file_url=? WHERE id=?",
+                  (title, content, file_url, post_id))
+        conn.commit()
+        conn.close()
+
+
+
+        return redirect(url_for("post", post_id=post_id))
+
+    conn.close()
+    
+    return render_template("edit_post.html", post=post, can_edit=can_edit)
 
 
 if __name__ == "__main__":
