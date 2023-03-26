@@ -2,14 +2,18 @@
 {% block content %}
 
 <div class="container">
+    <p></p>
     <h2>Login</h2>
     <form method="POST" action="{{ url_for('login') }}">
         <label>E-mail:</label>
-        <input type="text" name="email" class="form-control"><br>
+        <input type="text" name="email" class="form-control" required><br>
         <label>Senha:</label>
-        <input type="password" name="senha" class="form-control"><br>
+        <input type="password" name="senha" class="form-control" required><br>
         <input type="submit" value="Login" class="btn btn-primary">
     </form>
+    <p></p>
+    <a href="/register" class="btn btn-primary">Registe-se</a>
+    
 </div>
 
 {%endblock%}

@@ -2,26 +2,22 @@
 
 {% block content %}
 <main>
+
   <article>
 
-    <header>
+    <header class="text-center">
       <h1>{{ post[1] }}</h1>
     </header>
-
-    <section>
-      <p>{{ post[5] }}</p>
-      <p>{{ post[2] }}</p>
-    </section>
 
     {% if post[3] %}
     {% if post[3].endswith(('jpg', 'jpeg', 'gif', 'png')) %}
     {% set file_path = post[3].split('static', 1)[-1].lstrip('\\/') %}
-    <figure>
+    <figure class="text-center">
       <img src="{{ '../static/' ~ file_path }}" alt="">
     </figure>
     {% elif post[3].endswith('mp4') %}
     {% set file_path = post[3].split('static', 1)[-1].lstrip('\\/') %}
-    <figure>
+    <figure class="text-center">
       <video controls>
         <source src="{{ '../static/' ~ file_path }}" type="video/mp4">
         Seu navegador não suporta o elemento de vídeo.
@@ -29,6 +25,18 @@
     </figure>
     {% endif %}
     {% endif %}
+    <div class="card">
+      <div class="card-header">
+        Resumo
+      </div>
+      <div class="card-body">
+        <blockquote class="blockquote mb-0">
+          <p>{{ post[2] }}</p>
+        </blockquote>
+      </div>
+    </div>
+
+
   </article>
 </main>
 {% endblock %}

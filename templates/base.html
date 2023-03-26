@@ -81,7 +81,7 @@
         </div>
     </nav>
 
-    {% if 'email' in session %}
+    {% if 'tipo' in session and session['tipo'] == 'admin' %}
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">Admin</a>
