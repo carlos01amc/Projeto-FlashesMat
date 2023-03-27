@@ -1,9 +1,18 @@
-<!-- templates/register.html -->
-<h2>Registar</h2>
-<form method="POST" action="{{ url_for('register') }}">
-    <label>E-mail:</label>
-    <input type="text" name="email" required><br>
-    <label>Senha:</label>
-    <input type="password" name="senha" required><br>
-    <input type="submit" value="Registar">
-</form>
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container">
+    <p></p>
+    <h2>Registar</h2>
+    <form method="POST" action="{{ url_for('register') }}">
+        <label>E-mail:</label>
+        <input type="text" name="email" required><br>
+        <label>Senha:</label>
+        <input type="password" name="senha" required><br>
+        <input type="submit" value="Registar">
+    </form>
+</div>
+
+
+{% endblock %}

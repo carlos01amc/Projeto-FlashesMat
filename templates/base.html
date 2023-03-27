@@ -81,6 +81,28 @@
         </div>
     </nav>
 
+    {%with messages = get_flashed_messages(with_categories=true)%}
+    {%if messages %}
+    {%for category,message in messages%}
+    {%if category == 'error'%}
+    <div class="alert alert-danger alert-dismissable fade show " role="alert">
+        <button type = "button" class = "close" data-dismiss = "alert">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        {{message}}
+    </div>
+    {%else%}
+    <div class="alert alert-success alert-dismissable fade show " role="alert">
+        <button type = "button" class = "close" data-dismiss = "alert">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        {{message}}
+    </div>
+    {%endif%}
+    {%endfor%}
+    {%endif%}
+    {%endwith%}
+
     {% if 'tipo' in session and session['tipo'] == 'admin' %}
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
