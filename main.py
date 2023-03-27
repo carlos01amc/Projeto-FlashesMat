@@ -1,4 +1,4 @@
-from flask import Flask, redirect, request, url_for, render_template, session, abort
+from flask import Flask, redirect, request, url_for, render_template, session, abort, flash
 import os
 from flask_wtf import FlaskForm
 from wtforms import EmailField, SubmitField, PasswordField
@@ -42,9 +42,11 @@ def login():
                 session['tipo'] = user[4]
                 return redirect(url_for('home'))
             else:
-                return 'Senha incorreta!'
+                flash('Senha incorreta',category='error')
+                return render_template('login.html',can_edit=False)
         else:
-            return 'E-mail não encontrado!'
+            flash('E-mail não encontrado!',category='error')
+            return render_template('login.html',can_edit=False)
     else:
         return render_template('login.html', can_edit=False)
 
@@ -84,7 +86,8 @@ def sabe():
 @app.route("/new-post", methods=["GET", "POST"])
 def new_post():
     if 'email' not in session or session['tipo'] != 'admin':
-        return 'Acesso negado!'
+        flash("Acesso negado!",category='error')
+        return redirect("/")
 
     if request.method == "POST":
         title = request.form["title"]
@@ -103,6 +106,7 @@ def new_post():
                   (title, content, file_url))
         conn.commit()
         conn.close()
+        flash("Post criado com sucesso",category='success')
         return redirect("/")
     return render_template("new_post.html", can_edit=False)
 
@@ -125,7 +129,8 @@ def post(post_id):
 @app.route("/edit-post/<int:post_id>", methods=["GET", "POST"])
 def edit_post(post_id):
     if 'email' not in session or session['tipo'] != 'admin':
-        return 'Acesso negado!'
+        flash("Acesso negado!",category='error')
+        return redirect("/")
 
     can_edit = False
     if 'email' in session and session['tipo'] == 'admin':
@@ -151,11 +156,11 @@ def edit_post(post_id):
                   (title, content, file_url, post_id))
         conn.commit()
         conn.close()
-
+        flash("Post editado com sucesso",category='success')
         return redirect(url_for("post", post_id=post_id))
 
     conn.close()
-
+    
     return render_template("edit_post.html", post=post, can_edit=can_edit)
 
 
@@ -163,21 +168,25 @@ def edit_post(post_id):
 def register():
     if request.method == 'POST':
         email = request.form['email']
-        senha = request.form['senha']
-
+        senha = request.form['senha']            
+        
         conn = sqlite3.connect('database.db')
         c = conn.cursor()
         c.execute('SELECT * FROM usuarios WHERE email=?', (email,))
         user = c.fetchone()
         if user:
-            return 'Este e-mail já foi registrado'
-
+            flash('Este e-mail já foi registrado',category='error')
+            return render_template('register.html')
+        if len(senha) < 9:
+            flash('Palavra-passe tem que ter mais que 8 caracteres', category = 'error')
+            return render_template('register.html')
+        
         hash_senha = hashlib.sha256(senha.encode('utf-8')).hexdigest()
         c.execute('INSERT INTO usuarios (email, senha) VALUES (?, ?)',
                   (email, hash_senha))
         conn.commit()
         conn.close()
-
+        flash('Conta criada com sucesso', category='success')
         return render_template('index.html')
     else:
         return render_template('register.html')
