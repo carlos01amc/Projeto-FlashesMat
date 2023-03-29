@@ -86,14 +86,14 @@
     {%for category,message in messages%}
     {%if category == 'error'%}
     <div class="alert alert-danger alert-dismissable fade show " role="alert">
-        <button type = "button" class = "close" data-dismiss = "alert">
+        <button type="button" class="close" data-dismiss="alert">
             <span aria-hidden="true">&times;</span>
         </button>
         {{message}}
     </div>
     {%else%}
     <div class="alert alert-success alert-dismissable fade show " role="alert">
-        <button type = "button" class = "close" data-dismiss = "alert">
+        <button type="button" class="close" data-dismiss="alert">
             <span aria-hidden="true">&times;</span>
         </button>
         {{message}}
@@ -102,7 +102,9 @@
     {%endfor%}
     {%endif%}
     {%endwith%}
+</body>
 
+<body>
     {% if 'tipo' in session and session['tipo'] == 'admin' %}
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
@@ -160,7 +162,16 @@
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML"></script>
-
+    <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js"></script>
+    <script>
+        tinymce.init({
+            selector: '#content',
+            plugins: 'advlist autolink lists link image charmap print preview anchor',
+            toolbar: 'undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | link image',
+            submit_inline: true,
+            extended_valid_elements: 'script[type|src|async|defer|class],span[id|class|style]'
+        });
+    </script>
 
 </body>
 
