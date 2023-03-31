@@ -9,14 +9,14 @@
       <h1>{{ post[1] }}</h1>
     </header>
 
-    {% if post[3] %}
-    {% if post[3].endswith(('jpg', 'jpeg', 'gif', 'png')) %}
+    {% if post[4] %}
+    {% if post[4].endswith(('jpg', 'jpeg', 'gif', 'png')) %}
     {% set file_path = post[3].split('static', 1)[-1].lstrip('\\/') %}
     <figure class="text-center">
       <img width="320" height="240" src="{{ '../static/' ~ file_path }}" alt="">
     </figure>
-    {% elif post[3].endswith('mp4') %}
-    {% set file_path = post[3].split('static', 1)[-1].lstrip('\\/') %}
+    {% elif post[4].endswith('mp4') %}
+    {% set file_path = post[4].split('static', 1)[-1].lstrip('\\/') %}
     <figure class="text-center">
       <video width="320" height="240" controls>
         <source src="{{ '../static/' ~ file_path }}" type="video/mp4">
@@ -25,6 +25,7 @@
     </figure>
     {% endif %}
     {% endif %}
+
     <div class="card">
       <div class="card-header">
         Resumo
@@ -36,7 +37,49 @@
       </div>
     </div>
 
+    <h4> Autor: {{post[5]}}</h4>
+
+    <h4>Data: {{ post[11].split(' ')[0] }}</h4>
+
+    {% if post[6] or post[7] or post[8] %}
+    <div class="row mt-3">
+      {% if post[6] %}
+      <div class="col-md-4">
+        <figure class="text-center">
+          <img width="256" height="192" src="{{ '../static/' ~ post[6].split('static', 1)[-1].lstrip('\\/') }}" alt="">
+        </figure>
+      </div>
+      {% endif %}
+
+      {% if post[7] %}
+      <div class="col-md-4">
+        <figure class="text-center">
+          <img width="256" height="192" src="{{ '../static/' ~ post[7].split('static', 1)[-1].lstrip('\\/') }}" alt="">
+        </figure>
+      </div>
+      {% endif %}
+
+      {% if post[8] %}
+      <div class="col-md-4">
+        <figure class="text-center">
+          <img width="256" height="192" src="{{ '../static/' ~ post[8].split('static', 1)[-1].lstrip('\\/') }}" alt="">
+        </figure>
+      </div>
+      {% endif %}
+    </div>
+    {% endif %}
+
+    {% if post[9] %}
+    <p>links: {{post[9]}}</p>
+    {%endif%}
+
+    {% if post[10] %}
+    <p>downloads: {{post[10]}}</p>
+    {%endif%}
+
+
 
   </article>
+
 </main>
 {% endblock %}

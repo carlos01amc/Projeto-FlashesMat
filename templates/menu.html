@@ -12,8 +12,8 @@
   <div class="mt-5">
     <ul>
       {% for post in posts %}
-        {% if loop.index0 % 3 == 0 %}
-          <div class="row justify-content-center">
+      {% if loop.index0 % 3 == 0 %}
+      <div class="row justify-content-center">
         {% endif %}
         <div class="col-lg-4 col-md-6 mb-4">
           <div class="feature-box">
@@ -23,12 +23,18 @@
           </div>
         </div>
         {% if loop.index0 % 3 == 2 or loop.last %}
-          </div>
-        {% endif %}
+      </div>
+      {% endif %}
       {% endfor %}
     </ul>
   </div>
-  
+  {% if 'tipo' in session %}
+  <div class="container">
+    <p>Tem alguma sugestão que deseja ver implementada? <a href="/formulario">Clique aqui</a></p>
+
+  </div>
+  {%endif%}
+
 
 </body>
 
