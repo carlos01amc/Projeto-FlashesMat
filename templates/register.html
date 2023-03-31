@@ -1,18 +1,42 @@
 {% extends "base.html" %}
-
 {% block content %}
 
-<div class="container">
-    <p></p>
-    <h2>Registar</h2>
+<style>
+    input[type=text],
+    input[type=password] {
+        padding: 10px;
+        border-radius: 5px;
+        border: none;
+        width: 100%;
+        margin-bottom: 10px;
+        font-size: 16px;
+    }
+</style>
+
+<div class="container-login">
+    <h2>Criar sua conta</h2>
     <form method="POST" action="{{ url_for('register') }}">
+        <label>Nome:</label>
+        <input type="text" name="nome" required><br>
         <label>E-mail:</label>
         <input type="text" name="email" required><br>
         <label>Senha:</label>
         <input type="password" name="senha" required><br>
-        <input type="submit" value="Registar">
+        <label>Confirmar Senha:</label>
+        <input type="password" name="confirma_senha" required oninput="check(this)"><br>
+        <input type="submit" value="Registar" class="btn btn-primary">
     </form>
 </div>
 
+<script>
+    function check(input) {
+        if (input.value !== document.getElementsByName('senha')[0].value) {
+            input.setCustomValidity('As senhas não correspondem');
+        } else {
+            input.setCustomValidity('');
+        }
+    }
+</script>
 
-{% endblock %}
+
+{%endblock%}

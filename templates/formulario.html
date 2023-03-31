@@ -1,3 +1,56 @@
 {% extends "base.html" %}
 {% block content %}
+<div class="container">
+    <h1>Submit New Post</h1>
+    <form method="post" action="/new-post" enctype="multipart/form-data">
+      <div class="form-group">
+        <label for="title">Title:</label>
+        <input type="text" id="title" name="title" placeholder="Title" required>
+      </div>
+  
+      <div class="form-group">
+        <label for="thumbnail">Thumbnail:</label>
+        <input type="file" id="thumbnail" name="thumbnail">
+      </div>
+  
+      <div class="form-group">
+        <label for="file">File:</label>
+        <input type="file" id="file" name="file">
+      </div>
+  
+      <div class="form-group">
+        <label for="content">Content:</label>
+        <textarea id="content" name="content" placeholder="Content" required></textarea>
+        <script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML">
+        </script>
+      </div>
+  
+      <div class="form-group">
+        <label for="author">Author:</label>
+        <input type="text" id="author" name="author" placeholder="Author" required>
+      </div>
+  
+      <div class="form-group">
+        <label for="snapshots_1">Snapshots 1</label>
+        <input type="file" id="snapshots_1" name="snapshots_1">
+        <label for="snapshots_2">Snapshot 2:</label>
+        <input type="file" id="snapshots_2" name="snapshots_2">
+        <label for="snapshots_3">Snapshot 3:</label>
+        <input type="file" id="snapshots_3" name="snapshots_3">
+      </div>
+  
+      <div class="form-group">
+        <label for="links">Links:</label>
+        <input type="text" id="links" name="links" placeholder="Links">
+      </div>
+  
+      <div class="form-group">
+        <label for="download">Download:</label>
+        <input type="text" id="download" name="download" placeholder="Download">
+      </div>
+  
+      <button type="reset">Reset</button>
+      <button type="submit">Submit</button>
+    </form>
+  </div>
 {%endblock%}

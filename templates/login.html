@@ -1,20 +1,29 @@
 {% extends "base.html" %}
 {% block content %}
 
-<div class="container">
-    <p></p>
+<style>
+    input[type=text],
+    input[type=password] {
+        padding: 10px;
+        border-radius: 5px;
+        border: none;
+        width: 100%;
+        margin-bottom: 10px;
+        font-size: 16px;
+    }
+</style>
+
+<div class="container-login">
     <h2>Login</h2>
     <form method="POST" action="{{ url_for('login') }}">
         <label>E-mail:</label>
-        <input type="text" name="email" class="form-control" required><br>
+        <input type="text" name="email" required><br>
         <label>Senha:</label>
-        <input type="password" name="senha" class="form-control" required><br>
+        <input type="password" name="senha" required><br>
         <input type="submit" value="Login" class="btn btn-primary">
     </form>
     <p></p>
-    <a href="/register" class="btn btn-primary">Registe-se</a>
-    
+    <p>Não tem uma conta? <a href="/register">Registe-se</a></p>
+    <p>Esqueceu da sua palavra passe? <a href="#">Clique aqui</a> </p>
 </div>
-
 {%endblock%}
-
