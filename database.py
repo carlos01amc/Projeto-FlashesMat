@@ -8,7 +8,14 @@ c.execute('''CREATE TABLE IF NOT EXISTS posts
              (id INTEGER PRIMARY KEY AUTOINCREMENT,
               title TEXT,
               content TEXT,
+              thumbnail_url TEXT,
               file_url TEXT,
+              author TEXT,
+              snapshots_1 TEXT,
+              snapshots_2 TEXT,
+              snapshots_3 TEXT,
+              links TEXT,
+              download TEXT,
               created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP)''')
 
 # Crie a tabela de usuários com as colunas 'nome', 'email', 'senha' e 'tipo'

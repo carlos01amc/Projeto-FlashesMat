@@ -42,11 +42,11 @@ def login():
                 session['tipo'] = user[4]
                 return redirect(url_for('home'))
             else:
-                flash('Senha incorreta',category='error')
-                return render_template('login.html',can_edit=False)
+                flash('Senha incorreta', category='error')
+                return render_template('login.html', can_edit=False)
         else:
-            flash('E-mail não encontrado!',category='error')
-            return render_template('login.html',can_edit=False)
+            flash('E-mail não encontrado!', category='error')
+            return render_template('login.html', can_edit=False)
     else:
         return render_template('login.html', can_edit=False)
 
@@ -86,12 +86,19 @@ def sabe():
 @app.route("/new-post", methods=["GET", "POST"])
 def new_post():
     if 'email' not in session or session['tipo'] != 'admin':
-        flash("Acesso negado!",category='error')
+        flash("Acesso negado!", category='error')
         return redirect("/")
 
     if request.method == "POST":
         title = request.form["title"]
         content = request.form["content"]
+        thumbnail = request.files['thumbnail']
+        author = request.form['author']
+        snapshots_1 = request.files['snapshots_1']
+        snapshots_2 = request.files['snapshots_2']
+        snapshots_3 = request.files['snapshots_3']
+        links = request.form['links']
+        download = request.form['download']
         file = request.files["file"]
         if file:
             filename = secure_filename(file.filename)
@@ -100,13 +107,58 @@ def new_post():
             file_url = file_path
         else:
             file_url = None
+
+        if thumbnail:
+            # Salvar arquivo de imagem na pasta de uploads
+            filename = secure_filename(thumbnail.filename)
+            thumbnail_path = os.path.join(
+                app.config["UPLOAD_FOLDER"], filename)
+            thumbnail.save(thumbnail_path)
+            thumbnail_url = thumbnail_path
+        else:
+            thumbnail_url = None
+
+        if snapshots_1:
+            # Salvar arquivo de snapshot 1 na pasta de uploads
+            filename = secure_filename(snapshots_1.filename)
+            snapshots_1_path = os.path.join(
+                app.config["UPLOAD_FOLDER"], filename)
+            snapshots_1.save(snapshots_1_path)
+            snapshots_1_url = snapshots_1_path
+        else:
+            snapshots_1_url = None
+
+        if snapshots_2:
+            # Salvar arquivo de snapshot 2 na pasta de uploads
+            filename = secure_filename(snapshots_2.filename)
+            snapshots_2_path = os.path.join(
+                app.config["UPLOAD_FOLDER"], filename)
+            snapshots_2.save(snapshots_2_path)
+            snapshots_2_url = snapshots_2_path
+        else:
+            snapshots_2_url = None
+
+        if snapshots_3:
+            # Salvar arquivo de snapshot 3 na pasta de uploads
+            filename = secure_filename(snapshots_3.filename)
+            snapshots_3_path = os.path.join(
+                app.config["UPLOAD_FOLDER"], filename)
+            snapshots_3.save(snapshots_3_path)
+            snapshots_3_url = snapshots_3_path
+        else:
+            snapshots_3_url = None
+
+        # Conectar à base de dados
         conn = sqlite3.connect("database.db")
         c = conn.cursor()
-        c.execute("INSERT INTO posts (title, content,file_url) VALUES (?, ?, ?)",
-                  (title, content, file_url))
+
+        # Inserir dados na tabela de postagens
+        c.execute("INSERT INTO posts (title, content, thumbnail_url, file_url, author, snapshots_1, snapshots_2, snapshots_3, links, download) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                  (title, content, thumbnail_url, file_url, author, snapshots_1_url, snapshots_2_url, snapshots_3_url, links, download))
+
         conn.commit()
         conn.close()
-        flash("Post criado com sucesso",category='success')
+        flash("Post criado com sucesso", category='success')
         return redirect("/")
     return render_template("new_post.html", can_edit=False)
 
@@ -129,7 +181,7 @@ def post(post_id):
 @app.route("/edit-post/<int:post_id>", methods=["GET", "POST"])
 def edit_post(post_id):
     if 'email' not in session or session['tipo'] != 'admin':
-        flash("Acesso negado!",category='error')
+        flash("Acesso negado!", category='error')
         return redirect("/")
 
     can_edit = False
@@ -141,9 +193,21 @@ def edit_post(post_id):
     c.execute("SELECT * FROM posts WHERE id=?", (post_id,))
     post = c.fetchone()
 
+    author = post[5]
+    content = post[2]
+    links = post[9]
+    download = post[10]
+
     if request.method == "POST":
         title = request.form["title"]
         content = request.form["content"]
+        thumbnail = request.files['thumbnail']
+        author = request.form['author']
+        snapshots_1 = request.files['snapshots_1']
+        snapshots_2 = request.files['snapshots_2']
+        snapshots_3 = request.files['snapshots_3']
+        links = request.form['links']
+        download = request.form['download']
         file = request.files["file"]
         if file:
             filename = secure_filename(file.filename)
@@ -151,36 +215,94 @@ def edit_post(post_id):
             file.save(file_path)
             file_url = file_path
         else:
-            file_url = None
-        c.execute("UPDATE posts SET title=?, content=?, file_url=? WHERE id=?",
-                  (title, content, file_url, post_id))
+            # Manter a URL do arquivo de mídia original se nenhum novo arquivo foi enviado
+            file_url = post[4]
+
+        if thumbnail:
+            # Salvar arquivo de imagem na pasta de uploads
+            filename = secure_filename(thumbnail.filename)
+            thumbnail_path = os.path.join(
+                app.config["UPLOAD_FOLDER"], filename)
+            thumbnail.save(thumbnail_path)
+            thumbnail_url = thumbnail_path
+        else:
+            # Manter a URL da imagem original se nenhuma nova imagem foi enviada
+            thumbnail_url = post[3]
+
+        if snapshots_1:
+            # Salvar arquivo de snapshot 1 na pasta de uploads
+            filename = secure_filename(snapshots_1.filename)
+            snapshots_1_path = os.path.join(
+                app.config["UPLOAD_FOLDER"], filename)
+            snapshots_1.save(snapshots_1_path)
+            snapshots_1_url = snapshots_1_path
+        else:
+            # Manter a URL do snapshot 1 original se nenhum novo arquivo foi enviado
+            snapshots_1_url = post[6]
+
+        if snapshots_2:
+            # Salvar arquivo de snapshot 2 na pasta de uploads
+            filename = secure_filename(snapshots_2.filename)
+            snapshots_2_path = os.path.join(
+                app.config["UPLOAD_FOLDER"], filename)
+            snapshots_2.save(snapshots_2_path)
+            snapshots_2_url = snapshots_2_path
+        else:
+            # Manter a URL do snapshot 2 original se nenhum novo arquivo foi enviado
+            snapshots_2_url = post[7]
+
+        if snapshots_3:
+            # Salvar arquivo de snapshot 3 na pasta de uploads
+            filename = secure_filename(snapshots_3.filename)
+            snapshots_3_path = os.path.join(
+                app.config["UPLOAD_FOLDER"], filename)
+            snapshots_3.save(snapshots_3_path)
+            snapshots_3_url = snapshots_3_path
+        else:
+            # Manter a URL do snapshot 3 original se nenhum novo arquivo foi enviado
+            snapshots_3_url = post[8]
+
+        # Conectar à base de dados e atualizar o post
+        conn = sqlite3.connect("database.db")
+        c = conn.cursor()
+
+        if links:
+            # Atualizar links
+            c.execute("UPDATE posts SET links=? WHERE id=?", (links, post_id))
+
+        if download:
+            # Atualizar links de download
+            c.execute("UPDATE posts SET download=? WHERE id=?", (download, post_id))
+        
+         # Atualizar demais informações do post
+        c.execute("UPDATE posts SET title=?, content=?, thumbnail_url=?, author=?, snapshots_1=?, snapshots_2=?, snapshots_3=?, file_url=? WHERE id=?",
+                  (title, content, thumbnail_url, author, snapshots_1_url, snapshots_2_url, snapshots_3_url, file_url, post_id))
         conn.commit()
         conn.close()
-        flash("Post editado com sucesso",category='success')
+        flash("Post editado com sucesso", category='success')
         return redirect(url_for("post", post_id=post_id))
-
-    conn.close()
-    
     return render_template("edit_post.html", post=post, can_edit=can_edit)
+
+       
 
 
 @app.route('/register/', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
         email = request.form['email']
-        senha = request.form['senha']            
-        
+        senha = request.form['senha']
+
         conn = sqlite3.connect('database.db')
         c = conn.cursor()
         c.execute('SELECT * FROM usuarios WHERE email=?', (email,))
         user = c.fetchone()
         if user:
-            flash('Este e-mail já foi registrado',category='error')
+            flash('Este e-mail já foi registrado', category='error')
             return render_template('register.html')
         if len(senha) < 9:
-            flash('Palavra-passe tem que ter mais que 8 caracteres', category = 'error')
+            flash('Palavra-passe tem que ter mais que 8 caracteres', category='error')
             return render_template('register.html')
-        
+
         hash_senha = hashlib.sha256(senha.encode('utf-8')).hexdigest()
         c.execute('INSERT INTO usuarios (email, senha) VALUES (?, ?)',
                   (email, hash_senha))
@@ -190,6 +312,15 @@ def register():
         return render_template('index.html')
     else:
         return render_template('register.html')
+
+
+@app.route('/formulario/', methods=['GET', 'POST'])
+def form():
+    if 'email' not in session:
+        flash("Acesso negado!", category='error')
+        return redirect("/")
+
+    return render_template('formulario.html')
 
 
 if __name__ == "__main__":
