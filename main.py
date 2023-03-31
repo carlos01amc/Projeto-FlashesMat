@@ -29,7 +29,6 @@ def login():
         email = request.form['email']
         senha = request.form['senha']
 
-
         conn = sqlite3.connect('database.db')
         c = conn.cursor()
         c.execute('SELECT * FROM usuarios WHERE email=?', (email,))
@@ -41,6 +40,7 @@ def login():
             if hash_senha == user[3]:
                 session['email'] = user[2]
                 session['tipo'] = user[4]
+                session['id_user'] = user[0]
                 return redirect(url_for('home'))
             else:
                 flash('Senha incorreta', category='error')
@@ -273,8 +273,9 @@ def edit_post(post_id):
 
         if download:
             # Atualizar links de download
-            c.execute("UPDATE posts SET download=? WHERE id=?", (download, post_id))
-        
+            c.execute("UPDATE posts SET download=? WHERE id=?",
+                      (download, post_id))
+
          # Atualizar demais informações do post
         c.execute("UPDATE posts SET title=?, content=?, thumbnail_url=?, author=?, snapshots_1=?, snapshots_2=?, snapshots_3=?, file_url=? WHERE id=?",
                   (title, content, thumbnail_url, author, snapshots_1_url, snapshots_2_url, snapshots_3_url, file_url, post_id))
@@ -283,8 +284,6 @@ def edit_post(post_id):
         flash("Post editado com sucesso", category='success')
         return redirect(url_for("post", post_id=post_id))
     return render_template("edit_post.html", post=post, can_edit=can_edit)
-
-       
 
 
 @app.route('/register/', methods=['GET', 'POST'])
@@ -308,7 +307,7 @@ def register():
 
         hash_senha = hashlib.sha256(senha.encode('utf-8')).hexdigest()
         c.execute('INSERT INTO usuarios (nome,email, senha) VALUES (?,?, ?)',
-                  (nome,email, hash_senha))
+                  (nome, email, hash_senha))
         conn.commit()
         conn.close()
         flash('Conta criada com sucesso', category='success')
@@ -324,6 +323,21 @@ def form():
         return redirect("/")
 
     return render_template('formulario.html')
+
+
+@app.route('/admin_page/<int:admin_id>', methods=['GET', 'POST'])
+def admin(admin_id):
+    if 'email' not in session or session['tipo'] != 'admin' or session['id_user'] != admin_id:
+        flash("Acesso negado!", category='error')
+        return redirect("/")
+
+    conn = sqlite3.connect("database.db")
+    c = conn.cursor()
+    c.execute("SELECT * FROM usuarios WHERE id=?", (admin_id,))
+    usuario = c.fetchone()
+    conn.close()
+
+    return render_template('admin_page.html', usuario=usuario)
 
 if __name__ == "__main__":
     app.run(debug=True)
