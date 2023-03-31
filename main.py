@@ -29,6 +29,7 @@ def login():
         email = request.form['email']
         senha = request.form['senha']
 
+
         conn = sqlite3.connect('database.db')
         c = conn.cursor()
         c.execute('SELECT * FROM usuarios WHERE email=?', (email,))
@@ -291,6 +292,8 @@ def register():
     if request.method == 'POST':
         email = request.form['email']
         senha = request.form['senha']
+        confirma_senha = request.form['confirma_senha']
+        nome = request.form['nome']
 
         conn = sqlite3.connect('database.db')
         c = conn.cursor()
@@ -304,8 +307,8 @@ def register():
             return render_template('register.html')
 
         hash_senha = hashlib.sha256(senha.encode('utf-8')).hexdigest()
-        c.execute('INSERT INTO usuarios (email, senha) VALUES (?, ?)',
-                  (email, hash_senha))
+        c.execute('INSERT INTO usuarios (nome,email, senha) VALUES (?,?, ?)',
+                  (nome,email, hash_senha))
         conn.commit()
         conn.close()
         flash('Conta criada com sucesso', category='success')
@@ -321,7 +324,6 @@ def form():
         return redirect("/")
 
     return render_template('formulario.html')
-
 
 if __name__ == "__main__":
     app.run(debug=True)
