@@ -1,4 +1,4 @@
-from flask import Flask, redirect, request, url_for, render_template, session, abort, flash
+from flask import Flask, redirect, request, url_for, render_template, session, flash
 import os
 from flask_wtf import FlaskForm
 from wtforms import EmailField, SubmitField, PasswordField
@@ -316,10 +316,82 @@ def register():
         return render_template('register.html')
 
 
-@app.route('/formulario/', methods=['GET', 'POST'])
+@app.route('/new-form', methods=['GET', 'POST'])
 def form():
     if 'email' not in session:
         flash("Acesso negado!", category='error')
+        return redirect("/")
+    
+    if request.method == "POST":
+        title = request.form["title"]
+        content = request.form["content"]
+        thumbnail = request.files['thumbnail']
+        author = request.form['author']
+        snapshots_1 = request.files['snapshots_1']
+        snapshots_2 = request.files['snapshots_2']
+        snapshots_3 = request.files['snapshots_3']
+        links = request.form['links']
+        download = request.form['download']
+        file = request.files["file"]
+        if file:
+            filename = secure_filename(file.filename)
+            file_path = os.path.join(app.config["UPLOAD_FOLDER"], filename)
+            file.save(file_path)
+            file_url = file_path
+        else:
+            file_url = None
+
+        if thumbnail:
+            # Salvar arquivo de imagem na pasta de uploads
+            filename = secure_filename(thumbnail.filename)
+            thumbnail_path = os.path.join(
+                app.config["UPLOAD_FOLDER"], filename)
+            thumbnail.save(thumbnail_path)
+            thumbnail_url = thumbnail_path
+        else:
+            thumbnail_url = None
+
+        if snapshots_1:
+            # Salvar arquivo de snapshot 1 na pasta de uploads
+            filename = secure_filename(snapshots_1.filename)
+            snapshots_1_path = os.path.join(
+                app.config["UPLOAD_FOLDER"], filename)
+            snapshots_1.save(snapshots_1_path)
+            snapshots_1_url = snapshots_1_path
+        else:
+            snapshots_1_url = None
+
+        if snapshots_2:
+            # Salvar arquivo de snapshot 2 na pasta de uploads
+            filename = secure_filename(snapshots_2.filename)
+            snapshots_2_path = os.path.join(
+                app.config["UPLOAD_FOLDER"], filename)
+            snapshots_2.save(snapshots_2_path)
+            snapshots_2_url = snapshots_2_path
+        else:
+            snapshots_2_url = None
+
+        if snapshots_3:
+            # Salvar arquivo de snapshot 3 na pasta de uploads
+            filename = secure_filename(snapshots_3.filename)
+            snapshots_3_path = os.path.join(
+                app.config["UPLOAD_FOLDER"], filename)
+            snapshots_3.save(snapshots_3_path)
+            snapshots_3_url = snapshots_3_path
+        else:
+            snapshots_3_url = None
+
+        # Conectar à base de dados
+        conn = sqlite3.connect("database.db")
+        c = conn.cursor()
+
+        # Inserir dados na tabela de postagens
+        c.execute("INSERT INTO forms (title, content, thumbnail_url, file_url, author, snapshots_1, snapshots_2, snapshots_3, links, download) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                  (title, content, thumbnail_url, file_url, author, snapshots_1_url, snapshots_2_url, snapshots_3_url, links, download))
+
+        conn.commit()
+        conn.close()
+        flash("Post submetido com sucesso", category='success')
         return redirect("/")
 
     return render_template('formulario.html')
@@ -337,7 +409,32 @@ def admin(admin_id):
     usuario = c.fetchone()
     conn.close()
 
-    return render_template('admin_page.html', usuario=usuario)
+    conn = sqlite3.connect("database.db")
+    c = conn.cursor()
+    c.execute("SELECT * FROM forms")
+    forms = c.fetchall()
+    conn.close()
+
+    return render_template('admin_page.html', usuario=usuario, forms = forms)
+
+@app.route("/form/<int:form_id>")
+def forms(form_id):
+
+    if 'email' not in session or session['tipo'] != 'admin':
+        flash("Acesso negado!", category='error')
+        return redirect("/")
+
+    conn = sqlite3.connect("database.db")
+    c = conn.cursor()
+    c.execute("SELECT * FROM forms WHERE id=?", (form_id,))
+    post = c.fetchone()
+    conn.close()
+
+    can_edit_form = True
+    can_edit = True
+
+    return render_template("form.html", post=post, can_edit_form=can_edit_form, can_edit=can_edit)
+
 
 if __name__ == "__main__":
     app.run(debug=True)
