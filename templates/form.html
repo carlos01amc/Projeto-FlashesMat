@@ -89,5 +89,35 @@
 
   </article>
 
+  <div class="foot-con">
+    <footer id="footer">
+      <form method="post" action="/approved">
+        <input type="hidden" name="post_id" value="{{ post[0] }}">
+        <input type="hidden" name="title" value="{{ post[1] }}">
+        <input type="hidden" name="content" value="{{ post[2] }}">
+        <input type="hidden" name="thumbnail_url" value="{{ post[3] }}">
+        <input type="hidden" name="file_url" value="{{ post[4] }}">
+        <input type="hidden" name="author" value="{{ post[5] }}">
+        <input type="hidden" name="snapshots_1" value="{{ post[6] }}">
+        <input type="hidden" name="snapshots_2" value="{{ post[7] }}">
+        <input type="hidden" name="snapshots_3" value="{{ post[8] }}">
+        <input type="hidden" name="links" value="{{ post[9] }}">
+        <input type="hidden" name="download" value="{{ post[10] }}">
+        <input type="hidden" name="date" value="{{ post[11] }}">
+        <button type="submit" class="btn btn-success">Aprovar</button>
+      </form>
+      <form method="post" action="/delete">
+        <input type="hidden" name="form_id" value="{{ post[0] }}">
+        <button type="submit" class="btn btn-danger">Não Aprovar</button>
+      </form>
+    </footer>
+  </div>
+
+
 </main>
+
+
+
+
+
 {% endblock %}
