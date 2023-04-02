@@ -436,5 +436,49 @@ def forms(form_id):
     return render_template("form.html", post=post, can_edit_form=can_edit_form, can_edit=can_edit)
 
 
+@app.route("/delete", methods=["POST"])
+def delete():
+    form_id = request.form.get('form_id')
+    conn = sqlite3.connect("database.db")
+    print(form_id)
+    c = conn.cursor()
+    c.execute("DELETE FROM forms WHERE id=?", (form_id,))
+    conn.commit()
+    conn.close()
+    return redirect(url_for('home', can_edit=False))
+
+@app.route('/approved', methods=['POST'])
+def approved():
+    post_id = request.form['post_id']
+    title = request.form['title']
+    content = request.form['content']
+    thumbnail_url = request.form['thumbnail_url']
+    file_url = request.form['file_url']
+    author = request.form['author']
+    snapshots_1 = request.form['snapshots_1']
+    snapshots_2 = request.form['snapshots_2']
+    snapshots_3 = request.form['snapshots_3']
+    links = request.form['links']
+    download = request.form['download']
+    created_at = request.form['date']
+    
+    # Conectar com a base de dados
+    conn = sqlite3.connect('database.db')
+    cursor = conn.cursor()
+    
+    # Inserir os valores do formulário na base de dados "nice"
+    cursor.execute('''INSERT INTO posts(title, content, thumbnail_url, file_url, author, snapshots_1, snapshots_2, snapshots_3, links, download, created_at) 
+                      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)''', 
+                      (title, content, thumbnail_url, file_url, author, snapshots_1, snapshots_2, snapshots_3, links, download, created_at))
+    
+    # Remover os valores do formulário da base de dados "forms"
+    cursor.execute('''DELETE FROM forms WHERE id = ?''', (post_id,))
+    
+    # Salvar as mudanças e fechar a conexão com a base de dados
+    conn.commit()
+    conn.close()
+    
+    return redirect('/')
+
 if __name__ == "__main__":
     app.run(debug=True)
