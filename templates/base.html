@@ -46,7 +46,7 @@
                         Estatística
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        
+
                     </div>
                 </li>
                 <li class="nav-item dropdown active">
@@ -55,7 +55,7 @@
                         Análise Numérica
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        
+
                     </div>
                 </li>
                 <li class="nav-item active">
@@ -109,8 +109,8 @@
 <body>
     {% if 'tipo' in session and session['tipo'] == 'admin' %}
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container-fluid">            
-            <a class="navbar-brand" href="/admin_page/{{ session['id_user'] }}">Admin</a>                    
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/admin_page/{{ session['id_user'] }}">Admin</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -127,11 +127,26 @@
                     </li>
                     {%endif%}
                     {% if can_edit %}
-                        
+
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url_for('edit_post', post_id=post[0]) }}">Edite Post</a>
                     </li>
                     {%endif%}
+                    {% if not can_edit %}
+                    <li class="nav-item ">
+                        <a class="nav-link  disable">Delete Post</a>
+                    </li>
+                    {%endif%}
+                    {% if can_edit %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"
+                            onclick="event.preventDefault(); document.getElementById('delete-post-form').submit();">Delete
+                            Post</a>
+                        <form id="delete-post-form" action="{{ url_for('delete_post', post_id=post[0]) }}" method="post"
+                            style="display: none;">
+                        </form>
+                    </li>
+                    {% endif %}
                 </ul>
             </div>
         </div>

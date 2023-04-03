@@ -166,7 +166,7 @@ def new_post():
         conn.commit()
         conn.close()
         flash("Post criado com sucesso", category='success')
-        return redirect("/")
+        return redirect("menu")
     return render_template("new_post.html", can_edit=False)
 
 
@@ -438,12 +438,21 @@ def forms(form_id):
 def delete():
     form_id = request.form.get('form_id')
     conn = sqlite3.connect("database.db")
-    print(form_id)
     c = conn.cursor()
     c.execute("DELETE FROM forms WHERE id=?", (form_id,))
     conn.commit()
     conn.close()
     return redirect(url_for('home', can_edit=False))
+
+@app.route("/delete_post/<int:post_id>", methods=["POST"])
+def delete_post(post_id):
+    conn = sqlite3.connect("database.db")
+    c = conn.cursor()
+    c.execute("DELETE FROM posts WHERE id=?", (post_id,))
+    conn.commit()
+    conn.close()
+    flash('Post apagado com sucesso', category='success')
+    return redirect(url_for('menu', can_edit=False))
 
 
 @app.route('/approved', methods=['POST'])
