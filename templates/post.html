@@ -6,26 +6,28 @@
   <article>
 
     <header class="text-center">
+      <br></br>
       <h1>{{ post[1] }}</h1>
+      <br></br>
     </header>
 
     {% if post[4] %}
     {% if post[4].endswith(('jpg', 'jpeg', 'gif', 'png')) %}
     {% set file_path = post[4].split('static', 1)[-1].lstrip('\\/') %}
     <figure class="text-center">
-      <img width="320" height="240" src="{{ '../static/' ~ file_path }}" alt="">
+      <img width="320" height="320" src="{{ '../static/' ~ file_path }}" alt="">
     </figure>
     {% elif post[4].endswith('mp4') %}
     {% set file_path = post[4].split('static', 1)[-1].lstrip('\\/') %}
     <figure class="text-center">
-      <video width="320" height="240" controls>
+      <video width="320" height="320" controls>
         <source src="{{ '../static/' ~ file_path }}" type="video/mp4">
         Seu navegador não suporta o elemento de vídeo.
       </video>
     </figure>
     {% endif %}
     {% endif %}
-
+    <br></br>
     <div class="card">
       <div class="card-header">
         Resumo
@@ -50,7 +52,7 @@
         {% if post[6].endswith(('jpg', 'jpeg', 'gif', 'png')) %}
         <div class="col-md-4">
           <figure class="text-center">
-            <img width="256" height="192" src="{{ '../static/' ~ post[6].split('static', 1)[-1].lstrip('\\/') }}"
+            <img width="225" height="225" src="{{ '../static/' ~ post[6].split('static', 1)[-1].lstrip('\\/') }}"
               alt="">
           </figure>
         </div>
@@ -59,7 +61,7 @@
         {% if post[7].endswith(('jpg', 'jpeg', 'gif', 'png')) %}
         <div class="col-md-4">
           <figure class="text-center">
-            <img width="256" height="192" src="{{ '../static/' ~ post[7].split('static', 1)[-1].lstrip('\\/') }}"
+            <img width="225" height="225" src="{{ '../static/' ~ post[7].split('static', 1)[-1].lstrip('\\/') }}"
               alt="">
           </figure>
         </div>
@@ -68,7 +70,7 @@
         {% if post[8].endswith(('jpg', 'jpeg', 'gif', 'png')) %}
         <div class="col-md-4">
           <figure class="text-center">
-            <img width="256" height="192" src="{{ '../static/' ~ post[8].split('static', 1)[-1].lstrip('\\/') }}"
+            <img width="225" height="225" src="{{ '../static/' ~ post[8].split('static', 1)[-1].lstrip('\\/') }}"
               alt="">
           </figure>
         </div>

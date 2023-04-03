@@ -8,39 +8,50 @@
 </head>
 
 <body>
-
-  <div class="mt-5">
-    <ul>
-      {% for post in posts %}
-      {% if loop.index0 % 3 == 0 %}
-      <div class="row justify-content-center">
-        {% endif %}
-        <div class="col-lg-4 col-md-6 mb-4">
-          <div class="feature-box">
-            <i class="fas fa-chalkboard"></i>
-            <h3><a href="/post/{{ post[0] }}">{{ post[1] }}</a></h3>
-            <p>Resumo</p>
+  <div class="container-fluid">
+    <div class="mt-5">
+      <ul>
+        {% for post in posts %}
+        {% if loop.index0 % 4 == 0 %}
+        <div class="row justify-content-center">
+          {% endif %}
+          <div class="col-lg-3 col-md-6 mb-4">
+            <div class="feature-box">
+              <i class="fas fa-chalkboard"></i>
+              <h3><a href="/post/{{ post[0] }}">{{ post[1] }}</a></h3>
+              {% if post[3] %}
+              {% if post[3].endswith(('jpg', 'jpeg', 'gif', 'png')) %}
+              {% set file_path = post[3].split('static', 1)[-1].lstrip('\\/') %}
+              <figure class="text-center">
+                <img width="200" height="200" src="{{ '../static/' ~ file_path }}" alt="">
+              </figure>
+              {%endif%}
+              {%endif%}
+            </div>
           </div>
+          {% if loop.index0 % 4 == 3 or loop.last %}
         </div>
-        {% if loop.index0 % 3 == 2 or loop.last %}
-      </div>
-      {% endif %}
-      {% endfor %}
-    </ul>
+        {% endif %}
+        {% if loop.last and loop.index0 % 4 != 3 %}
+        {% for i in range(4 - loop.index0 % 4 - 1) %}
+        <div class="col-lg-3 col-md-6 mb-4"></div>
+        {% endfor %}
+        </div>
+        {% endif %}
+        {% endfor %}
+      </ul>
+    </div>
+    {% if 'tipo' in session %}
+    <div class="footc">
+      <footer>
+        <div class="container">
+          <p>Tem alguma sugestão que deseja ver implementada? <a href="/new-form">Clique aqui</a></p>
+        </div>
+      </footer>
+    </div>
+
+    {%endif%}
   </div>
-  {% if 'tipo' in session %}
-  <div class="footc">
-    <footer>
-      <div class="container">
-        <p>Tem alguma sugestão que deseja ver implementada? <a href="/new-form">Clique aqui</a></p>
-      </div>
-    </footer>
-  </div>
-
-
-  {%endif%}
-
-
 </body>
 
 </html>
