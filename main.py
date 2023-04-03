@@ -430,10 +430,7 @@ def forms(form_id):
     post = c.fetchone()
     conn.close()
 
-    can_edit_form = True
-    can_edit = True
-
-    return render_template("form.html", post=post, can_edit_form=can_edit_form, can_edit=can_edit)
+    return render_template("form.html", post=post, can_edit=False)
 
 
 @app.route("/delete", methods=["POST"])
