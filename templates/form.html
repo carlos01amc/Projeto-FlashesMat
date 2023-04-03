@@ -11,7 +11,7 @@
 
     {% if post[4] %}
     {% if post[4].endswith(('jpg', 'jpeg', 'gif', 'png')) %}
-    {% set file_path = post[3].split('static', 1)[-1].lstrip('\\/') %}
+    {% set file_path = post[4].split('static', 1)[-1].lstrip('\\/') %}
     <figure class="text-center">
       <img width="320" height="240" src="{{ '../static/' ~ file_path }}" alt="">
     </figure>

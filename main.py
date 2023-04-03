@@ -101,6 +101,12 @@ def new_post():
         links = request.form['links']
         download = request.form['download']
         file = request.files["file"]
+
+        if content:
+            content = content
+        else:
+            content = None
+
         if file:
             filename = secure_filename(file.filename)
             file_path = os.path.join(app.config["UPLOAD_FOLDER"], filename)
@@ -194,10 +200,15 @@ def edit_post(post_id):
     c.execute("SELECT * FROM posts WHERE id=?", (post_id,))
     post = c.fetchone()
 
-    author = post[5]
-    content = post[2]
-    links = post[9]
-    download = post[10]
+    # Colocar as variáveis a None caso não haja valores
+
+    thumbnail_url = post[3] if post[3] else None
+    file_url = post[4] if post[4] else None
+    snapshots_1_url = post[6] if post[6] else None
+    snapshots_2_url = post[7] if post[7] else None
+    snapshots_3_url = post[8] if post[8] else None
+    links = post[9] if post[9] else None
+    download = post[10] if post[10] else None
 
     if request.method == "POST":
         title = request.form["title"]
@@ -215,9 +226,6 @@ def edit_post(post_id):
             file_path = os.path.join(app.config["UPLOAD_FOLDER"], filename)
             file.save(file_path)
             file_url = file_path
-        else:
-            # Manter a URL do arquivo de mídia original se nenhum novo arquivo foi enviado
-            file_url = post[4]
 
         if thumbnail:
             # Salvar arquivo de imagem na pasta de uploads
@@ -226,9 +234,6 @@ def edit_post(post_id):
                 app.config["UPLOAD_FOLDER"], filename)
             thumbnail.save(thumbnail_path)
             thumbnail_url = thumbnail_path
-        else:
-            # Manter a URL da imagem original se nenhuma nova imagem foi enviada
-            thumbnail_url = post[3]
 
         if snapshots_1:
             # Salvar arquivo de snapshot 1 na pasta de uploads
@@ -237,9 +242,6 @@ def edit_post(post_id):
                 app.config["UPLOAD_FOLDER"], filename)
             snapshots_1.save(snapshots_1_path)
             snapshots_1_url = snapshots_1_path
-        else:
-            # Manter a URL do snapshot 1 original se nenhum novo arquivo foi enviado
-            snapshots_1_url = post[6]
 
         if snapshots_2:
             # Salvar arquivo de snapshot 2 na pasta de uploads
@@ -248,9 +250,6 @@ def edit_post(post_id):
                 app.config["UPLOAD_FOLDER"], filename)
             snapshots_2.save(snapshots_2_path)
             snapshots_2_url = snapshots_2_path
-        else:
-            # Manter a URL do snapshot 2 original se nenhum novo arquivo foi enviado
-            snapshots_2_url = post[7]
 
         if snapshots_3:
             # Salvar arquivo de snapshot 3 na pasta de uploads
@@ -259,9 +258,6 @@ def edit_post(post_id):
                 app.config["UPLOAD_FOLDER"], filename)
             snapshots_3.save(snapshots_3_path)
             snapshots_3_url = snapshots_3_path
-        else:
-            # Manter a URL do snapshot 3 original se nenhum novo arquivo foi enviado
-            snapshots_3_url = post[8]
 
         # Conectar à base de dados e atualizar o post
         conn = sqlite3.connect("database.db")
@@ -321,7 +317,7 @@ def form():
     if 'email' not in session:
         flash("Acesso negado!", category='error')
         return redirect("/")
-    
+
     if request.method == "POST":
         title = request.form["title"]
         content = request.form["content"]
@@ -333,6 +329,10 @@ def form():
         links = request.form['links']
         download = request.form['download']
         file = request.files["file"]
+        if content:
+            content = content
+        else:
+            content = None
         if file:
             filename = secure_filename(file.filename)
             file_path = os.path.join(app.config["UPLOAD_FOLDER"], filename)
@@ -415,7 +415,8 @@ def admin(admin_id):
     forms = c.fetchall()
     conn.close()
 
-    return render_template('admin_page.html', usuario=usuario, forms = forms)
+    return render_template('admin_page.html', usuario=usuario, forms=forms)
+
 
 @app.route("/form/<int:form_id>")
 def forms(form_id):
@@ -444,6 +445,7 @@ def delete():
     conn.close()
     return redirect(url_for('home', can_edit=False))
 
+
 @app.route('/approved', methods=['POST'])
 def approved():
     post_id = request.form['post_id']
@@ -458,24 +460,25 @@ def approved():
     links = request.form['links']
     download = request.form['download']
     created_at = request.form['date']
-    
+
     # Conectar com a base de dados
     conn = sqlite3.connect('database.db')
     cursor = conn.cursor()
-    
+
     # Inserir os valores do formulário na base de dados "nice"
     cursor.execute('''INSERT INTO posts(title, content, thumbnail_url, file_url, author, snapshots_1, snapshots_2, snapshots_3, links, download, created_at) 
-                      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)''', 
-                      (title, content, thumbnail_url, file_url, author, snapshots_1, snapshots_2, snapshots_3, links, download, created_at))
-    
+                      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)''',
+                   (title, content, thumbnail_url, file_url, author, snapshots_1, snapshots_2, snapshots_3, links, download, created_at))
+
     # Remover os valores do formulário da base de dados "forms"
     cursor.execute('''DELETE FROM forms WHERE id = ?''', (post_id,))
-    
+
     # Salvar as mudanças e fechar a conexão com a base de dados
     conn.commit()
     conn.close()
-    
+
     return redirect('/')
+
 
 if __name__ == "__main__":
     app.run(debug=True)
