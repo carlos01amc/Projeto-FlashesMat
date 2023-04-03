@@ -13,7 +13,7 @@ conn = sqlite3.connect('database.db')
 
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
-app.config["UPLOAD_FOLDER"] = r'C:\Users\carlo\Desktop\UM\3ano2s\Projeto\static\upload'
+app.config["UPLOAD_FOLDER"] = r'C:\Users\PC\Desktop\UM\3ano2s\projeto\static\upload'
 
 
 class LogForm(FlaskForm):
