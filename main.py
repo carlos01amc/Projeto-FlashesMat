@@ -278,7 +278,7 @@ def edit_post(post_id):
         conn.commit()
         conn.close()
         flash("Post editado com sucesso", category='success')
-        return redirect(url_for("post", post_id=post_id))
+        return redirect(url_for("menu", post_id=post_id))
     return render_template("edit_post.html", post=post, can_edit=can_edit)
 
 
