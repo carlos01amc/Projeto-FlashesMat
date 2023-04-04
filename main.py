@@ -61,7 +61,12 @@ def logout():
 
 @app.route("/")
 def home():
-    return render_template("index.html", can_edit=False)
+    conn = sqlite3.connect("database.db")
+    c = conn.cursor()
+    c.execute("SELECT * FROM forms")
+    forms = c.fetchall()
+    conn.close()
+    return render_template("index.html", can_edit=False,forms=forms)
 
 
 @app.route("/menu")
@@ -71,17 +76,32 @@ def menu():
     c.execute("SELECT * FROM posts")
     posts = c.fetchall()
     conn.close()
-    return render_template("menu.html", can_edit=False, posts=posts)
+    conn = sqlite3.connect("database.db")
+    c = conn.cursor()
+    c.execute("SELECT * FROM forms")
+    forms = c.fetchall()
+    conn.close()
+    return render_template("menu.html", can_edit=False, posts=posts,forms=forms)
 
 
 @app.route("/criadores/")
 def criadores():
-    return render_template("creatores.html", can_edit=False)
+    conn = sqlite3.connect("database.db")
+    c = conn.cursor()
+    c.execute("SELECT * FROM forms")
+    forms = c.fetchall()
+    conn.close()
+    return render_template("creatores.html", can_edit=False,forms=forms)
 
 
 @app.route("/sabermais/")
 def sabe():
-    return render_template("sabermais.html", can_edit=False)
+    conn = sqlite3.connect("database.db")
+    c = conn.cursor()
+    c.execute("SELECT * FROM forms")
+    forms = c.fetchall()
+    conn.close()
+    return render_template("sabermais.html", can_edit=False,forms=forms)
 
 
 @app.route("/new-post", methods=["GET", "POST"])
@@ -167,7 +187,12 @@ def new_post():
         conn.close()
         flash("Post criado com sucesso", category='success')
         return redirect("menu")
-    return render_template("new_post.html", can_edit=False)
+    conn = sqlite3.connect("database.db")
+    c = conn.cursor()
+    c.execute("SELECT * FROM forms")
+    forms = c.fetchall()
+    conn.close()
+    return render_template("new_post.html", can_edit=False,forms=forms)
 
 
 @app.route("/post/<int:post_id>")
@@ -181,8 +206,14 @@ def post(post_id):
     can_edit = False
     if 'email' in session and session['tipo'] == 'admin':
         can_edit = True
+    
+    conn = sqlite3.connect("database.db")
+    c = conn.cursor()
+    c.execute("SELECT * FROM forms")
+    forms = c.fetchall()
+    conn.close()
 
-    return render_template("post.html", post=post, can_edit=can_edit)
+    return render_template("post.html", post=post, can_edit=can_edit,forms=forms)
 
 
 @app.route("/edit-post/<int:post_id>", methods=["GET", "POST"])
@@ -279,7 +310,12 @@ def edit_post(post_id):
         conn.close()
         flash("Post editado com sucesso", category='success')
         return redirect(url_for("menu", post_id=post_id))
-    return render_template("edit_post.html", post=post, can_edit=can_edit)
+    conn = sqlite3.connect("database.db")
+    c = conn.cursor()
+    c.execute("SELECT * FROM forms")
+    forms = c.fetchall()
+    conn.close()
+    return render_template("edit_post.html", post=post, can_edit=can_edit,forms=forms)
 
 
 @app.route('/register/', methods=['GET', 'POST'])
@@ -391,10 +427,16 @@ def form():
 
         conn.commit()
         conn.close()
+        
         flash("Post submetido com sucesso", category='success')
         return redirect("/")
+    conn = sqlite3.connect("database.db")
+    c = conn.cursor()
+    c.execute("SELECT * FROM forms")
+    forms = c.fetchall()
+    conn.close()
 
-    return render_template('formulario.html')
+    return render_template('formulario.html',forms=forms)
 
 
 @app.route('/admin_page/<int:admin_id>', methods=['GET', 'POST'])
@@ -431,7 +473,13 @@ def forms(form_id):
     post = c.fetchone()
     conn.close()
 
-    return render_template("form.html", post=post, can_edit=False)
+    conn = sqlite3.connect("database.db")
+    c = conn.cursor()
+    c.execute("SELECT * FROM forms")
+    forms = c.fetchall()
+    conn.close()
+
+    return render_template("form.html", post=post, can_edit=False, forms=forms)
 
 
 @app.route("/delete", methods=["POST"])
