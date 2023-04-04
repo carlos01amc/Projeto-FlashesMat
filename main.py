@@ -10,26 +10,28 @@ from flask_mail import Message, Mail
 import random
 import string
 from werkzeug.security import generate_password_hash, check_password_hash
+from dotenv import load_dotenv
 
 conn = sqlite3.connect('database.db')
 
 # shift+alt+f -> format code
+# Carregar as variáveis de ambiente do arquivo .env
+load_dotenv()
 
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
 app.config["UPLOAD_FOLDER"] = r'C:\Users\carlo\Desktop\UM\3ano2s\Projeto\static\upload'
 
-# Inicializar o objeto Mail
-mail = Mail()
-
 # Configuração do Flask-Mail
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
-app.config['MAIL_PORT'] = 465
-app.config['MAIL_USE_SSL'] = True
+app.config['MAIL_PORT'] = 587
+app.config['MAIL_USE_TLS'] = True
 app.config['MAIL_USERNAME'] = 'portal.app.uminho@gmail.com'
-app.config['MAIL_PASSWORD'] = 'covsflqewoyimnjx'
+app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD')
 app.config['MAIL_DEFAULT_SENDER'] = 'portal.app.uminho@gmail.com'
 
+# Inicializar o objeto Mail
+mail = Mail()
 # Inicializar a extensão Flask-Mail
 mail.init_app(app)
 
@@ -88,7 +90,7 @@ def reset_password_confirm(token):
         password = request.form.get('password')
         confirm_password = request.form.get('confirm_password')
         if password != confirm_password:
-            flash('As senhas não coincidem. Tente novamente.')
+            flash('As senhas não coincidem. Tente novamente.',category='error')
             return redirect(url_for('reset_password_confirm', token=token))
 
         # Hash da nova senha
