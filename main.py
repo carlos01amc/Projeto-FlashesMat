@@ -6,6 +6,10 @@ from wtforms.validators import DataRequired, Email
 import hashlib
 from werkzeug.utils import secure_filename
 import sqlite3
+from flask_mail import Message, Mail
+import random
+import string
+from werkzeug.security import generate_password_hash, check_password_hash
 
 conn = sqlite3.connect('database.db')
 
@@ -15,12 +19,92 @@ app = Flask(__name__)
 app.secret_key = os.urandom(24)
 app.config["UPLOAD_FOLDER"] = r'C:\Users\carlo\Desktop\UM\3ano2s\Projeto\static\upload'
 
+# Inicializar o objeto Mail
+mail = Mail()
+
+# Configuração do Flask-Mail
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_PORT'] = 465
+app.config['MAIL_USE_SSL'] = True
+app.config['MAIL_USERNAME'] = 'portal.app.uminho@gmail.com'
+app.config['MAIL_PASSWORD'] = 'covsflqewoyimnjx'
+app.config['MAIL_DEFAULT_SENDER'] = 'portal.app.uminho@gmail.com'
+
+# Inicializar a extensão Flask-Mail
+mail.init_app(app)
 
 class LogForm(FlaskForm):
     mail = EmailField("Email: ", validators=[Email(), DataRequired()])
     password = PasswordField("Password: ", validators=[DataRequired()])
     submit = SubmitField("login")
 
+@app.route('/reset_password', methods=['GET', 'POST'])
+def reset_password():
+    if request.method == 'POST':
+        email = request.form.get('email')
+
+        # Verificar se o email existe na base de dados
+        conn = sqlite3.connect('database.db')
+        c = conn.cursor()
+        c.execute("SELECT * FROM usuarios WHERE email=?", (email,))
+        user = c.fetchone()
+        conn.close()
+
+        if user:
+            # Gerar token de redefinição de senha
+            token = ''.join(random.choice(string.ascii_uppercase + string.ascii_lowercase + string.digits) for _ in range(32))
+
+            # Atualizar o token de redefinição de senha na base de dados
+            conn = sqlite3.connect('database.db')
+            c = conn.cursor()
+            c.execute("UPDATE usuarios SET reset_password_token=? WHERE email=?", (token, email))
+            conn.commit()
+            conn.close()
+
+            # Enviar e-mail de redefinição de senha
+            msg = Message('Redefinição de senha', recipients=[email])
+            msg.html = render_template('reset_password_email.html', user=user, token=token)
+            mail.send(msg)
+
+        flash('Foi enviado um e-mail com instruções para redefinir a senha.')
+        return redirect(url_for('login'))
+
+    return render_template('reset_password.html')
+
+@app.route('/reset_password/<token>', methods=['GET', 'POST'])
+def reset_password_confirm(token):
+    # Verificar se o token existe na base de dados
+    conn = sqlite3.connect('database.db')
+    c = conn.cursor()
+    c.execute("SELECT * FROM usuarios WHERE reset_password_token=?", (token,))
+    user = c.fetchone()
+    conn.close()
+
+    if not user:
+        flash('Token inválido ou expirado.',category='error')
+        return redirect(url_for('login'))
+
+    if request.method == 'POST':
+        password = request.form.get('password')
+        confirm_password = request.form.get('confirm_password')
+        if password != confirm_password:
+            flash('As senhas não coincidem. Tente novamente.')
+            return redirect(url_for('reset_password_confirm', token=token))
+
+        # Hash da nova senha
+        password_hash = hashlib.sha256(password.encode('utf-8')).hexdigest()
+
+        # Atualizar a senha e o token de redefinição de senha na base de dados
+        conn = sqlite3.connect('database.db')
+        c = conn.cursor()
+        c.execute("UPDATE usuarios SET senha=?, reset_password_token=? WHERE id=?", (password_hash, None, user[0]))
+        conn.commit()
+        conn.close()
+
+        flash('A senha foi redefinida com sucesso.')
+        return redirect(url_for('login'))
+
+    return render_template('reset_password_confirm.html', token=token)
 
 @app.route("/login/", methods=['GET', 'POST'])
 def login():

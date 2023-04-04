@@ -26,6 +26,8 @@ c.execute('''CREATE TABLE IF NOT EXISTS usuarios
               senha TEXT, 
               tipo TEXT DEFAULT "regular")''')
 
+c.execute('''ALTER TABLE usuarios ADD COLUMN reset_password_token TEXT''')
+
 # Crie a tabela de formulario
 c.execute('''CREATE TABLE IF NOT EXISTS forms
              (id INTEGER PRIMARY KEY AUTOINCREMENT,
