@@ -149,6 +149,7 @@ textarea[name="content"] {
     text-align: center;
     font-family: Arial, sans-serif;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+
 }
 
 footer {
@@ -173,4 +174,3 @@ footer {
     min-height: 100%;
     margin-top: 300px;
 }
-
