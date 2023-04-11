@@ -5,86 +5,90 @@
 
   <article>
 
-    <header class="text-center">
-      <h1>{{ post[1] }}</h1>
-    </header>
+    <div class="container-fluid">
 
-    {% if post[4] %}
-    {% if post[4].endswith(('jpg', 'jpeg', 'gif', 'png')) %}
-    {% set file_path = post[4].split('static', 1)[-1].lstrip('\\/') %}
-    <figure class="text-center">
-      <img width="320" height="320" src="{{ '../static/' ~ file_path }}" alt="">
-    </figure>
-    {% elif post[4].endswith('mp4') %}
-    {% set file_path = post[4].split('static', 1)[-1].lstrip('\\/') %}
-    <figure class="text-center">
-      <video width="320" height="320" controls>
-        <source src="{{ '../static/' ~ file_path }}" type="video/mp4">
-        Seu navegador não suporta o elemento de vídeo.
-      </video>
-    </figure>
-    {% endif %}
-    {% endif %}
+      <header class="text-center">
+        <h1>{{ post[1] }}</h1>
+      </header>
 
-    <div class="card">
-      <div class="card-header">
-        Resumo
-      </div>
-      <div class="card-body">
-        <blockquote class="blockquote mb-0">
-          {{ post[2]|safe }}
-        </blockquote>
-      </div>
-    </div>
-
-    <div class="container">
-
-      <br></br>
-
-      <h4> Autor: {{post[5]}}</h4>
-
-      <h4>Data: {{ post[11].split(' ')[0] }}</h4>
-
-      {% if post[6] or post[7] or post[8] %}
-      <div class="row mt-3">
-        {% if post[6] %}
-        <div class="col-md-4">
-          <figure class="text-center">
-            <img width="225" height="225" src="{{ '../static/' ~ post[6].split('static', 1)[-1].lstrip('\\/') }}"
-              alt="">
-          </figure>
-        </div>
-        {% endif %}
-
-        {% if post[7] %}
-        <div class="col-md-4">
-          <figure class="text-center">
-            <img width="225" height="225" src="{{ '../static/' ~ post[7].split('static', 1)[-1].lstrip('\\/') }}"
-              alt="">
-          </figure>
-        </div>
-        {% endif %}
-
-        {% if post[8] %}
-        <div class="col-md-4">
-          <figure class="text-center">
-            <img width="225" height="225" src="{{ '../static/' ~ post[8].split('static', 1)[-1].lstrip('\\/') }}"
-              alt="">
-          </figure>
-        </div>
-        {% endif %}
-      </div>
+      {% if post[4] %}
+      {% if post[4].endswith(('jpg', 'jpeg', 'gif', 'png')) %}
+      {% set file_path = post[4].split('static', 1)[-1].lstrip('\\/') %}
+      <figure class="text-center">
+        <img width="320" height="320" src="{{ '../static/' ~ file_path }}" alt="">
+      </figure>
+      {% elif post[4].endswith('mp4') %}
+      {% set file_path = post[4].split('static', 1)[-1].lstrip('\\/') %}
+      <figure class="text-center">
+        <video width="320" height="320" controls>
+          <source src="{{ '../static/' ~ file_path }}" type="video/mp4">
+          Seu navegador não suporta o elemento de vídeo.
+        </video>
+      </figure>
+      {% endif %}
       {% endif %}
 
-      {% if post[9] %}
-      <p>Links: <a href="{{ post[9] }}">
-          {% if post[9] | length <= 25 %} {{ post[9] }} {% else %} {{ post[9][:25] + '...' }} {% endif %} </a>
-      </p>
-      {%endif%}
+      <div class="card">
+        <div class="card-header">
+          Resumo
+        </div>
+        <div class="card-body">
+          <blockquote class="blockquote mb-0">
+            {{ post[2]|safe }}
+          </blockquote>
+        </div>
+      </div>
 
-      {% if post[10] %}
-      <p>downloads: {{post[10]}}</p>
-      {%endif%}
+      <div class="container">
+
+        <br></br>
+
+        <h4> Autor: {{post[5]}}</h4>
+
+        <h4>Data: {{ post[11].split(' ')[0] }}</h4>
+
+        {% if post[6] or post[7] or post[8] %}
+        <div class="row mt-3">
+          {% if post[6] %}
+          <div class="col-md-4">
+            <figure class="text-center">
+              <img width="225" height="225" src="{{ '../static/' ~ post[6].split('static', 1)[-1].lstrip('\\/') }}"
+                alt="">
+            </figure>
+          </div>
+          {% endif %}
+
+          {% if post[7] %}
+          <div class="col-md-4">
+            <figure class="text-center">
+              <img width="225" height="225" src="{{ '../static/' ~ post[7].split('static', 1)[-1].lstrip('\\/') }}"
+                alt="">
+            </figure>
+          </div>
+          {% endif %}
+
+          {% if post[8] %}
+          <div class="col-md-4">
+            <figure class="text-center">
+              <img width="225" height="225" src="{{ '../static/' ~ post[8].split('static', 1)[-1].lstrip('\\/') }}"
+                alt="">
+            </figure>
+          </div>
+          {% endif %}
+        </div>
+        {% endif %}
+
+        {% if post[9] %}
+        <p>Links: <a href="{{ post[9] }}">
+            {% if post[9] | length <= 25 %} {{ post[9] }} {% else %} {{ post[9][:25] + '...' }} {% endif %} </a>
+        </p>
+        {%endif%}
+
+        {% if post[10] %}
+        <p>downloads: {{post[10]}}</p>
+        {%endif%}
+      </div>
+      
     </div>
 
   </article>
