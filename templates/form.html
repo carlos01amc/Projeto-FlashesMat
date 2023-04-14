@@ -3,29 +3,41 @@
 {% block content %}
 <main>
 
-  <article>
-
-    <div class="container-fluid">
+  <<div class="container-fluid">
+    <article>
 
       <header class="text-center">
+        <br></br>
         <h1>{{ post[1] }}</h1>
+        <br></br>
       </header>
 
       {% if post[4] %}
-      {% if post[4].endswith(('jpg', 'jpeg', 'gif', 'png')) %}
-      {% set file_path = post[4].split('static', 1)[-1].lstrip('\\/') %}
-      <figure class="text-center">
-        <img width="320" height="320" src="{{ '../static/' ~ file_path }}" alt="">
-      </figure>
-      {% elif post[4].endswith('mp4') %}
-      {% set file_path = post[4].split('static', 1)[-1].lstrip('\\/') %}
-      <figure class="text-center">
-        <video width="320" height="320" controls>
-          <source src="{{ '../static/' ~ file_path }}" type="video/mp4">
-          Seu navegador não suporta o elemento de vídeo.
-        </video>
-      </figure>
-      {% endif %}
+      <div class="card">
+        <div class="card-body">
+          <blockquote class="blockquote mb-0">
+
+
+            {% if post[4].endswith(('jpg', 'jpeg', 'gif', 'png')) %}
+            {% set file_path = post[4].split('static', 1)[-1].lstrip('\\/') %}
+            <figure class="text-center">
+              <img width="320" height="320" src="{{ '../static/' ~ file_path }}" alt="">
+            </figure>
+            {% elif post[4].endswith('mp4') %}
+            {% set file_path = post[4].split('static', 1)[-1].lstrip('\\/') %}
+            <figure class="text-center">
+              <video width="320" height="320" controls>
+                <source src="{{ '../static/' ~ file_path }}" type="video/mp4">
+                Seu navegador não suporta o elemento de vídeo.
+              </video>
+            </figure>
+            {% endif %}
+
+          </blockquote>
+        </div>
+      </div>
+      <br>
+      </br>
       {% endif %}
 
       <div class="card">
@@ -39,85 +51,150 @@
         </div>
       </div>
 
-      <div class="container">
+      <br>
+      </br>
 
-        <br></br>
-
-        <h4> Autor: {{post[5]}}</h4>
-
-        <h4>Data: {{ post[11].split(' ')[0] }}</h4>
-
-        {% if post[6] or post[7] or post[8] %}
-        <div class="row mt-3">
-          {% if post[6] %}
-          <div class="col-md-4">
-            <figure class="text-center">
-              <img width="225" height="225" src="{{ '../static/' ~ post[6].split('static', 1)[-1].lstrip('\\/') }}"
-                alt="">
-            </figure>
-          </div>
-          {% endif %}
-
-          {% if post[7] %}
-          <div class="col-md-4">
-            <figure class="text-center">
-              <img width="225" height="225" src="{{ '../static/' ~ post[7].split('static', 1)[-1].lstrip('\\/') }}"
-                alt="">
-            </figure>
-          </div>
-          {% endif %}
-
-          {% if post[8] %}
-          <div class="col-md-4">
-            <figure class="text-center">
-              <img width="225" height="225" src="{{ '../static/' ~ post[8].split('static', 1)[-1].lstrip('\\/') }}"
-                alt="">
-            </figure>
-          </div>
-          {% endif %}
+      {% if post[6] or post[7] or post[8] %}
+      <div class="card">
+        <div class="card-header">
+          Snapshots
         </div>
-        {% endif %}
+        <div class="card-body">
+          <blockquote class="blockquote mb-0">
 
-        {% if post[9] %}
-        <p>Links: <a href="{{ post[9] }}">
-            {% if post[9] | length <= 25 %} {{ post[9] }} {% else %} {{ post[9][:25] + '...' }} {% endif %} </a>
-        </p>
-        {%endif%}
+            <div class="row mt-3">
+              {% if post[6].endswith(('jpg', 'jpeg', 'gif', 'png')) %}
+              <div class="col-md-4">
+                <figure class="text-center">
+                  <img width="225" height="225" src="{{ '../static/' ~ post[6].split('static', 1)[-1].lstrip('\\/') }}"
+                    alt="">
+                </figure>
+              </div>
+              {% endif %}
 
-        {% if post[10] %}
-        <p>downloads: {{post[10]}}</p>
-        {%endif%}
+              {% if post[7].endswith(('jpg', 'jpeg', 'gif', 'png')) %}
+              <div class="col-md-4">
+                <figure class="text-center">
+                  <img width="225" height="225" src="{{ '../static/' ~ post[7].split('static', 1)[-1].lstrip('\\/') }}"
+                    alt="">
+                </figure>
+              </div>
+              {% endif %}
+
+              {% if post[8].endswith(('jpg', 'jpeg', 'gif', 'png')) %}
+              <div class="col-md-4">
+                <figure class="text-center">
+                  <img width="225" height="225" src="{{ '../static/' ~ post[8].split('static', 1)[-1].lstrip('\\/') }}"
+                    alt="">
+                </figure>
+              </div>
+              {% endif %}
+            </div>
+        </div>
+        </blockquote>
       </div>
-      
+
+      <br>
+      </br>
+
+      {% endif %}
+
+      <div class="card">
+        <div class="card-header">
+          Autor
+        </div>
+        <div class="card-body">
+          <blockquote class="blockquote mb-0">
+            {{post[5]}}
+          </blockquote>
+        </div>
+      </div>
+
+      <br>
+      </br>
+
+      <div class="card">
+        <div class="card-header">
+          Data
+        </div>
+        <div class="card-body">
+          <blockquote class="blockquote mb-0">
+            {{ post[11].split(' ')[0] }}
+          </blockquote>
+        </div>
+      </div>
+
+      <br>
+      </br>
+
+      {% if post[9] %}
+      <div class="card">
+        <div class="card-header">
+          Links
+        </div>
+        <div class="card-body">
+          <blockquote class="blockquote mb-0">
+
+            <p><a href="{{ post[9] }}">
+                {% if post[9] | length <= 25 %} {{ post[9] }} {% else %} {{ post[9][:25] + '...' }} {% endif %} </a>
+            </p>
+
+          </blockquote>
+        </div>
+      </div>
+      <br>
+      </br>
+      {%endif%}
+
+
+      {% if post[10] %}
+      <div class="card">
+        <div class="card-header">
+          Downloads
+        </div>
+        <div class="card-body">
+          <blockquote class="blockquote mb-0">
+
+            <form method="post" action="/download">
+              <input type="hidden" name="download" value="{{ post[10] }}">
+              <button type="submit" class="btn btn-primary">
+                Download
+              </button>
+            </form>
+          </blockquote>
+        </div>
+      </div>
+      <br>
+      </br>
+      {%endif%}
+
+    </article>
     </div>
 
-  </article>
-
-  <div class="foot-con">
-    <footer id="footer">
-      <form method="post" action="/approved">
-        <input type="hidden" name="post_id" value="{{ post[0] }}">
-        <input type="hidden" name="title" value="{{ post[1] }}">
-        <input type="hidden" name="content" value="{{ post[2] }}">
-        <input type="hidden" name="thumbnail_url" value="{{ post[3] }}">
-        <input type="hidden" name="file_url" value="{{ post[4] }}">
-        <input type="hidden" name="author" value="{{ post[5] }}">
-        <input type="hidden" name="snapshots_1" value="{{ post[6] }}">
-        <input type="hidden" name="snapshots_2" value="{{ post[7] }}">
-        <input type="hidden" name="snapshots_3" value="{{ post[8] }}">
-        <input type="hidden" name="links" value="{{ post[9] }}">
-        <input type="hidden" name="download" value="{{ post[10] }}">
-        <input type="hidden" name="date" value="{{ post[11] }}">
-        <input type="hidden" name="subject" value="{{ post[12] }}">
-        <button type="submit" class="btn btn-success">Aprovar</button>
-      </form>
-      <form method="post" action="/delete">
-        <input type="hidden" name="form_id" value="{{ post[0] }}">
-        <button type="submit" class="btn btn-danger">Não Aprovar</button>
-      </form>
-    </footer>
-  </div>
-
+    <div class="foot-con">
+      <footer id="footer">
+        <form method="post" action="/approved">
+          <input type="hidden" name="post_id" value="{{ post[0] }}">
+          <input type="hidden" name="title" value="{{ post[1] }}">
+          <input type="hidden" name="content" value="{{ post[2] }}">
+          <input type="hidden" name="thumbnail_url" value="{{ post[3] }}">
+          <input type="hidden" name="file_url" value="{{ post[4] }}">
+          <input type="hidden" name="author" value="{{ post[5] }}">
+          <input type="hidden" name="snapshots_1" value="{{ post[6] }}">
+          <input type="hidden" name="snapshots_2" value="{{ post[7] }}">
+          <input type="hidden" name="snapshots_3" value="{{ post[8] }}">
+          <input type="hidden" name="links" value="{{ post[9] }}">
+          <input type="hidden" name="download" value="{{ post[10] }}">
+          <input type="hidden" name="date" value="{{ post[11] }}">
+          <input type="hidden" name="subject" value="{{ post[12] }}">
+          <button type="submit" class="btn btn-success">Aprovar</button>
+        </form>
+        <form method="post" action="/delete">
+          <input type="hidden" name="form_id" value="{{ post[0] }}">
+          <button type="submit" class="btn btn-danger">Não Aprovar</button>
+        </form>
+      </footer>
+    </div>
 
 </main>
 
