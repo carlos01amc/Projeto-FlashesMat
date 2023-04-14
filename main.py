@@ -42,6 +42,11 @@ class LogForm(FlaskForm):
 
 @app.route('/reset_password', methods=['GET', 'POST'])
 def reset_password():
+    conn = sqlite3.connect("database.db")
+    c = conn.cursor()
+    c.execute("SELECT * FROM posts")
+    posts = c.fetchall()
+    conn.close()
     if request.method == 'POST':
         email = request.form.get('email')
 
@@ -71,7 +76,7 @@ def reset_password():
         flash('Foi enviado um e-mail com instruções para redefinir a senha.')
         return redirect(url_for('login'))
 
-    return render_template('reset_password.html')
+    return render_template('reset_password.html',posts=posts)
 
 @app.route('/reset_password/<token>', methods=['GET', 'POST'])
 def reset_password_confirm(token):
@@ -80,6 +85,12 @@ def reset_password_confirm(token):
     c = conn.cursor()
     c.execute("SELECT * FROM usuarios WHERE reset_password_token=?", (token,))
     user = c.fetchone()
+    conn.close()
+
+    conn = sqlite3.connect("database.db")
+    c = conn.cursor()
+    c.execute("SELECT * FROM posts")
+    posts = c.fetchall()
     conn.close()
 
     if not user:
@@ -106,7 +117,7 @@ def reset_password_confirm(token):
         flash('A senha foi redefinida com sucesso.')
         return redirect(url_for('login'))
 
-    return render_template('reset_password_confirm.html', token=token)
+    return render_template('reset_password_confirm.html', token=token,posts=posts)
 
 @app.route("/login/", methods=['GET', 'POST'])
 def login():
@@ -121,6 +132,12 @@ def login():
         user = c.fetchone()
         conn.close()
 
+        conn = sqlite3.connect("database.db")
+        c = conn.cursor()
+        c.execute("SELECT * FROM posts")
+        posts = c.fetchall()
+        conn.close()
+
         if user:
             hash_senha = hashlib.sha256(senha.encode('utf-8')).hexdigest()
             if hash_senha == user[3]:
@@ -130,12 +147,17 @@ def login():
                 return redirect(url_for('home'))
             else:
                 flash('Senha incorreta', category='error')
-                return render_template('login.html', can_edit=False)
+                return render_template('login.html', can_edit=False,posts=posts)
         else:
             flash('E-mail não encontrado!', category='error')
-            return render_template('login.html', can_edit=False)
+            return render_template('login.html', can_edit=False,posts=posts)
     else:
-        return render_template('login.html', can_edit=False)
+        conn = sqlite3.connect("database.db")
+        c = conn.cursor()
+        c.execute("SELECT * FROM posts")
+        posts = c.fetchall()
+        conn.close()
+        return render_template('login.html', can_edit=False,posts=posts)
 
 
 @app.route('/logout/', methods=['GET', 'POST'])
@@ -152,7 +174,12 @@ def home():
     c.execute("SELECT * FROM forms")
     forms = c.fetchall()
     conn.close()
-    return render_template("index.html", can_edit=False,forms=forms)
+    conn = sqlite3.connect("database.db")
+    c = conn.cursor()
+    c.execute("SELECT * FROM posts")
+    posts = c.fetchall()
+    conn.close()
+    return render_template("index.html", can_edit=False,forms=forms,posts=posts)
 
 
 @app.route("/menu")
@@ -169,17 +196,6 @@ def menu():
     conn.close()
     return render_template("menu.html", can_edit=False, posts=posts,forms=forms)
 
-
-@app.route("/criadores/")
-def criadores():
-    conn = sqlite3.connect("database.db")
-    c = conn.cursor()
-    c.execute("SELECT * FROM forms")
-    forms = c.fetchall()
-    conn.close()
-    return render_template("creatores.html", can_edit=False,forms=forms)
-
-
 @app.route("/sabermais/")
 def sabe():
     conn = sqlite3.connect("database.db")
@@ -187,7 +203,12 @@ def sabe():
     c.execute("SELECT * FROM forms")
     forms = c.fetchall()
     conn.close()
-    return render_template("sabermais.html", can_edit=False,forms=forms)
+    conn = sqlite3.connect("database.db")
+    c = conn.cursor()
+    c.execute("SELECT * FROM posts")
+    posts = c.fetchall()
+    conn.close()
+    return render_template("sabermais.html", can_edit=False,forms=forms,posts=posts)
 
 
 @app.route("/new-post", methods=["GET", "POST"])
@@ -207,6 +228,7 @@ def new_post():
         links = request.form['links']
         download = request.form['download']
         file = request.files["file"]
+        subject = request.form['subject']
 
         if content:
             content = content
@@ -266,8 +288,8 @@ def new_post():
         c = conn.cursor()
 
         # Inserir dados na tabela de postagens
-        c.execute("INSERT INTO posts (title, content, thumbnail_url, file_url, author, snapshots_1, snapshots_2, snapshots_3, links, download) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-                  (title, content, thumbnail_url, file_url, author, snapshots_1_url, snapshots_2_url, snapshots_3_url, links, download))
+        c.execute("INSERT INTO posts (title, content, thumbnail_url, file_url, author, snapshots_1, snapshots_2, snapshots_3, links, download,subject) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                  (title, content, thumbnail_url, file_url, author, snapshots_1_url, snapshots_2_url, snapshots_3_url, links, download,subject))
 
         conn.commit()
         conn.close()
@@ -278,7 +300,12 @@ def new_post():
     c.execute("SELECT * FROM forms")
     forms = c.fetchall()
     conn.close()
-    return render_template("new_post.html", can_edit=False,forms=forms)
+    conn = sqlite3.connect("database.db")
+    c = conn.cursor()
+    c.execute("SELECT * FROM posts")
+    posts = c.fetchall()
+    conn.close()
+    return render_template("new_post.html", can_edit=False,forms=forms,posts=posts)
 
 
 @app.route("/post/<int:post_id>")
@@ -298,8 +325,13 @@ def post(post_id):
     c.execute("SELECT * FROM forms")
     forms = c.fetchall()
     conn.close()
+    conn = sqlite3.connect("database.db")
+    c = conn.cursor()
+    c.execute("SELECT * FROM posts")
+    posts = c.fetchall()
+    conn.close()
 
-    return render_template("post.html", post=post, can_edit=can_edit,forms=forms)
+    return render_template("post.html", post=post, can_edit=can_edit,forms=forms,posts=posts)
 
 
 @app.route("/edit-post/<int:post_id>", methods=["GET", "POST"])
@@ -338,6 +370,8 @@ def edit_post(post_id):
         links = request.form['links']
         download = request.form['download']
         file = request.files["file"]
+        subject = request.form['subject']
+
         if file:
             filename = secure_filename(file.filename)
             file_path = os.path.join(app.config["UPLOAD_FOLDER"], filename)
@@ -390,8 +424,8 @@ def edit_post(post_id):
                       (download, post_id))
 
          # Atualizar demais informações do post
-        c.execute("UPDATE posts SET title=?, content=?, thumbnail_url=?, author=?, snapshots_1=?, snapshots_2=?, snapshots_3=?, file_url=? WHERE id=?",
-                  (title, content, thumbnail_url, author, snapshots_1_url, snapshots_2_url, snapshots_3_url, file_url, post_id))
+        c.execute("UPDATE posts SET title=?, content=?, thumbnail_url=?, author=?, snapshots_1=?, snapshots_2=?, snapshots_3=?, file_url=?,subject=? WHERE id=?",
+                  (title, content, thumbnail_url, author, snapshots_1_url, snapshots_2_url, snapshots_3_url, file_url,subject, post_id))
         conn.commit()
         conn.close()
         flash("Post editado com sucesso", category='success')
@@ -401,7 +435,12 @@ def edit_post(post_id):
     c.execute("SELECT * FROM forms")
     forms = c.fetchall()
     conn.close()
-    return render_template("edit_post.html", post=post, can_edit=can_edit,forms=forms)
+    conn = sqlite3.connect("database.db")
+    c = conn.cursor()
+    c.execute("SELECT * FROM posts")
+    posts = c.fetchall()
+    conn.close()
+    return render_template("edit_post.html", post=post, can_edit=can_edit,forms=forms,posts=posts)
 
 
 @app.route('/register/', methods=['GET', 'POST'])
@@ -428,10 +467,20 @@ def register():
                   (nome, email, hash_senha))
         conn.commit()
         conn.close()
+        conn = sqlite3.connect("database.db")
+        c = conn.cursor()
+        c.execute("SELECT * FROM posts")
+        posts = c.fetchall()
+        conn.close()
         flash('Conta criada com sucesso', category='success')
-        return render_template('index.html')
+        return render_template('index.html',posts=posts)
     else:
-        return render_template('register.html')
+        conn = sqlite3.connect("database.db")
+        c = conn.cursor()
+        c.execute("SELECT * FROM posts")
+        posts = c.fetchall()
+        conn.close()
+        return render_template('register.html',posts=posts)
 
 
 @app.route('/new-form', methods=['GET', 'POST'])
@@ -451,6 +500,8 @@ def form():
         links = request.form['links']
         download = request.form['download']
         file = request.files["file"]
+        subject = request.form['subject']
+
         if content:
             content = content
         else:
@@ -508,8 +559,8 @@ def form():
         c = conn.cursor()
 
         # Inserir dados na tabela de postagens
-        c.execute("INSERT INTO forms (title, content, thumbnail_url, file_url, author, snapshots_1, snapshots_2, snapshots_3, links, download) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-                  (title, content, thumbnail_url, file_url, author, snapshots_1_url, snapshots_2_url, snapshots_3_url, links, download))
+        c.execute("INSERT INTO forms (title, content, thumbnail_url, file_url, author, snapshots_1, snapshots_2, snapshots_3, links, download,subject) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?,?, ?)",
+                  (title, content, thumbnail_url, file_url, author, snapshots_1_url, snapshots_2_url, snapshots_3_url, links, download,subject))
 
         conn.commit()
         conn.close()
@@ -521,8 +572,13 @@ def form():
     c.execute("SELECT * FROM forms")
     forms = c.fetchall()
     conn.close()
+    conn = sqlite3.connect("database.db")
+    c = conn.cursor()
+    c.execute("SELECT * FROM posts")
+    posts = c.fetchall()
+    conn.close()
 
-    return render_template('formulario.html',forms=forms)
+    return render_template('formulario.html',forms=forms,posts=posts)
 
 
 @app.route('/admin_page/<int:admin_id>', methods=['GET', 'POST'])
@@ -543,7 +599,13 @@ def admin(admin_id):
     forms = c.fetchall()
     conn.close()
 
-    return render_template('admin_page.html', usuario=usuario, forms=forms)
+    conn = sqlite3.connect("database.db")
+    c = conn.cursor()
+    c.execute("SELECT * FROM posts")
+    posts = c.fetchall()
+    conn.close()
+
+    return render_template('admin_page.html', usuario=usuario, forms=forms,posts=posts)
 
 
 @app.route("/form/<int:form_id>")
@@ -564,8 +626,13 @@ def forms(form_id):
     c.execute("SELECT * FROM forms")
     forms = c.fetchall()
     conn.close()
+    conn = sqlite3.connect("database.db")
+    c = conn.cursor()
+    c.execute("SELECT * FROM posts")
+    posts = c.fetchall()
+    conn.close()
 
-    return render_template("form.html", post=post, can_edit=False, forms=forms)
+    return render_template("form.html", post=post, can_edit=False, forms=forms,posts=posts)
 
 
 @app.route("/delete", methods=["POST"])
@@ -576,7 +643,12 @@ def delete():
     c.execute("DELETE FROM forms WHERE id=?", (form_id,))
     conn.commit()
     conn.close()
-    return redirect(url_for('home', can_edit=False))
+    conn = sqlite3.connect("database.db")
+    c = conn.cursor()
+    c.execute("SELECT * FROM posts")
+    posts = c.fetchall()
+    conn.close()
+    return redirect(url_for('home', can_edit=False,posts=posts))
 
 @app.route("/delete_post/<int:post_id>", methods=["POST"])
 def delete_post(post_id):
