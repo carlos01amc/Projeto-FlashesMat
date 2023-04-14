@@ -20,7 +20,7 @@ load_dotenv()
 
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
-app.config["UPLOAD_FOLDER"] = r'C:\Users\carlo\Desktop\UM\3ano2s\Projeto\static\upload'
+app.config["UPLOAD_FOLDER"] = r'C:\Users\PC\Desktop\UM\3ano2s\Projeto\static\upload'
 
 # Configuração do Flask-Mail
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
@@ -35,10 +35,12 @@ mail = Mail()
 # Inicializar a extensão Flask-Mail
 mail.init_app(app)
 
+
 class LogForm(FlaskForm):
     mail = EmailField("Email: ", validators=[Email(), DataRequired()])
     password = PasswordField("Password: ", validators=[DataRequired()])
     submit = SubmitField("login")
+
 
 @app.route('/reset_password', methods=['GET', 'POST'])
 def reset_password():
@@ -59,24 +61,28 @@ def reset_password():
 
         if user:
             # Gerar token de redefinição de senha
-            token = ''.join(random.choice(string.ascii_uppercase + string.ascii_lowercase + string.digits) for _ in range(32))
+            token = ''.join(random.choice(string.ascii_uppercase +
+                            string.ascii_lowercase + string.digits) for _ in range(32))
 
             # Atualizar o token de redefinição de senha na base de dados
             conn = sqlite3.connect('database.db')
             c = conn.cursor()
-            c.execute("UPDATE usuarios SET reset_password_token=? WHERE email=?", (token, email))
+            c.execute(
+                "UPDATE usuarios SET reset_password_token=? WHERE email=?", (token, email))
             conn.commit()
             conn.close()
 
             # Enviar e-mail de redefinição de senha
             msg = Message('Redefinição de senha', recipients=[email])
-            msg.html = render_template('reset_password_email.html', user=user, token=token)
+            msg.html = render_template(
+                'reset_password_email.html', user=user, token=token)
             mail.send(msg)
 
         flash('Foi enviado um e-mail com instruções para redefinir a senha.')
         return redirect(url_for('login'))
 
-    return render_template('reset_password.html',posts=posts)
+    return render_template('reset_password.html', posts=posts)
+
 
 @app.route('/reset_password/<token>', methods=['GET', 'POST'])
 def reset_password_confirm(token):
@@ -94,14 +100,14 @@ def reset_password_confirm(token):
     conn.close()
 
     if not user:
-        flash('Token inválido ou expirado.',category='error')
+        flash('Token inválido ou expirado.', category='error')
         return redirect(url_for('login'))
 
     if request.method == 'POST':
         password = request.form.get('password')
         confirm_password = request.form.get('confirm_password')
         if password != confirm_password:
-            flash('As senhas não coincidem. Tente novamente.',category='error')
+            flash('As senhas não coincidem. Tente novamente.', category='error')
             return redirect(url_for('reset_password_confirm', token=token))
 
         # Hash da nova senha
@@ -110,14 +116,16 @@ def reset_password_confirm(token):
         # Atualizar a senha e o token de redefinição de senha na base de dados
         conn = sqlite3.connect('database.db')
         c = conn.cursor()
-        c.execute("UPDATE usuarios SET senha=?, reset_password_token=? WHERE id=?", (password_hash, None, user[0]))
+        c.execute("UPDATE usuarios SET senha=?, reset_password_token=? WHERE id=?",
+                  (password_hash, None, user[0]))
         conn.commit()
         conn.close()
 
         flash('A senha foi redefinida com sucesso.')
         return redirect(url_for('login'))
 
-    return render_template('reset_password_confirm.html', token=token,posts=posts)
+    return render_template('reset_password_confirm.html', token=token, posts=posts)
+
 
 @app.route("/login/", methods=['GET', 'POST'])
 def login():
@@ -147,17 +155,17 @@ def login():
                 return redirect(url_for('home'))
             else:
                 flash('Senha incorreta', category='error')
-                return render_template('login.html', can_edit=False,posts=posts)
+                return render_template('login.html', can_edit=False, posts=posts)
         else:
             flash('E-mail não encontrado!', category='error')
-            return render_template('login.html', can_edit=False,posts=posts)
+            return render_template('login.html', can_edit=False, posts=posts)
     else:
         conn = sqlite3.connect("database.db")
         c = conn.cursor()
         c.execute("SELECT * FROM posts")
         posts = c.fetchall()
         conn.close()
-        return render_template('login.html', can_edit=False,posts=posts)
+        return render_template('login.html', can_edit=False, posts=posts)
 
 
 @app.route('/logout/', methods=['GET', 'POST'])
@@ -179,7 +187,7 @@ def home():
     c.execute("SELECT * FROM posts")
     posts = c.fetchall()
     conn.close()
-    return render_template("index.html", can_edit=False,forms=forms,posts=posts)
+    return render_template("index.html", can_edit=False, forms=forms, posts=posts)
 
 
 @app.route("/menu")
@@ -194,7 +202,8 @@ def menu():
     c.execute("SELECT * FROM forms")
     forms = c.fetchall()
     conn.close()
-    return render_template("menu.html", can_edit=False, posts=posts,forms=forms)
+    return render_template("menu.html", can_edit=False, posts=posts, forms=forms)
+
 
 @app.route("/sabermais/")
 def sabe():
@@ -208,7 +217,7 @@ def sabe():
     c.execute("SELECT * FROM posts")
     posts = c.fetchall()
     conn.close()
-    return render_template("sabermais.html", can_edit=False,forms=forms,posts=posts)
+    return render_template("sabermais.html", can_edit=False, forms=forms, posts=posts)
 
 
 @app.route("/new-post", methods=["GET", "POST"])
@@ -289,7 +298,7 @@ def new_post():
 
         # Inserir dados na tabela de postagens
         c.execute("INSERT INTO posts (title, content, thumbnail_url, file_url, author, snapshots_1, snapshots_2, snapshots_3, links, download,subject) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-                  (title, content, thumbnail_url, file_url, author, snapshots_1_url, snapshots_2_url, snapshots_3_url, links, download,subject))
+                  (title, content, thumbnail_url, file_url, author, snapshots_1_url, snapshots_2_url, snapshots_3_url, links, download, subject))
 
         conn.commit()
         conn.close()
@@ -305,7 +314,7 @@ def new_post():
     c.execute("SELECT * FROM posts")
     posts = c.fetchall()
     conn.close()
-    return render_template("new_post.html", can_edit=False,forms=forms,posts=posts)
+    return render_template("new_post.html", can_edit=False, forms=forms, posts=posts)
 
 
 @app.route("/post/<int:post_id>")
@@ -319,7 +328,7 @@ def post(post_id):
     can_edit = False
     if 'email' in session and session['tipo'] == 'admin':
         can_edit = True
-    
+
     conn = sqlite3.connect("database.db")
     c = conn.cursor()
     c.execute("SELECT * FROM forms")
@@ -331,7 +340,7 @@ def post(post_id):
     posts = c.fetchall()
     conn.close()
 
-    return render_template("post.html", post=post, can_edit=can_edit,forms=forms,posts=posts)
+    return render_template("post.html", post=post, can_edit=can_edit, forms=forms, posts=posts)
 
 
 @app.route("/edit-post/<int:post_id>", methods=["GET", "POST"])
@@ -425,7 +434,7 @@ def edit_post(post_id):
 
          # Atualizar demais informações do post
         c.execute("UPDATE posts SET title=?, content=?, thumbnail_url=?, author=?, snapshots_1=?, snapshots_2=?, snapshots_3=?, file_url=?,subject=? WHERE id=?",
-                  (title, content, thumbnail_url, author, snapshots_1_url, snapshots_2_url, snapshots_3_url, file_url,subject, post_id))
+                  (title, content, thumbnail_url, author, snapshots_1_url, snapshots_2_url, snapshots_3_url, file_url, subject, post_id))
         conn.commit()
         conn.close()
         flash("Post editado com sucesso", category='success')
@@ -440,7 +449,7 @@ def edit_post(post_id):
     c.execute("SELECT * FROM posts")
     posts = c.fetchall()
     conn.close()
-    return render_template("edit_post.html", post=post, can_edit=can_edit,forms=forms,posts=posts)
+    return render_template("edit_post.html", post=post, can_edit=can_edit, forms=forms, posts=posts)
 
 
 @app.route('/register/', methods=['GET', 'POST'])
@@ -473,14 +482,14 @@ def register():
         posts = c.fetchall()
         conn.close()
         flash('Conta criada com sucesso', category='success')
-        return render_template('index.html',posts=posts)
+        return render_template('index.html', posts=posts)
     else:
         conn = sqlite3.connect("database.db")
         c = conn.cursor()
         c.execute("SELECT * FROM posts")
         posts = c.fetchall()
         conn.close()
-        return render_template('register.html',posts=posts)
+        return render_template('register.html', posts=posts)
 
 
 @app.route('/new-form', methods=['GET', 'POST'])
@@ -560,11 +569,11 @@ def form():
 
         # Inserir dados na tabela de postagens
         c.execute("INSERT INTO forms (title, content, thumbnail_url, file_url, author, snapshots_1, snapshots_2, snapshots_3, links, download,subject) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?,?, ?)",
-                  (title, content, thumbnail_url, file_url, author, snapshots_1_url, snapshots_2_url, snapshots_3_url, links, download,subject))
+                  (title, content, thumbnail_url, file_url, author, snapshots_1_url, snapshots_2_url, snapshots_3_url, links, download, subject))
 
         conn.commit()
         conn.close()
-        
+
         flash("Post submetido com sucesso", category='success')
         return redirect("/")
     conn = sqlite3.connect("database.db")
@@ -578,7 +587,7 @@ def form():
     posts = c.fetchall()
     conn.close()
 
-    return render_template('formulario.html',forms=forms,posts=posts)
+    return render_template('formulario.html', forms=forms, posts=posts)
 
 
 @app.route('/admin_page/<int:admin_id>', methods=['GET', 'POST'])
@@ -605,7 +614,7 @@ def admin(admin_id):
     posts = c.fetchall()
     conn.close()
 
-    return render_template('admin_page.html', usuario=usuario, forms=forms,posts=posts)
+    return render_template('admin_page.html', usuario=usuario, forms=forms, posts=posts)
 
 
 @app.route("/form/<int:form_id>")
@@ -632,7 +641,7 @@ def forms(form_id):
     posts = c.fetchall()
     conn.close()
 
-    return render_template("form.html", post=post, can_edit=False, forms=forms,posts=posts)
+    return render_template("form.html", post=post, can_edit=False, forms=forms, posts=posts)
 
 
 @app.route("/delete", methods=["POST"])
@@ -648,7 +657,8 @@ def delete():
     c.execute("SELECT * FROM posts")
     posts = c.fetchall()
     conn.close()
-    return redirect(url_for('home', can_edit=False,posts=posts))
+    return redirect(url_for('home', can_edit=False, posts=posts))
+
 
 @app.route("/delete_post/<int:post_id>", methods=["POST"])
 def delete_post(post_id):
@@ -663,27 +673,29 @@ def delete_post(post_id):
 
 @app.route('/approved', methods=['POST'])
 def approved():
-    post_id = request.form['post_id']
-    title = request.form['title']
-    content = request.form['content']
-    thumbnail_url = request.form['thumbnail_url']
-    file_url = request.form['file_url']
-    author = request.form['author']
-    snapshots_1 = request.form['snapshots_1']
-    snapshots_2 = request.form['snapshots_2']
-    snapshots_3 = request.form['snapshots_3']
-    links = request.form['links']
-    download = request.form['download']
-    created_at = request.form['date']
+    if request.method == "POST":
+        post_id = request.form['post_id']
+        title = request.form['title']
+        content = request.form['content']
+        thumbnail_url = request.form['thumbnail_url']
+        file_url = request.form['file_url']
+        author = request.form['author']
+        snapshots_1 = request.form['snapshots_1']
+        snapshots_2 = request.form['snapshots_2']
+        snapshots_3 = request.form['snapshots_3']
+        links = request.form['links']
+        download = request.form['download']
+        created_at = request.form['date']
+        subject = request.form['subject']
 
     # Conectar com a base de dados
     conn = sqlite3.connect('database.db')
     cursor = conn.cursor()
 
     # Inserir os valores do formulário na base de dados "nice"
-    cursor.execute('''INSERT INTO posts(title, content, thumbnail_url, file_url, author, snapshots_1, snapshots_2, snapshots_3, links, download, created_at) 
-                      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)''',
-                   (title, content, thumbnail_url, file_url, author, snapshots_1, snapshots_2, snapshots_3, links, download, created_at))
+    cursor.execute('''INSERT INTO posts(title, content, thumbnail_url, file_url, author, snapshots_1, snapshots_2, snapshots_3, links, download, created_at, subject) 
+                      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)''',
+                   (title, content, thumbnail_url, file_url, author, snapshots_1, snapshots_2, snapshots_3, links, download, created_at, subject))
 
     # Remover os valores do formulário da base de dados "forms"
     cursor.execute('''DELETE FROM forms WHERE id = ?''', (post_id,))
@@ -693,6 +705,7 @@ def approved():
     conn.close()
 
     return redirect('/')
+
 
 if __name__ == "__main__":
     app.run(debug=True)
