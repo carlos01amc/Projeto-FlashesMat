@@ -1,4 +1,4 @@
-from flask import Flask, redirect, request, url_for, render_template, session, flash
+from flask import Flask, redirect, request, url_for, render_template, session, flash, send_file
 import os
 from flask_wtf import FlaskForm
 from wtforms import EmailField, SubmitField, PasswordField
@@ -235,9 +235,17 @@ def new_post():
         snapshots_2 = request.files['snapshots_2']
         snapshots_3 = request.files['snapshots_3']
         links = request.form['links']
-        download = request.form['download']
+        download = request.files['download']
         file = request.files["file"]
         subject = request.form['subject']
+
+        if download:
+            filename = secure_filename(download.filename)
+            download_path = os.path.join(app.config["UPLOAD_FOLDER"], filename)
+            download.save(download_path)
+            download_url = download_path
+        else:
+            download = None
 
         if content:
             content = content
@@ -298,7 +306,7 @@ def new_post():
 
         # Inserir dados na tabela de postagens
         c.execute("INSERT INTO posts (title, content, thumbnail_url, file_url, author, snapshots_1, snapshots_2, snapshots_3, links, download,subject) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-                  (title, content, thumbnail_url, file_url, author, snapshots_1_url, snapshots_2_url, snapshots_3_url, links, download, subject))
+                  (title, content, thumbnail_url, file_url, author, snapshots_1_url, snapshots_2_url, snapshots_3_url, links, download_url, subject))
 
         conn.commit()
         conn.close()
@@ -377,9 +385,17 @@ def edit_post(post_id):
         snapshots_2 = request.files['snapshots_2']
         snapshots_3 = request.files['snapshots_3']
         links = request.form['links']
-        download = request.form['download']
+        download = request.files['download']
         file = request.files["file"]
         subject = request.form['subject']
+
+        if download:
+            filename = secure_filename(download.filename)
+            download_path = os.path.join(app.config["UPLOAD_FOLDER"], filename)
+            download.save(download_path)
+            download_url = download_path
+        else:
+            download = None
 
         if file:
             filename = secure_filename(file.filename)
@@ -430,7 +446,7 @@ def edit_post(post_id):
         if download:
             # Atualizar links de download
             c.execute("UPDATE posts SET download=? WHERE id=?",
-                      (download, post_id))
+                      (download_url, post_id))
 
          # Atualizar demais informações do post
         c.execute("UPDATE posts SET title=?, content=?, thumbnail_url=?, author=?, snapshots_1=?, snapshots_2=?, snapshots_3=?, file_url=?,subject=? WHERE id=?",
@@ -507,14 +523,23 @@ def form():
         snapshots_2 = request.files['snapshots_2']
         snapshots_3 = request.files['snapshots_3']
         links = request.form['links']
-        download = request.form['download']
+        download = request.files['download']
         file = request.files["file"]
         subject = request.form['subject']
+
+        if download:
+            filename = secure_filename(download.filename)
+            download_path = os.path.join(app.config["UPLOAD_FOLDER"], filename)
+            download.save(download_path)
+            download_url = download_path
+        else:
+            download = None
 
         if content:
             content = content
         else:
             content = None
+
         if file:
             filename = secure_filename(file.filename)
             file_path = os.path.join(app.config["UPLOAD_FOLDER"], filename)
@@ -569,7 +594,7 @@ def form():
 
         # Inserir dados na tabela de postagens
         c.execute("INSERT INTO forms (title, content, thumbnail_url, file_url, author, snapshots_1, snapshots_2, snapshots_3, links, download,subject) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?,?, ?)",
-                  (title, content, thumbnail_url, file_url, author, snapshots_1_url, snapshots_2_url, snapshots_3_url, links, download, subject))
+                  (title, content, thumbnail_url, file_url, author, snapshots_1_url, snapshots_2_url, snapshots_3_url, links, download_url, subject))
 
         conn.commit()
         conn.close()
@@ -706,6 +731,13 @@ def approved():
 
     return redirect('/')
 
+@app.route('/download', methods = ['POST'])
+def download():
+    if request.method == "POST":
+        download = request.form['download']
+
+    caminho_arquivo = os.path.join(app.config["UPLOAD_FOLDER"], download)
+    return send_file(caminho_arquivo, as_attachment=True, download_name="AppUM")
 
 if __name__ == "__main__":
     app.run(debug=True)
