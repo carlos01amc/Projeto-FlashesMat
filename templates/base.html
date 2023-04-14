@@ -30,6 +30,11 @@
                         Cálculo e Análise
                     </a>
                     <div class="dropdown-menu active" aria-labelledby="navbarDropdownMenuLink">
+                        {% for post in posts %}
+                        {%if post[12] == 'calculo_analise' %}
+                            <a class="dropdown-item" href="/post/{{ post[0] }}">{{ post[1] }}</a>
+                        {%endif%}
+                        {% endfor %}
                     </div>
                 </li>
                 <li class="nav-item dropdown active">
@@ -38,6 +43,11 @@
                         Álgebra
                     </a>
                     <div class=" dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        {% for post in posts %}
+                        {%if post[12] == 'algebra' %}
+                            <a class="dropdown-item" href="/post/{{ post[0] }}">{{ post[1] }}</a>
+                        {%endif%}
+                        {% endfor %}
                     </div>
                 </li>
                 <li class="nav-item dropdown active">
@@ -46,7 +56,11 @@
                         Estatística
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-
+                        {% for post in posts %}
+                        {%if post[12] == 'estatistica' %}
+                            <a class="dropdown-item" href="/post/{{ post[0] }}">{{ post[1] }}</a>
+                        {%endif%}
+                        {% endfor %}
                     </div>
                 </li>
                 <li class="nav-item dropdown active">
@@ -55,7 +69,11 @@
                         Análise Numérica
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-
+                        {% for post in posts %}
+                        {%if post[12] == 'analise_numerica' %}
+                            <a class="dropdown-item" href="/post/{{ post[0] }}">{{ post[1] }}</a>
+                        {%endif%}
+                        {% endfor %}
                     </div>
                 </li>
                 <li class="nav-item active">
