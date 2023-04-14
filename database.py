@@ -18,6 +18,9 @@ c.execute('''CREATE TABLE IF NOT EXISTS posts
               download TEXT,
               created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP)''')
 
+
+c.execute('''ALTER TABLE posts ADD COLUMN subject TEXT''')
+
 # Crie a tabela de usuários com as colunas 'nome', 'email', 'senha' e 'tipo'
 c.execute('''CREATE TABLE IF NOT EXISTS usuarios 
              (id INTEGER PRIMARY KEY AUTOINCREMENT, 
@@ -42,6 +45,9 @@ c.execute('''CREATE TABLE IF NOT EXISTS forms
               links TEXT,
               download TEXT,
               created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP)''')
+
+c.execute('''ALTER TABLE forms ADD COLUMN subject TEXT''')
+
 
 # Adiciona um usuário admin à tabela de usuários
 hash_senha = hashlib.sha256('admin'.encode('utf-8')).hexdigest()
