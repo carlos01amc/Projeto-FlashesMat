@@ -16,7 +16,7 @@
         <div class="card-body">
           <blockquote class="blockquote mb-0">
 
-            
+
             {% if post[4].endswith(('jpg', 'jpeg', 'gif', 'png')) %}
             {% set file_path = post[4].split('static', 1)[-1].lstrip('\\/') %}
             <figure class="text-center">
@@ -31,14 +31,14 @@
               </video>
             </figure>
             {% endif %}
-            
+
           </blockquote>
         </div>
       </div>
       <br>
       </br>
       {% endif %}
-    
+
       <div class="card">
         <div class="card-header">
           Resumo
@@ -145,7 +145,7 @@
       </br>
       {%endif%}
 
-      
+
       {% if post[10] %}
       <div class="card">
         <div class="card-header">
@@ -166,7 +166,7 @@
       <br>
       </br>
       {%endif%}
-    
+
     </article>
   </div>
 </main>
