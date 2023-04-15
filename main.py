@@ -245,7 +245,7 @@ def new_post():
             download.save(download_path)
             download_url = download_path
         else:
-            download = None
+            download_url = None
 
         if content:
             content = content
@@ -370,11 +370,8 @@ def edit_post(post_id):
 
     thumbnail_url = post[3] if post[3] else None
     file_url = post[4] if post[4] else None
-    snapshots_1_url = post[6] if post[6] else None
-    snapshots_2_url = post[7] if post[7] else None
-    snapshots_3_url = post[8] if post[8] else None
     links = post[9] if post[9] else None
-    download = post[10] if post[10] else None
+    
 
     if request.method == "POST":
         title = request.form["title"]
@@ -395,7 +392,7 @@ def edit_post(post_id):
             download.save(download_path)
             download_url = download_path
         else:
-            download = None
+            download_url = None
 
         if file:
             filename = secure_filename(file.filename)
@@ -418,6 +415,8 @@ def edit_post(post_id):
                 app.config["UPLOAD_FOLDER"], filename)
             snapshots_1.save(snapshots_1_path)
             snapshots_1_url = snapshots_1_path
+        else:
+            snapshots_1_url = None
 
         if snapshots_2:
             # Salvar arquivo de snapshot 2 na pasta de uploads
@@ -426,6 +425,8 @@ def edit_post(post_id):
                 app.config["UPLOAD_FOLDER"], filename)
             snapshots_2.save(snapshots_2_path)
             snapshots_2_url = snapshots_2_path
+        else:
+            snapshots_2_url = None
 
         if snapshots_3:
             # Salvar arquivo de snapshot 3 na pasta de uploads
@@ -434,6 +435,8 @@ def edit_post(post_id):
                 app.config["UPLOAD_FOLDER"], filename)
             snapshots_3.save(snapshots_3_path)
             snapshots_3_url = snapshots_3_path
+        else:
+            snapshots_3_url = None
 
         # Conectar à base de dados e atualizar o post
         conn = sqlite3.connect("database.db")
@@ -443,14 +446,9 @@ def edit_post(post_id):
             # Atualizar links
             c.execute("UPDATE posts SET links=? WHERE id=?", (links, post_id))
 
-        if download:
-            # Atualizar links de download
-            c.execute("UPDATE posts SET download=? WHERE id=?",
-                      (download_url, post_id))
-
          # Atualizar demais informações do post
-        c.execute("UPDATE posts SET title=?, content=?, thumbnail_url=?, author=?, snapshots_1=?, snapshots_2=?, snapshots_3=?, file_url=?,subject=? WHERE id=?",
-                  (title, content, thumbnail_url, author, snapshots_1_url, snapshots_2_url, snapshots_3_url, file_url, subject, post_id))
+        c.execute("UPDATE posts SET title=?, content=?, thumbnail_url=?, author=?, snapshots_1=?, snapshots_2=?, snapshots_3=?, file_url=?,download=?,subject=? WHERE id=?",
+                  (title, content, thumbnail_url, author, snapshots_1_url, snapshots_2_url, snapshots_3_url, file_url, download_url,subject, post_id))
         conn.commit()
         conn.close()
         flash("Post editado com sucesso", category='success')
@@ -533,7 +531,7 @@ def form():
             download.save(download_path)
             download_url = download_path
         else:
-            download = None
+            download_url = None
 
         if content:
             content = content
@@ -736,8 +734,9 @@ def download():
     if request.method == "POST":
         download = request.form['download']
 
+    file = os.path.basename(download)
     caminho_arquivo = os.path.join(app.config["UPLOAD_FOLDER"], download)
-    return send_file(caminho_arquivo, as_attachment=True, download_name="AppUM")
+    return send_file(caminho_arquivo, as_attachment=True, download_name=file)
 
 if __name__ == "__main__":
     app.run(debug=True)
