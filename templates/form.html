@@ -63,15 +63,18 @@
           <blockquote class="blockquote mb-0">
 
             <div class="row mt-3">
+              {%if post[6]%}
               {% if post[6].endswith(('jpg', 'jpeg', 'gif', 'png')) %}
               <div class="col-md-4">
                 <figure class="text-center">
                   <img width="225" height="225" src="{{ '../static/' ~ post[6].split('static', 1)[-1].lstrip('\\/') }}"
                     alt="">
                 </figure>
-              </div>
+              </div>  
+              {% endif %}
               {% endif %}
 
+              {%if post[7]%}
               {% if post[7].endswith(('jpg', 'jpeg', 'gif', 'png')) %}
               <div class="col-md-4">
                 <figure class="text-center">
@@ -80,7 +83,9 @@
                 </figure>
               </div>
               {% endif %}
+              {% endif %}
 
+              {%if post[8]%}
               {% if post[8].endswith(('jpg', 'jpeg', 'gif', 'png')) %}
               <div class="col-md-4">
                 <figure class="text-center">
@@ -88,6 +93,7 @@
                     alt="">
                 </figure>
               </div>
+              {% endif %}
               {% endif %}
             </div>
         </div>
