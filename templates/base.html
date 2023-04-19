@@ -204,14 +204,12 @@
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML"></script>
-    <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js"></script>
+    <script src="static/js/tinymce/tinymce.min.js" referrerpolicy="origin"></script>
     <script>
         tinymce.init({
             selector: '#content',
-            plugins: 'advlist autolink lists link image charmap print preview anchor pageembed code preview',
-            toolbar: 'undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | link image | pageembed code preview',
-            submit_inline: true,
-            extended_valid_elements: 'script[type|src|async|defer|class],span[id|class|style]'
+            branding: false,
+            promotion: false
         });
     </script>
 
