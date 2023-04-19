@@ -105,7 +105,9 @@
         </div>
         <div class="card-body">
           <blockquote class="blockquote mb-0">
-            {{post[5]}}
+            {% for line in post[5].split('\n') %}
+            {{ line }}<br>
+            {% endfor %}
           </blockquote>
         </div>
       </div>
@@ -134,17 +136,17 @@
         </div>
         <div class="card-body">
           <blockquote class="blockquote mb-0">
+            {% for word in post[9].split() %}
+            <p><a href="{{ word }}">
 
-            <p><a href="{{ post[9] }}">
-                {% if post[9] | length <= 25 %} {{ post[9] }} {% else %} {{ post[9][:25] + '...' }} {% endif %} </a>
+                {% if word | length <= 40 %} {{ word }} {% else %} {{ word[:40] + '...' }} {% endif %} </a>
             </p>
-
+            {% endfor %}
           </blockquote>
         </div>
       </div>
       <br>
-      </br>
-      {%endif%}
+      {% endif %}
 
 
       {% if post[10] %}
