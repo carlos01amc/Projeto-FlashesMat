@@ -27,11 +27,11 @@
                 <li class="nav-item dropdown active">
                     <a class="nav-link dropdown-toggle nav-link-main" href="#" id="navbarDropdownMenuLink" role="button"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Cálculo e Análise
+                        Álgebra
                     </a>
-                    <div class="dropdown-menu active" aria-labelledby="navbarDropdownMenuLink">
+                    <div class=" dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                         {% for post in posts %}
-                        {%if post[12] == 'calculo_analise' %}
+                        {%if post[12] == 'algebra' %}
                             <a class="dropdown-item" href="/post/{{ post[0] }}">{{ post[1] }}</a>
                         {%endif%}
                         {% endfor %}
@@ -40,11 +40,24 @@
                 <li class="nav-item dropdown active">
                     <a class="nav-link dropdown-toggle nav-link-main" href="#" id="navbarDropdownMenuLink" role="button"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Álgebra
+                        Análise Numérica
                     </a>
-                    <div class=" dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                         {% for post in posts %}
-                        {%if post[12] == 'algebra' %}
+                        {%if post[12] == 'analise_numerica' %}
+                            <a class="dropdown-item" href="/post/{{ post[0] }}">{{ post[1] }}</a>
+                        {%endif%}
+                        {% endfor %}
+                    </div>
+                </li>
+                <li class="nav-item dropdown active">
+                    <a class="nav-link dropdown-toggle nav-link-main" href="#" id="navbarDropdownMenuLink" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Cálculo e Análise
+                    </a>
+                    <div class="dropdown-menu active" aria-labelledby="navbarDropdownMenuLink">
+                        {% for post in posts %}
+                        {%if post[12] == 'calculo_analise' %}
                             <a class="dropdown-item" href="/post/{{ post[0] }}">{{ post[1] }}</a>
                         {%endif%}
                         {% endfor %}
@@ -66,16 +79,43 @@
                 <li class="nav-item dropdown active">
                     <a class="nav-link dropdown-toggle nav-link-main" href="#" id="navbarDropdownMenuLink" role="button"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Análise Numérica
+                        Geometria
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                         {% for post in posts %}
-                        {%if post[12] == 'analise_numerica' %}
+                        {%if post[12] == 'geometria' %}
                             <a class="dropdown-item" href="/post/{{ post[0] }}">{{ post[1] }}</a>
                         {%endif%}
                         {% endfor %}
                     </div>
                 </li>
+                <li class="nav-item dropdown active">
+                    <a class="nav-link dropdown-toggle nav-link-main" href="#" id="navbarDropdownMenuLink" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Matemática Discreta
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        {% for post in posts %}
+                        {%if post[12] == 'matematica_discreta' %}
+                            <a class="dropdown-item" href="/post/{{ post[0] }}">{{ post[1] }}</a>
+                        {%endif%}
+                        {% endfor %}
+                    </div>
+                </li>
+                <li class="nav-item dropdown active">
+                    <a class="nav-link dropdown-toggle nav-link-main" href="#" id="navbarDropdownMenuLink" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Miscelânea
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        {% for post in posts %}
+                        {%if post[12] == 'miscelanea' %}
+                            <a class="dropdown-item" href="/post/{{ post[0] }}">{{ post[1] }}</a>
+                        {%endif%}
+                        {% endfor %}
+                    </div>
+                </li>
+                
                 <li class="nav-item active">
                     <a class="nav-link nav-link-main" href="/sabermais/">Sobre nós</a>
                 </li>
