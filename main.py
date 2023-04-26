@@ -38,10 +38,11 @@ class LogForm(FlaskForm):
     password = PasswordField("Password: ", validators=[DataRequired()])
     submit = SubmitField("login")
 
+DATABASE = '/home/carlos/projects/projeto-final/database.db'
 
 def get_db():
     if 'db' not in g:
-        g.db = sqlite3.connect('database.db')
+        g.db = sqlite3.connect(DATABASE)
         g.db.row_factory = sqlite3.Row
 
     return g.db
