@@ -17,9 +17,10 @@ load_dotenv()
 
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
-app.config["UPLOAD_FOLDER"] = r'/home/carlos/projects/projeto-final/static/upload'
+app.config["UPLOAD_FOLDER"] = r'/home/carlos/projects/projeto-final/static/upload2'
 
 # Configuração do Flask-Mail
+
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 587
 app.config['MAIL_USE_TLS'] = True
@@ -29,6 +30,7 @@ app.config['MAIL_DEFAULT_SENDER'] = 'portal.app.uminho@gmail.com'
 
 # Inicializar o objeto Mail
 mail = Mail()
+
 # Inicializar a extensão Flask-Mail
 mail.init_app(app)
 
@@ -38,7 +40,9 @@ class LogForm(FlaskForm):
     password = PasswordField("Password: ", validators=[DataRequired()])
     submit = SubmitField("login")
 
+
 DATABASE = '/home/carlos/projects/projeto-final/database.db'
+
 
 def get_db():
     if 'db' not in g:
@@ -479,7 +483,8 @@ def form():
     if 'email' not in session:
         flash("Acesso negado!", category='error')
         return redirect("/")
-        # Conectar à base de dados
+    
+    # Conectar à base de dados
     db = get_db()
     c = db.cursor()
 
@@ -665,7 +670,7 @@ def approved():
         db = get_db()
         c = db.cursor()
 
-    # Inserir os valores do formulário na base de dados "nice"
+    # Inserir os valores do formulário na base de dados "posts"
     c.execute('''INSERT INTO posts(title, content, thumbnail_url, file_url, author, snapshots_1, snapshots_2, snapshots_3, links, download, created_at, subject) 
                       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)''',
               (title, content, thumbnail_url, file_url, author, snapshots_1, snapshots_2, snapshots_3, links, download, created_at, subject))
