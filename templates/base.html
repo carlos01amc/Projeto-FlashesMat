@@ -16,7 +16,7 @@
             <img src="../static/images/logo_ciencias.jpg" width="60" height="60" alt="Logo da Faculdade de Ciências">
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" id="btn1">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -162,19 +162,17 @@
     {%endfor%}
     {%endif%}
     {%endwith%}
-</body>
 
-<body>
     {% if 'tipo' in session and session['tipo'] == 'admin' %}
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
             <a class="navbar-brand" href="">Admin</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-toggle="collapse"
+                data-target="#navbarAdmin" aria-controls="navbarAdmin" aria-expanded="false"
+                aria-label="Toggle navigation" id="btn2">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <div class="collapse navbar-collapse" id="navbarAdmin">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
                         <a class="nav-link" href="/admin_page/{{ session['id_user'] }}" class="notification">
