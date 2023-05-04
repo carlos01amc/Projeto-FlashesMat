@@ -1,71 +1,90 @@
-{% extends "base.html" %}
-
-{% block content %}
+{% extends "base.html" %} {% block content %}
 
 <div class="hero-section">
-    <div class="container">
-        <div class="hero-content">
-            <h1>Aprenda Matemática de Forma Divertida e Interativa</h1>
-            <p>Com nossa aplicação, você pode explorar conceitos matemáticos complexos de forma fácil e criativa.</p>
-            <div class="hero-buttons">
-                <a href="/menu" class="btn btn-primary">Comece Agora</a>
-            </div>
-        </div>
+  <div class="container">
+    <div class="hero-content">
+      <h1>Aprenda Matemática de Forma Divertida e Interativa</h1>
+      <p>
+        Com nossa aplicação, você pode explorar conceitos matemáticos complexos
+        de forma fácil e criativa.
+      </p>
+      <div class="hero-buttons">
+        <a href="/menu" class="btn btn-primary">Comece Agora</a>
+      </div>
     </div>
+  </div>
 </div>
 
 <div class="features-section">
-    <div class="container">
-        <h2 class="section-title">Recursos da Aplicação</h2>
-        <div class="row">
-            <div class="col-lg-4 col-md-6">
-                <div class="feature-box">
-                    <i class="fas fa-chalkboard"></i>
-                    <h3>Exemplos</h3>
-                    <p>Veja exemplos práticos de como aplicar os conceitos matemáticos em situações reais.</p>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6">
-                <div class="feature-box">
-                    <i class="fas fa-chart-bar"></i>
-                    <h3>Gráficos</h3>
-                    <p>Visualize funções e dados de forma gráfica para melhor compreensão dos conceitos.</p>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6">
-                <div class="feature-box">
-                    <i class="fas fa-gamepad"></i>
-                    <h3>Interatividade</h3>
-                    <p>Brinque com gráficos 2D e 3D e veja as suas tranformações acontecer em tempo real</p>
-                </div>
-            </div>
+  <div class="container">
+    <h2 class="section-title">Recursos da Aplicação</h2>
+    <div class="row">
+      <div class="col-lg-4 col-md-6">
+        <div class="feature-box">
+          <i class="fas fa-chalkboard"></i>
+          <h3>Exemplos</h3>
+          <p>
+            Veja exemplos práticos de como aplicar os conceitos matemáticos em
+            situações reais.
+          </p>
         </div>
-        <div class="image-container">
-            <img src="../static/images/logo_uminho.png" width="60" height="60" alt="Logo da Universidade do Minho">
-            <img src="../static/images/logo_ciencias.jpg" width="60" height="60" alt="Logo da Faculdade de Ciências">
+      </div>
+      <div class="col-lg-4 col-md-6">
+        <div class="feature-box">
+          <i class="fas fa-chart-bar"></i>
+          <h3>Gráficos</h3>
+          <p>
+            Visualize funções e dados de forma gráfica para melhor compreensão
+            dos conceitos.
+          </p>
         </div>
+      </div>
+      <div class="col-lg-4 col-md-6">
+        <div class="feature-box">
+          <i class="fas fa-gamepad"></i>
+          <h3>Interatividade</h3>
+          <p>
+            Brinque com gráficos 2D e 3D e veja as suas tranformações acontecer
+            em tempo real
+          </p>
+        </div>
+      </div>
     </div>
+    <div class="image-container">
+      <img
+        src="../static/images/logo_uminho.png"
+        width="60"
+        height="60"
+        alt="Logo da Universidade do Minho"
+      />
+      <img
+        src="../static/images/logo_ciencias.jpg"
+        width="60"
+        height="60"
+        alt="Logo da Faculdade de Ciências"
+      />
+    </div>
+  </div>
 </div>
 
 <div class="cta-section">
-    <div class="container">
-        <h2 class="section-title">Experimente a Nossa Aplicação Hoje Mesmo!</h2>
-        <p> Aplicação realizada no âmbito da disciplina final de lcc</p>
+  <div class="container">
+    <h2 class="section-title">Experimente a Nossa Aplicação Hoje Mesmo!</h2>
+    <p>Aplicação realizada no âmbito da disciplina final de lcc</p>
 
-        <a href="/sabermais" class="btn btn-primary">Saiba mais</a>
-    </div>
+    <a href="/sabermais" class="btn btn-primary">Saiba mais</a>
+  </div>
 </div>
 
 <style>
-    .image-container {
-        display: flex;
-        justify-content: center;
-    }
+  .image-container {
+    display: flex;
+    justify-content: center;
+  }
 
-    .features-section .row {
-        justify-content: center;
-    }
+  .features-section .row {
+    justify-content: center;
+  }
 </style>
-
 
 {% endblock %}
