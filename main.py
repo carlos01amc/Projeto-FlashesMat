@@ -66,6 +66,10 @@ def reset_password():
 
         c.execute("SELECT * FROM usuarios WHERE email=?", (email,))
         user = c.fetchone()
+        
+        if not user:
+            flash('Mail não registrado no site', category="error" )
+            return redirect(url_for('login'))
 
         if user:
             # Gerar token de redefinição de senha
