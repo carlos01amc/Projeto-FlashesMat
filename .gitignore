@@ -1,4 +1,4 @@
 .env
 .gitignore
 database.db
-upload2/
+upload/
