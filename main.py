@@ -17,7 +17,7 @@ load_dotenv()
 
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
-app.config["UPLOAD_FOLDER"] = r'/home/carlos/projects/projeto-final/static/upload2'
+app.config["UPLOAD_FOLDER"] = r'./static/upload'
 
 # Configuração do Flask-Mail
 
@@ -41,7 +41,7 @@ class LogForm(FlaskForm):
     submit = SubmitField("login")
 
 
-DATABASE = '/home/carlos/projects/projeto-final/database.db'
+DATABASE = 'database.db'
 
 
 def get_db():
