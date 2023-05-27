@@ -1,0 +1,416 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 12.1' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     17225,        406]
+NotebookOptionsPosition[     16702,        388]
+NotebookOutlinePosition[     17139,        405]
+CellTagsIndexPosition[     17096,        402]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[BoxData[
+ RowBox[{"Manipulate", "[", 
+  RowBox[{
+   RowBox[{"Module", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"insideRegion", ",", "region", ",", "x"}], "}"}], ",", 
+     RowBox[{
+      RowBox[{"insideRegion", "=", "True"}], ";", "\[IndentingNewLine]", 
+      RowBox[{"If", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"delta", ">", "epsilon"}], "||", 
+         RowBox[{"epsilon", ">", "3"}], "||", 
+         RowBox[{"delta", ">", "1"}], "||", 
+         RowBox[{"epsilon", "\[LessEqual]", "0"}], "||", 
+         RowBox[{"delta", "\[LessEqual]", "0"}]}], ",", 
+        RowBox[{
+        "Return", "[", 
+         "\"\<Os valores de \[Epsilon] e \[Delta] devem estar dentro do \
+intervalo (0, 3] e (0, 1] respectivamente.\>\"", "]"}]}], "]"}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"x", "=", 
+       RowBox[{"a", "-", "delta"}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{"While", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"x", "\[LessEqual]", 
+          RowBox[{"a", "+", "delta"}]}], "&&", "insideRegion"}], ",", 
+        RowBox[{
+         RowBox[{"insideRegion", "=", 
+          RowBox[{"insideRegion", "&&", 
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{"l", "-", "epsilon"}], "\[LessEqual]", 
+             RowBox[{"InterpolatingPolynomial", "[", 
+              RowBox[{"points", ",", "x"}], "]"}], "\[LessEqual]", 
+             RowBox[{"l", "+", "epsilon"}]}], ")"}]}]}], ";", 
+         "\[IndentingNewLine]", 
+         RowBox[{"x", "+=", "0.01"}], ";"}]}], "]"}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"region", "=", 
+       RowBox[{"If", "[", 
+        RowBox[{"insideRegion", ",", 
+         RowBox[{"RegionPlot", "[", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{"l", "-", "epsilon"}], "\[LessEqual]", "y", 
+              "\[LessEqual]", 
+              RowBox[{"l", "+", "epsilon"}]}], ")"}], "&&", 
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{"a", "-", "delta"}], "\[LessEqual]", "x", 
+              "\[LessEqual]", 
+              RowBox[{"a", "+", "delta"}]}], ")"}]}], ",", 
+           RowBox[{"{", 
+            RowBox[{"x", ",", 
+             RowBox[{"a", "-", "delta"}], ",", 
+             RowBox[{"a", "+", "delta"}]}], "}"}], ",", 
+           RowBox[{"{", 
+            RowBox[{"y", ",", 
+             RowBox[{"l", "-", "epsilon"}], ",", 
+             RowBox[{"l", "+", "epsilon"}]}], "}"}], ",", 
+           RowBox[{"PlotStyle", "\[Rule]", 
+            RowBox[{"Opacity", "[", 
+             RowBox[{"0.09", ",", "Green"}], "]"}]}]}], "]"}], ",", 
+         RowBox[{"RegionPlot", "[", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{"l", "-", "epsilon"}], "\[LessEqual]", "y", 
+              "\[LessEqual]", 
+              RowBox[{"l", "+", "epsilon"}]}], ")"}], "&&", 
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{"a", "-", "delta"}], "\[LessEqual]", "x", 
+              "\[LessEqual]", 
+              RowBox[{"a", "+", "delta"}]}], ")"}]}], ",", 
+           RowBox[{"{", 
+            RowBox[{"x", ",", 
+             RowBox[{"a", "-", "delta"}], ",", 
+             RowBox[{"a", "+", "delta"}]}], "}"}], ",", 
+           RowBox[{"{", 
+            RowBox[{"y", ",", 
+             RowBox[{"l", "-", "epsilon"}], ",", 
+             RowBox[{"l", "+", "epsilon"}]}], "}"}], ",", 
+           RowBox[{"PlotStyle", "\[Rule]", 
+            RowBox[{"Opacity", "[", 
+             RowBox[{"0.09", ",", "Blue"}], "]"}]}]}], "]"}]}], "]"}]}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"Show", "[", 
+       RowBox[{
+        RowBox[{"Plot", "[", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"l", "-", "epsilon"}], ",", "l", ",", 
+            RowBox[{"l", "+", "epsilon"}]}], "}"}], ",", 
+          RowBox[{"{", 
+           RowBox[{"i", ",", "0", ",", "3"}], "}"}], ",", 
+          RowBox[{"Ticks", "\[Rule]", 
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"{", 
+              RowBox[{
+               RowBox[{"{", 
+                RowBox[{"a", ",", "\"\<a\>\""}], "}"}], ",", 
+               RowBox[{"{", 
+                RowBox[{
+                 RowBox[{"a", "-", "delta"}], ",", "\"\<a-\[Delta]\>\""}], 
+                "}"}], ",", 
+               RowBox[{"{", 
+                RowBox[{
+                 RowBox[{"a", "+", "delta"}], ",", "\"\<a+\[Delta]\>\""}], 
+                "}"}]}], "}"}], ",", 
+             RowBox[{"{", 
+              RowBox[{
+               RowBox[{"{", 
+                RowBox[{"l", ",", "\"\<l\>\""}], "}"}], ",", 
+               RowBox[{"{", 
+                RowBox[{
+                 RowBox[{"l", "-", "epsilon"}], ",", "\"\<l-\[Epsilon]\>\""}],
+                 "}"}], ",", 
+               RowBox[{"{", 
+                RowBox[{
+                 RowBox[{"l", "+", "epsilon"}], ",", "\"\<l+\[Epsilon]\>\""}],
+                 "}"}]}], "}"}]}], "}"}]}], ",", 
+          RowBox[{"PlotRange", "\[Rule]", 
+           RowBox[{"{", 
+            RowBox[{"0", ",", "10"}], "}"}]}], ",", 
+          RowBox[{"Filling", "\[Rule]", 
+           RowBox[{"{", 
+            RowBox[{"1", "\[Rule]", 
+             RowBox[{"{", "3", "}"}]}], "}"}]}], ",", 
+          RowBox[{"PlotStyle", "\[Rule]", 
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"{", 
+              RowBox[{"Orange", ",", "Dashed"}], "}"}], ",", 
+             RowBox[{"{", 
+              RowBox[{"Orange", ",", "Thin"}], "}"}], ",", 
+             RowBox[{"{", 
+              RowBox[{"Orange", ",", "Dashed"}], "}"}]}], "}"}]}], ",", 
+          RowBox[{"GridLines", "\[Rule]", 
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"{", 
+              RowBox[{
+               RowBox[{"{", 
+                RowBox[{
+                 RowBox[{"a", "-", "delta"}], ",", 
+                 RowBox[{"Directive", "[", 
+                  RowBox[{"Blue", ",", "Dashed", ",", 
+                   RowBox[{"Thickness", "[", "0.004", "]"}]}], "]"}]}], "}"}],
+                ",", 
+               RowBox[{"{", 
+                RowBox[{"a", ",", 
+                 RowBox[{"Directive", "[", 
+                  RowBox[{"Blue", ",", "Thin"}], "]"}]}], "}"}], ",", 
+               RowBox[{"{", 
+                RowBox[{
+                 RowBox[{"a", "+", "delta"}], ",", 
+                 RowBox[{"Directive", "[", 
+                  RowBox[{"Blue", ",", "Dashed", ",", 
+                   RowBox[{"Thickness", "[", "0.004", "]"}]}], "]"}]}], 
+                "}"}]}], "}"}], ",", 
+             RowBox[{"{", "}"}]}], "}"}]}], ",", 
+          RowBox[{"Prolog", "\[Rule]", 
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"{", 
+              RowBox[{
+               RowBox[{"Opacity", "[", 
+                RowBox[{"0.09", ",", "Cyan"}], "]"}], ",", 
+               RowBox[{"Rectangle", "[", 
+                RowBox[{
+                 RowBox[{"{", 
+                  RowBox[{
+                   RowBox[{"a", "-", "delta"}], ",", "0"}], "}"}], ",", 
+                 RowBox[{"{", 
+                  RowBox[{
+                   RowBox[{"a", "+", "delta"}], ",", "10"}], "}"}]}], "]"}]}],
+               "}"}], ",", 
+             RowBox[{"{", 
+              RowBox[{
+               RowBox[{"PointSize", "[", "0.015", "]"}], ",", "Red", ",", 
+               RowBox[{"Point", "[", 
+                RowBox[{"{", 
+                 RowBox[{"a", ",", "l"}], "}"}], "]"}]}], "}"}]}], "}"}]}]}], 
+         "]"}], ",", 
+        RowBox[{"Plot", "[", 
+         RowBox[{
+          RowBox[{"InterpolatingPolynomial", "[", 
+           RowBox[{"points", ",", "x"}], "]"}], ",", 
+          RowBox[{"{", 
+           RowBox[{"x", ",", "0", ",", "3"}], "}"}]}], "]"}], ",", "region"}],
+        "]"}]}]}], "]"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"l", ",", "7.72"}], "}"}], ",", "2", ",", "8"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"a", ",", "1.666"}], "}"}], ",", "0.25", ",", "1.75"}], "}"}], 
+   ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"epsilon", ",", "1.8", ",", "\"\<\[Epsilon]\>\""}], "}"}], ",", 
+     "0.1", ",", "3", ",", "0.1"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"delta", ",", "0.7", ",", "\"\<\[Delta]\>\""}], "}"}], ",", 
+     "0.05", ",", "1", ",", "0.05"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"points", ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"3.062499872395833", ",", "0.8200000000000001"}], "}"}], 
+         ",", 
+         RowBox[{"{", 
+          RowBox[{"2.4600000000000004", ",", "7.42"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"0.35000000000000003", ",", "4.96"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"1.31", ",", "7.640000000000001"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"0.74", ",", "5.28"}], "}"}]}], "}"}]}], "}"}], ",", 
+     RowBox[{"ControlType", "\[Rule]", "Locator"}]}], "}"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.8930655560992727`*^9, 3.8930655600253*^9}, {
+   3.893066241839467*^9, 3.8930662798412743`*^9}, {3.8930663567969685`*^9, 
+   3.8930663900082254`*^9}, 3.893066499837425*^9, 3.8930674609734163`*^9},
+ CellLabel->"In[32]:=",ExpressionUUID->"f96c3ba8-e585-410a-b8f9-8642ed152b07"],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   DynamicModuleBox[{$CellContext`a$$ = 1.666, $CellContext`delta$$ = 
+    0.7, $CellContext`epsilon$$ = 1.8, $CellContext`l$$ = 
+    7.72, $CellContext`points$$ = {{3.062499872395833, 0.8200000000000001}, {
+    2.4600000000000004`, 7.42}, {0.35000000000000003`, 4.96}, {1.31, 
+    7.640000000000001}, {0.74, 5.28}}, Typeset`show$$ = True, 
+    Typeset`bookmarkList$$ = {}, Typeset`bookmarkMode$$ = "Menu", 
+    Typeset`animator$$, Typeset`animvar$$ = 1, Typeset`name$$ = 
+    "\"untitled\"", Typeset`specs$$ = {{{
+       Hold[$CellContext`l$$], 7.72}, 2, 8}, {{
+       Hold[$CellContext`a$$], 1.666}, 0.25, 1.75}, {{
+       Hold[$CellContext`epsilon$$], 1.8, "\[Epsilon]"}, 0.1, 3, 0.1}, {{
+       Hold[$CellContext`delta$$], 0.7, "\[Delta]"}, 0.05, 1, 0.05}, {{
+       Hold[$CellContext`points$$], {{3.062499872395833, 
+       0.8200000000000001}, {2.4600000000000004`, 7.42}, {
+       0.35000000000000003`, 4.96}, {1.31, 7.640000000000001}, {0.74, 
+       5.28}}}}}, Typeset`size$$ = {360., {114., 117.60170238554991`}}, 
+    Typeset`update$$ = 0, Typeset`initDone$$, Typeset`skipInitDone$$ = True}, 
+    DynamicBox[Manipulate`ManipulateBoxes[
+     1, StandardForm, 
+      "Variables" :> {$CellContext`a$$ = 1.666, $CellContext`delta$$ = 
+        0.7, $CellContext`epsilon$$ = 1.8, $CellContext`l$$ = 
+        7.72, $CellContext`points$$ = {{3.062499872395833, 
+         0.8200000000000001}, {2.4600000000000004`, 7.42}, {
+         0.35000000000000003`, 4.96}, {1.31, 7.640000000000001}, {0.74, 
+         5.28}}}, "ControllerVariables" :> {}, 
+      "OtherVariables" :> {
+       Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+        Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+        Typeset`specs$$, Typeset`size$$, Typeset`update$$, Typeset`initDone$$,
+         Typeset`skipInitDone$$}, "Body" :> 
+      Module[{$CellContext`insideRegion$, $CellContext`region$, \
+$CellContext`x$}, $CellContext`insideRegion$ = True; If[
+          
+          Or[$CellContext`delta$$ > $CellContext`epsilon$$, \
+$CellContext`epsilon$$ > 3, $CellContext`delta$$ > 1, $CellContext`epsilon$$ <= 
+           0, $CellContext`delta$$ <= 0], 
+          Return[
+          "Os valores de \[Epsilon] e \[Delta] devem estar dentro do \
+intervalo (0, 3] e (0, 1] respectivamente."]]; $CellContext`x$ = \
+$CellContext`a$$ - $CellContext`delta$$; While[
+          
+          And[$CellContext`x$ <= $CellContext`a$$ + $CellContext`delta$$, \
+$CellContext`insideRegion$], $CellContext`insideRegion$ = 
+           And[$CellContext`insideRegion$, $CellContext`l$$ - \
+$CellContext`epsilon$$ <= 
+             InterpolatingPolynomial[$CellContext`points$$, $CellContext`x$] <= \
+$CellContext`l$$ + $CellContext`epsilon$$]; AddTo[$CellContext`x$, 0.01]; 
+          Null]; $CellContext`region$ = If[$CellContext`insideRegion$, 
+           RegionPlot[
+            
+            And[$CellContext`l$$ - $CellContext`epsilon$$ <= $CellContext`y <= \
+$CellContext`l$$ + $CellContext`epsilon$$, $CellContext`a$$ - \
+$CellContext`delta$$ <= $CellContext`x$ <= $CellContext`a$$ + \
+$CellContext`delta$$], {$CellContext`x$, $CellContext`a$$ - \
+$CellContext`delta$$, $CellContext`a$$ + $CellContext`delta$$}, \
+{$CellContext`y, $CellContext`l$$ - $CellContext`epsilon$$, $CellContext`l$$ + \
+$CellContext`epsilon$$}, PlotStyle -> Opacity[0.09, Green]], 
+           RegionPlot[
+            
+            And[$CellContext`l$$ - $CellContext`epsilon$$ <= $CellContext`y <= \
+$CellContext`l$$ + $CellContext`epsilon$$, $CellContext`a$$ - \
+$CellContext`delta$$ <= $CellContext`x$ <= $CellContext`a$$ + \
+$CellContext`delta$$], {$CellContext`x$, $CellContext`a$$ - \
+$CellContext`delta$$, $CellContext`a$$ + $CellContext`delta$$}, \
+{$CellContext`y, $CellContext`l$$ - $CellContext`epsilon$$, $CellContext`l$$ + \
+$CellContext`epsilon$$}, PlotStyle -> Opacity[0.09, Blue]]]; Show[
+          
+          Plot[{$CellContext`l$$ - $CellContext`epsilon$$, $CellContext`l$$, \
+$CellContext`l$$ + $CellContext`epsilon$$}, {$CellContext`i, 0, 3}, 
+           Ticks -> {{{$CellContext`a$$, 
+               "a"}, {$CellContext`a$$ - $CellContext`delta$$, 
+               "a-\[Delta]"}, {$CellContext`a$$ + $CellContext`delta$$, 
+               "a+\[Delta]"}}, {{$CellContext`l$$, 
+               "l"}, {$CellContext`l$$ - $CellContext`epsilon$$, 
+               "l-\[Epsilon]"}, {$CellContext`l$$ + $CellContext`epsilon$$, 
+               "l+\[Epsilon]"}}}, PlotRange -> {0, 10}, Filling -> {1 -> {3}},
+            PlotStyle -> {{Orange, Dashed}, {Orange, Thin}, {Orange, Dashed}},
+            GridLines -> {{{$CellContext`a$$ - $CellContext`delta$$, 
+               Directive[Blue, Dashed, 
+                Thickness[0.004]]}, {$CellContext`a$$, 
+               Directive[
+               Blue, Thin]}, {$CellContext`a$$ + $CellContext`delta$$, 
+               Directive[Blue, Dashed, 
+                Thickness[0.004]]}}, {}}, Prolog -> {{
+              Opacity[0.09, Cyan], 
+              
+              Rectangle[{$CellContext`a$$ - $CellContext`delta$$, 
+                0}, {$CellContext`a$$ + $CellContext`delta$$, 10}]}, {
+              PointSize[0.015], Red, 
+              Point[{$CellContext`a$$, $CellContext`l$$}]}}], 
+          Plot[
+           
+           InterpolatingPolynomial[$CellContext`points$$, $CellContext`x$], \
+{$CellContext`x$, 0, 3}], $CellContext`region$]], 
+      "Specifications" :> {{{$CellContext`l$$, 7.72}, 2, 
+         8}, {{$CellContext`a$$, 1.666}, 0.25, 
+         1.75}, {{$CellContext`epsilon$$, 1.8, "\[Epsilon]"}, 0.1, 3, 
+         0.1}, {{$CellContext`delta$$, 0.7, "\[Delta]"}, 0.05, 1, 
+         0.05}, {{$CellContext`points$$, {{3.062499872395833, 
+          0.8200000000000001}, {2.4600000000000004`, 7.42}, {
+          0.35000000000000003`, 4.96}, {1.31, 7.640000000000001}, {0.74, 
+          5.28}}}, ControlType -> Locator}}, "Options" :> {}, 
+      "DefaultOptions" :> {}],
+     ImageSizeCache->{414., {193.3, 198.7}},
+     SingleEvaluation->True],
+    Deinitialization:>None,
+    DynamicModuleValues:>{},
+    SynchronousInitialization->True,
+    UndoTrackedVariables:>{Typeset`show$$, Typeset`bookmarkMode$$},
+    UnsavedVariables:>{Typeset`initDone$$},
+    UntrackedVariables:>{Typeset`size$$}], "Manipulate",
+   Deployed->True,
+   StripOnInput->False],
+  Manipulate`InterpretManipulate[1]]], "Output",
+ CellChangeTimes->{
+  3.893065562999408*^9, {3.8930662460416765`*^9, 3.8930662849995103`*^9}, 
+   3.893066361867958*^9, 3.893066504204327*^9, 3.8930674635363045`*^9, {
+   3.8930679208513346`*^9, 3.8930679251956873`*^9}, 3.893068193577031*^9},
+ CellLabel->"Out[32]=",ExpressionUUID->"b70c8bdf-bf13-4cb9-b3d3-51c64f0a897c"]
+}, Open  ]]
+},
+WindowSize->{1152., 585.6},
+WindowMargins->{{
+  Automatic, -5.399999999999864}, {-5.399999999999977, Automatic}},
+FrontEndVersion->"12.1 for Microsoft Windows (64-bit) (June 19, 2020)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"a36bd51b-a811-4b95-92eb-f84ef8621154"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 9420, 240, 663, "Input",ExpressionUUID->"f96c3ba8-e585-410a-b8f9-8642ed152b07"],
+Cell[10003, 264, 6683, 121, 411, "Output",ExpressionUUID->"b70c8bdf-bf13-4cb9-b3d3-51c64f0a897c"]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)
+

@@ -1,0 +1,369 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 13.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     15309,        361]
+NotebookOptionsPosition[     14467,        338]
+NotebookOutlinePosition[     14908,        355]
+CellTagsIndexPosition[     14865,        352]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Exemplo de Runge", "Subsection",
+ CellChangeTimes->{{3.88740183812525*^9, 3.8874018471942034`*^9}, {
+  3.8927279347593718`*^9, 3.8927279371469345`*^9}, {3.8929819175586405`*^9, 
+  3.892981921245926*^9}, {3.893138132483698*^9, 
+  3.8931381342116404`*^9}},ExpressionUUID->"647bfb38-57e0-490e-8310-\
+b4efc967064a"],
+
+Cell[TextData[{
+ "\nExistem fun\[CCedilla]\[OTilde]es para as quais a interpola\[CCedilla]\
+\[ATilde]o num n\[UAcute]mero crescente de ",
+ StyleBox["pontos equidistantes",
+  FontWeight->"Bold"],
+ " n\[ATilde]o produz uma sequ\[EHat]ncia de polin\[OAcute]mios convergindo \
+uniformemente para a fun\[CCedilla]\[ATilde]o. Um exemplo cl\[AAcute]ssico \
+\[EAcute] a chamada ",
+ StyleBox["fun\[CCedilla]\[ATilde]o de Runge",
+  FontWeight->"Bold"],
+ ", definida em [-1,1] por\n",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    RowBox[{"f", "(", "x", ")"}], "=", 
+    FractionBox["1", 
+     RowBox[{"1", "+", 
+      RowBox[{"25", 
+       SuperscriptBox["x", "2"]}]}]]}], TraditionalForm]],ExpressionUUID->
+  "9060c7e9-0b1d-421c-864c-a8c173a8d112"],
+ ".\nPode provar-se que se  ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["p", 
+    RowBox[{"n", "-", "1"}]], TraditionalForm]],ExpressionUUID->
+  "0aadc7b3-11e4-4c79-af0d-bde26bfaa52f"],
+ " for o polin\[OAcute]mio de grau n\[ATilde]o superior a n-1, interpolador \
+de f em n  pontos igualmente espa\[CCedilla]ados no intervalo $[-1,1]$, ent\
+\[ATilde]o sequ\[EHat]ncia de polin\[OAcute]mios ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox[
+    RowBox[{"(", 
+     SubscriptBox["p", "n"], ")"}], 
+    RowBox[{"n", " "}]], TraditionalForm]],ExpressionUUID->
+  "04eb5a2f-351e-4856-b770-0cd0e9dbd440"],
+ " n\[ATilde]o converge uniformemente para f no intervalo [-1,1], tendo-se\n\t\
+\t",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    RowBox[{
+     RowBox[{
+      UnderscriptBox["\[Limit]", 
+       RowBox[{"n", "\[Rule]", "\[Infinity]"}]], 
+      UnderscriptBox["max", 
+       RowBox[{"x", "\[Element]", 
+        RowBox[{"[", 
+         RowBox[{
+          RowBox[{"-", "1"}], ",", "1"}], "]"}]}]]}], "|", 
+     RowBox[{
+      RowBox[{"f", "(", "x", ")"}], "-", 
+      RowBox[{
+       SubscriptBox["p", "n"], "(", "x", ")"}]}], "|"}], "=", 
+    RowBox[{"+", "\[Infinity]"}]}], TraditionalForm]],ExpressionUUID->
+  "9453c165-b5a7-42e6-a3fd-5fe490fb0c8c"]
+}], "Text",
+ CellChangeTimes->{{3.8931381370661592`*^9, 3.8931381786698046`*^9}, {
+   3.893138230841051*^9, 3.893138564761768*^9}, {3.8931386596811295`*^9, 
+   3.8931386705147443`*^9}, {3.8931387796715355`*^9, 3.893138868322448*^9}, 
+   3.8931391888281093`*^9, {3.893154200580533*^9, 
+   3.8931542070037904`*^9}},ExpressionUUID->"bf8bc6c9-1df7-47e9-822e-\
+2c8539cec7ff"],
+
+Cell[TextData[{
+ "Este problema desaparece se forem usados como n\[OAcute]s de interpola\
+\[CCedilla]\[ATilde]o, os chamados ",
+ StyleBox["n\[OAcute]s de Chebyshev\n",
+  FontWeight->"Bold"],
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SubscriptBox["x", "k"], "="}], TraditionalForm]],ExpressionUUID->
+  "ba2ee5e8-cf85-4027-87d8-aa991eb255d6"],
+ "cos ",
+ Cell[BoxData[
+  FormBox[
+   FractionBox[
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{"2", "k"}], "-", "1"}], ")"}], "\[Pi]"}], 
+    RowBox[{"2", "n"}]], TraditionalForm]],ExpressionUUID->
+  "48dffc86-f3a5-428c-9064-2282f3f70f91"],
+ ";  k=1, ..,n\ne calculando o polin\[OAcute]mio interpolador de grau <=n-1 \
+interpolador da fun\[CCedilla]\[ATilde]o neste n pontos."
+}], "Text",
+ CellChangeTimes->{{3.8931388755350904`*^9, 3.8931388767311573`*^9}, {
+  3.8931389559818273`*^9, 3.8931389993651047`*^9}, {3.8931390294213204`*^9, 
+  3.893139040128893*^9}, {3.893139073346414*^9, 3.8931392020642495`*^9}, {
+  3.893154217832118*^9, 
+  3.8931542249818206`*^9}},ExpressionUUID->"b7802367-78f5-4068-b86b-\
+26fd22d8d7b9"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Manipulate", "[", "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{
+     RowBox[{
+      RowBox[{"a", "=", 
+       RowBox[{"-", "1"}]}], ";", 
+      RowBox[{"b", "=", "1"}], ";", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"f", "[", "x_", "]"}], "=", 
+       FractionBox["1", 
+        RowBox[{"1", "+", 
+         RowBox[{"25", 
+          SuperscriptBox["x", "2"]}]}]]}], ";", "\[IndentingNewLine]", 
+      RowBox[{"pontos1", "=", 
+       RowBox[{"Range", "[", 
+        RowBox[{"a", ",", "b", ",", 
+         RowBox[{
+          RowBox[{"(", 
+           RowBox[{"b", "-", "a"}], ")"}], "/", 
+          RowBox[{"(", 
+           RowBox[{"n", "-", "1"}], ")"}]}]}], "]"}]}], ";"}], "//", "N"}], 
+    ";", "\[IndentingNewLine]", 
+    RowBox[{"pontos2", "=", 
+     RowBox[{
+      RowBox[{"Table", "[", 
+       RowBox[{
+        RowBox[{
+         FractionBox[
+          RowBox[{"a", "+", "b"}], "2"], "+", 
+         RowBox[{
+          FractionBox["1", "2"], 
+          RowBox[{"(", 
+           RowBox[{"b", "-", "a"}], ")"}], 
+          RowBox[{"Cos", "[", 
+           RowBox[{
+            FractionBox[
+             RowBox[{
+              RowBox[{"2", "k"}], "-", "1"}], 
+             RowBox[{"2", "n"}]], "Pi"}], "]"}]}]}], ",", 
+        RowBox[{"{", 
+         RowBox[{"k", ",", "1", ",", "n"}], "}"}]}], "]"}], "//", "N"}]}], 
+    ";", "\[IndentingNewLine]", 
+    RowBox[{"l1", "=", 
+     RowBox[{"Transpose", "[", 
+      RowBox[{"{", 
+       RowBox[{"pontos1", ",", 
+        RowBox[{"f", "[", "pontos1", "]"}]}], "}"}], "]"}]}], ";", 
+    "\[IndentingNewLine]", 
+    RowBox[{"l2", "=", 
+     RowBox[{"Transpose", "[", 
+      RowBox[{"{", 
+       RowBox[{"pontos2", ",", 
+        RowBox[{"f", "[", "pontos2", "]"}]}], "}"}], "]"}]}], ";", 
+    "\[IndentingNewLine]", "\[IndentingNewLine]", 
+    RowBox[{"Show", "[", 
+     RowBox[{
+      RowBox[{"Plot", "[", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"f", "[", "x", "]"}], ",", 
+          RowBox[{"InterpolatingPolynomial", "[", 
+           RowBox[{"l1", ",", "x"}], "]"}], ",", 
+          RowBox[{"InterpolatingPolynomial", "[", 
+           RowBox[{"l2", ",", "x"}], "]"}]}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"x", ",", "a", ",", "b"}], "}"}], ",", 
+        RowBox[{"PlotStyle", "->", 
+         RowBox[{"{", 
+          RowBox[{"Blue", ",", "Red", ",", "Green"}], "}"}]}], ",", 
+        RowBox[{"PlotRange", "\[Rule]", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"a", "-", "0.1"}], ",", 
+             RowBox[{"b", "+", "0.1"}]}], "}"}], ",", 
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"-", "2"}], ",", "2"}], "}"}]}], "}"}]}], ",", 
+        RowBox[{"PlotLegends", "\[Rule]", 
+         RowBox[{"{", 
+          RowBox[{
+          "\"\<f(x)=\!\(\*FractionBox[\(1\), \(1 + 25 \*SuperscriptBox[\(x\), \
+\(2\)]\)]\)\>\"", ",", "\"\<n\[OAcute]s igualmente espa\[CCedilla]ados\>\"", 
+           ",", "\"\<n\[OAcute]s de Chebyshev\>\""}], "}"}]}], ",", 
+        RowBox[{
+        "PlotLabel", "->", 
+         "\"\<Interpola\[CCedilla]\[ATilde]o da fun\[CCedilla]\[ATilde]o de \
+Runge\>\""}]}], "]"}], ",", 
+      RowBox[{"ListPlot", "[", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"l1", ",", "l2"}], "}"}], ",", 
+        RowBox[{"PlotMarkers", "->", "Automatic"}]}], "]"}], ",", 
+      RowBox[{"ImageSize", "->", "Large"}]}], "]"}]}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"n", ",", "2", ",", "\"\<N\[UAcute]mero de n\[OAcute]s\>\""}], 
+      "}"}], ",", "2", ",", "20", ",", "1"}], "}"}], ",", 
+   RowBox[{"ControlPlacement", "\[Rule]", "Top"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.8927378058486505`*^9, 3.8927378903710938`*^9}, 
+   3.8927380127833652`*^9, {3.8927381193626413`*^9, 3.8927381462655272`*^9}, {
+   3.892738402538529*^9, 3.892738407885132*^9}, {3.8927385183961716`*^9, 
+   3.892738523387203*^9}, {3.892738668735609*^9, 3.892738785956676*^9}, {
+   3.8927389764452343`*^9, 3.8927390418057356`*^9}, 3.8927400505903797`*^9, {
+   3.8927401033386273`*^9, 3.892740103703555*^9}, {3.8927401670771613`*^9, 
+   3.892740196857953*^9}, {3.8927402495382957`*^9, 3.892740294464853*^9}, {
+   3.8929819412288036`*^9, 3.8929821783804398`*^9}, 3.8929822110499144`*^9, 
+   3.892982474378185*^9, {3.8929829483710165`*^9, 3.8929829738532095`*^9}, {
+   3.8929830153352823`*^9, 3.8929830166464863`*^9}, {3.892983100142079*^9, 
+   3.892983178083041*^9}, {3.892983297181779*^9, 3.892983341234037*^9}, {
+   3.8929834296864705`*^9, 3.8929834529065824`*^9}, {3.892983623544693*^9, 
+   3.892983676872334*^9}, {3.892983717138509*^9, 3.892983726622927*^9}, {
+   3.8929837768265915`*^9, 3.8929838178110514`*^9}, {3.892983853606442*^9, 
+   3.892983899737612*^9}, {3.892983945678585*^9, 3.8929839632056656`*^9}, {
+   3.8929841943726373`*^9, 3.892984341311615*^9}, {3.8929845473068976`*^9, 
+   3.8929845671225624`*^9}, {3.8929847438698645`*^9, 
+   3.8929847574593735`*^9}, {3.8929852869391413`*^9, 3.8929853173154635`*^9}, 
+   3.893134400614558*^9, {3.8931392217968235`*^9, 3.893139255113309*^9}, {
+   3.8931395025393705`*^9, 3.893139516793865*^9}, {3.8931542297665834`*^9, 
+   3.8931542798157344`*^9}, 3.8931543550517893`*^9},
+ CellLabel->"In[5]:=",ExpressionUUID->"84cca47e-8519-456e-83ac-cb72d833e455"],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   DynamicModuleBox[{$CellContext`n$$ = 5, Typeset`show$$ = True, 
+    Typeset`bookmarkList$$ = {}, Typeset`bookmarkMode$$ = "Menu", 
+    Typeset`animator$$, Typeset`animvar$$ = 1, Typeset`name$$ = 
+    "\"untitled\"", Typeset`specs$$ = {{{
+       Hold[$CellContext`n$$], 2, "N\[UAcute]mero de n\[OAcute]s"}, 2, 20, 
+      1}}, Typeset`size$$ = {774., {188., 194.}}, Typeset`update$$ = 0, 
+    Typeset`initDone$$, Typeset`skipInitDone$$ = True}, 
+    DynamicBox[Manipulate`ManipulateBoxes[
+     1, StandardForm, "Variables" :> {$CellContext`n$$ = 2}, 
+      "ControllerVariables" :> {}, 
+      "OtherVariables" :> {
+       Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+        Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+        Typeset`specs$$, Typeset`size$$, Typeset`update$$, Typeset`initDone$$,
+         Typeset`skipInitDone$$}, 
+      "Body" :> (N[$CellContext`a = -1; $CellContext`b = 1; $CellContext`f[
+            Pattern[$CellContext`x, 
+             Blank[]]] = 1/(1 + 25 $CellContext`x^2); $CellContext`pontos1 = 
+          Range[$CellContext`a, $CellContext`b, ($CellContext`b - \
+$CellContext`a)/($CellContext`n$$ - 1)]; Null]; $CellContext`pontos2 = N[
+          
+          Table[($CellContext`a + $CellContext`b)/
+            2 + (1/2) ($CellContext`b - $CellContext`a) 
+            Cos[((2 $CellContext`k - 1)/(2 $CellContext`n$$)) 
+              Pi], {$CellContext`k, 1, $CellContext`n$$}]]; $CellContext`l1 = 
+        Transpose[{$CellContext`pontos1, 
+           $CellContext`f[$CellContext`pontos1]}]; $CellContext`l2 = 
+        Transpose[{$CellContext`pontos2, 
+           $CellContext`f[$CellContext`pontos2]}]; Show[
+         Plot[{
+           $CellContext`f[$CellContext`x], 
+           InterpolatingPolynomial[$CellContext`l1, $CellContext`x], 
+           
+           InterpolatingPolynomial[$CellContext`l2, $CellContext`x]}, \
+{$CellContext`x, $CellContext`a, $CellContext`b}, 
+          PlotStyle -> {Blue, Red, Green}, 
+          PlotRange -> {{$CellContext`a - 0.1, $CellContext`b + 0.1}, {-2, 
+            2}}, PlotLegends -> {
+           "f(x)=\!\(\*FractionBox[\(1\), \(1 + 25 \*SuperscriptBox[\(x\), \
+\(2\)]\)]\)", "n\[OAcute]s igualmente espa\[CCedilla]ados", 
+            "n\[OAcute]s de Chebyshev"}, PlotLabel -> 
+          "Interpola\[CCedilla]\[ATilde]o da fun\[CCedilla]\[ATilde]o de \
+Runge"], 
+         ListPlot[{$CellContext`l1, $CellContext`l2}, PlotMarkers -> 
+          Automatic], ImageSize -> Large]), 
+      "Specifications" :> {{{$CellContext`n$$, 2, 
+          "N\[UAcute]mero de n\[OAcute]s"}, 2, 20, 1}}, 
+      "Options" :> {ControlPlacement -> Top}, "DefaultOptions" :> {}],
+     ImageSizeCache->{820., {241.634033203125, 247.365966796875}},
+     SingleEvaluation->True],
+    Deinitialization:>None,
+    DynamicModuleValues:>{},
+    SynchronousInitialization->True,
+    UndoTrackedVariables:>{Typeset`show$$, Typeset`bookmarkMode$$},
+    UnsavedVariables:>{Typeset`initDone$$},
+    UntrackedVariables:>{Typeset`size$$}], "Manipulate",
+   Deployed->True,
+   StripOnInput->False],
+  Manipulate`InterpretManipulate[1]]], "Output",
+ CellChangeTimes->{{3.8927390436422415`*^9, 3.8927390748851395`*^9}, 
+   3.892740198477666*^9, {3.89274025075391*^9, 3.8927402954379797`*^9}, {
+   3.8929821826089163`*^9, 3.8929822122585473`*^9}, 3.892982496159096*^9, {
+   3.8929830022574315`*^9, 3.8929830180781364`*^9}, {3.8929831251108637`*^9, 
+   3.892983132581113*^9}, {3.892983163140233*^9, 3.892983180077761*^9}, {
+   3.892983333956006*^9, 3.892983342797903*^9}, {3.8929834371163445`*^9, 
+   3.8929834694844036`*^9}, 3.892983632815075*^9, {3.892983679222266*^9, 
+   3.892983692848977*^9}, {3.892983728162294*^9, 3.892983732541971*^9}, 
+   3.8929838269111958`*^9, {3.8929839014000225`*^9, 3.892983924164268*^9}, 
+   3.8929840161013274`*^9, 3.892984159586896*^9, {3.892984209011074*^9, 
+   3.8929842346536818`*^9}, 3.8929842674882145`*^9, {3.8929843292624083`*^9, 
+   3.8929843426490707`*^9}, {3.892984549712263*^9, 3.892984568847195*^9}, {
+   3.892984760090495*^9, 3.8929847643152075`*^9}, {3.892985301343429*^9, 
+   3.892985327018139*^9}, {3.8929855469877386`*^9, 3.8929855509716177`*^9}, {
+   3.8931343513766193`*^9, 3.893134357983218*^9}, {3.8931344027074146`*^9, 
+   3.8931344088066516`*^9}, {3.8931392898967433`*^9, 3.893139304632105*^9}, {
+   3.8931394550297165`*^9, 3.8931394590671406`*^9}, {3.893139519095972*^9, 
+   3.8931395240618925`*^9}, {3.893154079640207*^9, 3.89315410423291*^9}, {
+   3.8931541388349695`*^9, 3.893154142395754*^9}, {3.8931542464822054`*^9, 
+   3.8931542859362583`*^9}, {3.893154361724386*^9, 3.893154363542807*^9}},
+ CellLabel->"Out[5]=",ExpressionUUID->"fab645ac-f57f-40e1-a591-2f4d2a9bb326"]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{949, 461},
+WindowMargins->{{0, Automatic}, {Automatic, 0}},
+TaggingRules-><|"TryRealOnly" -> False|>,
+FrontEndVersion->"13.2 for Microsoft Windows (64-bit) (January 30, 2023)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"aec2be89-60c4-4804-84ad-c1634ef07443"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 317, 5, 54, "Subsection",ExpressionUUID->"647bfb38-57e0-490e-8310-b4efc967064a"],
+Cell[900, 29, 2347, 62, 177, "Text",ExpressionUUID->"bf8bc6c9-1df7-47e9-822e-2c8539cec7ff"],
+Cell[3250, 93, 1081, 28, 86, "Text",ExpressionUUID->"b7802367-78f5-4068-b86b-26fd22d8d7b9"],
+Cell[CellGroupData[{
+Cell[4356, 125, 5349, 125, 350, "Input",ExpressionUUID->"84cca47e-8519-456e-83ac-cb72d833e455"],
+Cell[9708, 252, 4731, 82, 508, "Output",ExpressionUUID->"fab645ac-f57f-40e1-a591-2f4d2a9bb326"]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+

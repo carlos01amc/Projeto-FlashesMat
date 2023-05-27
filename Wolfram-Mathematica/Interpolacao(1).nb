@@ -1,0 +1,390 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 13.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     15439,        382]
+NotebookOptionsPosition[     14466,        357]
+NotebookOutlinePosition[     14941,        375]
+CellTagsIndexPosition[     14898,        372]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Interpola\[CCedilla]\[ATilde]o", "Subsection",
+ CellChangeTimes->{{3.88740183812525*^9, 3.8874018471942034`*^9}, {
+  3.8927279347593718`*^9, 
+  3.8927279371469345`*^9}},ExpressionUUID->"647bfb38-57e0-490e-8310-\
+b4efc967064a"],
+
+Cell[TextData[{
+ "Dada uma fun\[CCedilla]\[ATilde]o f definida num intervalo [a,b] e n+1 \
+pontos  distintos ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SubscriptBox["x", "1"], ",", 
+    RowBox[{"...", 
+     SubscriptBox["x", 
+      RowBox[{"n", "+", "1"}]]}]}], TraditionalForm]],ExpressionUUID->
+  "d59dd9e1-b8d7-40fe-9b1e-00c2be94665e"],
+ " desse intervalo, o polin\[OAcute]mio p de grau <=n que satisfaz\n",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    RowBox[{"p", "(", 
+     SubscriptBox["x", "i"], ")"}], "=", 
+    RowBox[{"f", "(", 
+     SubscriptBox["x", "i"], ")"}], " "}], TraditionalForm]],ExpressionUUID->
+  "b14d5880-c68e-403a-bf96-f43efe8da371"],
+ ", i=1,...,n+1\ndiz-se o polin\[OAcute]mio interpolador de grau <=n da fun\
+\[CCedilla]\[ATilde]o f.\nPode provar-se que este polin\[OAcute]mio existe e \
+\[EAcute] \[UAcute]nico."
+}], "Text",
+ CellChangeTimes->{{3.893137870590612*^9, 3.893138056160926*^9}, 
+   3.893138089555689*^9},ExpressionUUID->"f8f7a81f-193f-4459-8d56-\
+d0837d90fb78"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Manipulate", "[", "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"range", "=", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"1.2", 
+        RowBox[{"NMinValue", "[", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"f", "[", "x", "]"}], ",", 
+            RowBox[{"a", "\[LessEqual]", "x", "\[LessEqual]", "b"}]}], "}"}], 
+          ",", "x"}], "]"}]}], ",", 
+       RowBox[{"1.2", 
+        RowBox[{"NMaxValue", "[", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"f", "[", "x", "]"}], ",", 
+            RowBox[{"a", "\[LessEqual]", "x", "\[LessEqual]", "b"}]}], "}"}], 
+          ",", "x"}], "]"}]}]}], "}"}]}], ";", "\[IndentingNewLine]", 
+    RowBox[{"points", "=", 
+     RowBox[{"Range", "[", 
+      RowBox[{"a", ",", "b", ",", 
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{"b", "-", "a"}], ")"}], "/", 
+        RowBox[{"(", 
+         RowBox[{"n", "-", "1"}], ")"}]}]}], "]"}]}], ";", 
+    "\[IndentingNewLine]", 
+    RowBox[{"l", "=", 
+     RowBox[{
+      RowBox[{"Transpose", "[", 
+       RowBox[{"{", 
+        RowBox[{"points", ",", 
+         RowBox[{"f", "[", "points", "]"}]}], "}"}], "]"}], "//", "N"}]}], 
+    ";", "\[IndentingNewLine]", 
+    RowBox[{"Show", "[", 
+     RowBox[{
+      RowBox[{"Plot", "[", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"f", "[", "x", "]"}], ",", 
+          RowBox[{"InterpolatingPolynomial", "[", 
+           RowBox[{"l", ",", "x"}], "]"}]}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"x", ",", "a", ",", "b"}], "}"}], ",", 
+        RowBox[{"PlotRange", "\[Rule]", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{"a", ",", "b"}], "}"}], ",", 
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"-", "2.5"}], ",", "2.5"}], "}"}]}], "}"}]}], ",", 
+        RowBox[{"PlotLegends", "\[Rule]", 
+         RowBox[{"{", 
+          RowBox[{
+          "\"\<f\>\"", ",", "\"\<Polin\[OAcute]mio Interpolador\>\""}], 
+          "}"}]}]}], "]"}], ",", 
+      RowBox[{"ListPlot", "[", "l", "]"}]}], "]"}]}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"f", ",", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"(", 
+          RowBox[{"Cos", "[", 
+           RowBox[{"#", " ", "Pi"}], "]"}], ")"}], "&"}], ")"}], ",", 
+       "\"\<Fun\[CCedilla]\[ATilde]o\>\""}], "}"}], ",", 
+     "\[IndentingNewLine]", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{
+        RowBox[{
+         RowBox[{"(", 
+          RowBox[{"Cos", "[", 
+           RowBox[{"#", " ", "Pi"}], "]"}], ")"}], "&"}], "\[Rule]", 
+        RowBox[{"TraditionalForm", "[", 
+         RowBox[{"Cos", "[", 
+          RowBox[{"Pi", " ", "x"}], "]"}], "]"}]}], ",", 
+       "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"#", "^", "5"}], " ", 
+             RowBox[{"Exp", "[", 
+              RowBox[{"-", 
+               RowBox[{"#", "^", "2"}]}], "]"}]}], "+", "1"}], ")"}], "&"}], 
+         ")"}], "\[Rule]", 
+        RowBox[{"TraditionalForm", "[", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"x", " ", "^", "5"}], 
+           RowBox[{"Exp", "[", 
+            RowBox[{"-", 
+             RowBox[{"x", "^", "2"}]}], "]"}]}], "+", "1"}], "]"}]}], ",", 
+       "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{"2", 
+             RowBox[{
+              RowBox[{"Abs", "[", "#", "]"}], "^", 
+              RowBox[{"(", 
+               RowBox[{"1", "/", "3"}], ")"}]}]}], "-", "1"}], ")"}], "&"}], 
+         ")"}], "\[Rule]", 
+        RowBox[{"TraditionalForm", "[", 
+         RowBox[{
+          RowBox[{"2", "*", 
+           RowBox[{
+            RowBox[{"Abs", "[", "x", "]"}], "^", 
+            RowBox[{"(", 
+             RowBox[{"1", "/", "3"}], ")"}]}]}], "-", "1"}], "]"}]}], ",", 
+       "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{"1", "/", "20"}], 
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{"#", "^", "5"}], "-", 
+              RowBox[{"#", "^", "2"}], "-", 
+              RowBox[{"2", "#"}]}], ")"}]}], ")"}], "&"}], ")"}], "\[Rule]", 
+        RowBox[{"TraditionalForm", "[", 
+         RowBox[{
+          RowBox[{"1", "/", "20"}], 
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{"x", "^", "5"}], "-", 
+            RowBox[{"x", "^", "2"}], "-", 
+            RowBox[{"2", "x"}]}], ")"}]}], "]"}]}]}], "}"}], ",", 
+     "\[IndentingNewLine]", 
+     RowBox[{"ControlType", "\[Rule]", "PopupMenu"}]}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"n", ",", "3"}], "}"}], ",", "2", ",", "10", ",", "1"}], "}"}], 
+   ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"a", ",", 
+       RowBox[{"-", "2"}]}], "}"}], ",", 
+     RowBox[{"-", "2"}], ",", "0", ",", "1"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"b", ",", "2"}], "}"}], ",", "0", ",", "2", ",", "1"}], "}"}], 
+   ",", 
+   RowBox[{"ControlPlacement", "->", 
+    RowBox[{"{", 
+     RowBox[{"Top", ",", "Top", ",", "Bottom", ",", "Bottom"}], "}"}]}]}], 
+  "]"}]], "Input",
+ CellChangeTimes->{{3.8927378058486505`*^9, 3.8927378903710938`*^9}, 
+   3.8927380127833652`*^9, {3.8927381193626413`*^9, 3.8927381462655272`*^9}, {
+   3.892738402538529*^9, 3.892738407885132*^9}, {3.8927385183961716`*^9, 
+   3.892738523387203*^9}, {3.892738668735609*^9, 3.892738785956676*^9}, {
+   3.8927389764452343`*^9, 3.8927390418057356`*^9}, 3.8927400505903797`*^9, {
+   3.8927401033386273`*^9, 3.892740103703555*^9}, {3.8927401670771613`*^9, 
+   3.892740196857953*^9}, {3.8927402495382957`*^9, 3.892740294464853*^9}, {
+   3.893134525848364*^9, 3.8931345530589633`*^9}, {3.893134584929222*^9, 
+   3.8931346715814395`*^9}, 3.893134736204371*^9, {3.8931348213979597`*^9, 
+   3.893134824901512*^9}, {3.89313487890501*^9, 3.893134932229493*^9}, {
+   3.8931349869809976`*^9, 3.893135010101817*^9}, {3.8931350520359907`*^9, 
+   3.8931350852155805`*^9}, {3.8931351718391476`*^9, 3.8931352089160075`*^9}, 
+   3.8931353159099092`*^9, {3.8931353733758907`*^9, 3.893135393673279*^9}, {
+   3.893135494697257*^9, 3.893135501699168*^9}, {3.8931355588985405`*^9, 
+   3.8931355962614007`*^9}, {3.893135649726962*^9, 3.893135708205405*^9}, {
+   3.8931357640575156`*^9, 3.8931358250444217`*^9}, {3.893135923931674*^9, 
+   3.893135929409772*^9}, {3.8931359788238616`*^9, 3.893135991837203*^9}, {
+   3.8931360314719887`*^9, 3.893136033827506*^9}, {3.893136277289876*^9, 
+   3.893136363676858*^9}, {3.8931363942004895`*^9, 3.8931363970108566`*^9}, {
+   3.893136428309123*^9, 3.893136429896036*^9}, {3.8931364760849543`*^9, 
+   3.893136479080576*^9}, {3.893136532007024*^9, 3.893136533592058*^9}, {
+   3.893136578224304*^9, 3.8931365804773474`*^9}, {3.8931366546873207`*^9, 
+   3.893136691362567*^9}, {3.8931367359329*^9, 3.8931367494815807`*^9}, {
+   3.8931368328031855`*^9, 3.8931368399077044`*^9}, {3.8931368859296117`*^9, 
+   3.893136888789918*^9}, {3.893136977314099*^9, 3.8931369942709074`*^9}, {
+   3.8931370869180765`*^9, 3.8931371279411545`*^9}, {3.89313718652607*^9, 
+   3.8931371885402994`*^9}, {3.8931375801780634`*^9, 3.893137597839566*^9}, {
+   3.893137650708921*^9, 3.8931376528623095`*^9}},
+ CellLabel->"In[1]:=",ExpressionUUID->"84cca47e-8519-456e-83ac-cb72d833e455"],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   DynamicModuleBox[{$CellContext`a$$ = -2, $CellContext`b$$ = 
+    2, $CellContext`f$$ = (1/20) (#^5 - #^2 - 2 #)& , $CellContext`n$$ = 2, 
+    Typeset`show$$ = True, Typeset`bookmarkList$$ = {}, 
+    Typeset`bookmarkMode$$ = "Menu", Typeset`animator$$, Typeset`animvar$$ = 
+    1, Typeset`name$$ = "\"untitled\"", Typeset`specs$$ = {{{
+       Hold[$CellContext`f$$], Cos[# Pi]& , 
+       "Fun\[CCedilla]\[ATilde]o"}, {(Cos[# Pi]& ) -> TraditionalForm[
+         Cos[Pi $CellContext`x]], (#^5 Exp[-#^2] + 1& ) -> 
+       TraditionalForm[1 + E^(-$CellContext`x^2) $CellContext`x^5], (
+        2 Abs[#]^(1/3) - 1& ) -> 
+       TraditionalForm[-1 + 2 Abs[$CellContext`x]^Rational[1, 3]], ((1/
+         20) (#^5 - #^2 - 2 #)& ) -> 
+       TraditionalForm[
+        Rational[
+          1, 20] ((-2) $CellContext`x - $CellContext`x^2 + \
+$CellContext`x^5)]}}, {{
+       Hold[$CellContext`n$$], 3}, 2, 10, 1}, {{
+       Hold[$CellContext`a$$], -2}, -2, 0, 1}, {{
+       Hold[$CellContext`b$$], 2}, 0, 2, 1}}, Typeset`size$$ = {
+    400., {80., 84.}}, Typeset`update$$ = 0, Typeset`initDone$$, 
+    Typeset`skipInitDone$$ = True}, 
+    DynamicBox[Manipulate`ManipulateBoxes[
+     1, StandardForm, 
+      "Variables" :> {$CellContext`a$$ = -2, $CellContext`b$$ = 
+        2, $CellContext`f$$ = Cos[# Pi]& , $CellContext`n$$ = 3}, 
+      "ControllerVariables" :> {}, 
+      "OtherVariables" :> {
+       Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+        Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+        Typeset`specs$$, Typeset`size$$, Typeset`update$$, Typeset`initDone$$,
+         Typeset`skipInitDone$$}, 
+      "Body" :> ($CellContext`range = {1.2 NMinValue[{
+             $CellContext`f$$[$CellContext`x], $CellContext`a$$ <= \
+$CellContext`x <= $CellContext`b$$}, $CellContext`x], 1.2 NMaxValue[{
+             $CellContext`f$$[$CellContext`x], $CellContext`a$$ <= \
+$CellContext`x <= $CellContext`b$$}, $CellContext`x]}; $CellContext`points = 
+        Range[$CellContext`a$$, $CellContext`b$$, ($CellContext`b$$ - \
+$CellContext`a$$)/($CellContext`n$$ - 1)]; $CellContext`l = N[
+          Transpose[{$CellContext`points, 
+            $CellContext`f$$[$CellContext`points]}]]; Show[
+         Plot[{
+           $CellContext`f$$[$CellContext`x], 
+           
+           InterpolatingPolynomial[$CellContext`l, $CellContext`x]}, \
+{$CellContext`x, $CellContext`a$$, $CellContext`b$$}, 
+          PlotRange -> {{$CellContext`a$$, $CellContext`b$$}, {-2.5, 2.5}}, 
+          PlotLegends -> {"f", "Polin\[OAcute]mio Interpolador"}], 
+         ListPlot[$CellContext`l]]), 
+      "Specifications" :> {{{$CellContext`f$$, Cos[# Pi]& , 
+          "Fun\[CCedilla]\[ATilde]o"}, {(Cos[# Pi]& ) -> TraditionalForm[
+            Cos[Pi $CellContext`x]], (#^5 Exp[-#^2] + 1& ) -> 
+          TraditionalForm[1 + E^(-$CellContext`x^2) $CellContext`x^5], (
+           2 Abs[#]^(1/3) - 1& ) -> 
+          TraditionalForm[-1 + 2 Abs[$CellContext`x]^Rational[1, 3]], ((1/
+            20) (#^5 - #^2 - 2 #)& ) -> 
+          TraditionalForm[
+           Rational[
+             1, 20] ((-2) $CellContext`x - $CellContext`x^2 + \
+$CellContext`x^5)]}, ControlType -> PopupMenu}, {{$CellContext`n$$, 3}, 2, 10,
+          1}, {{$CellContext`a$$, -2}, -2, 0, 1}, {{$CellContext`b$$, 2}, 0, 
+         2, 1}}, "Options" :> {
+       ControlPlacement -> {Top, Top, Bottom, Bottom}}, 
+      "DefaultOptions" :> {}],
+     ImageSizeCache->{436., {155.85052490234375`, 160.14947509765625`}},
+     SingleEvaluation->True],
+    Deinitialization:>None,
+    DynamicModuleValues:>{},
+    SynchronousInitialization->True,
+    UndoTrackedVariables:>{Typeset`show$$, Typeset`bookmarkMode$$},
+    UnsavedVariables:>{Typeset`initDone$$},
+    UntrackedVariables:>{Typeset`size$$}], "Manipulate",
+   Deployed->True,
+   StripOnInput->False],
+  Manipulate`InterpretManipulate[1]]], "Output",
+ CellChangeTimes->{{3.8931371298910885`*^9, 3.8931371471558113`*^9}, {
+   3.893137189655282*^9, 3.8931371932071457`*^9}, {3.8931375990491276`*^9, 
+   3.8931376055998783`*^9}, {3.893137653826557*^9, 3.893137660883032*^9}, {
+   3.8931377231709166`*^9, 3.8931377396581135`*^9}, 3.8931538972750463`*^9, 
+   3.893153962304125*^9, 3.893154042024331*^9},
+ CellLabel->"Out[1]=",ExpressionUUID->"bbacfefd-e4fb-4ebe-b4a8-5c2722566f60"],
+
+Cell[BoxData[
+ TemplateBox[{
+  "Power", "infy", 
+   "\"Infinite expression \\!\\(\\*FractionBox[\\\"1\\\", \\\"0\\\"]\\) \
+encountered.\"", 2, 2, 1, 16523410994534146436, "Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.893154032966156*^9},
+ CellLabel->"",ExpressionUUID->"89e99122-b958-48c6-b9b0-d95bd0806693"],
+
+Cell[BoxData[
+ TemplateBox[{
+  "Power", "infy", 
+   "\"Infinite expression \\!\\(\\*FractionBox[\\\"1\\\", \\\"0\\\"]\\) \
+encountered.\"", 2, 2, 2, 16523410994534146436, "Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.893154033343108*^9},
+ CellLabel->"",ExpressionUUID->"1a583886-e9f3-4869-bdd1-ee534d550b74"]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{949., 466.5},
+WindowMargins->{{0, Automatic}, {Automatic, 0}},
+TaggingRules-><|"TryRealOnly" -> False|>,
+Magnification:>0.75 Inherited,
+FrontEndVersion->"13.2 for Microsoft Windows (64-bit) (January 30, 2023)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"ecc5570c-3123-4b69-b1f3-e0606a9721ee"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 232, 4, 41, "Subsection",ExpressionUUID->"647bfb38-57e0-490e-8310-b4efc967064a"],
+Cell[815, 28, 1002, 26, 82, "Text",ExpressionUUID->"f8f7a81f-193f-4459-8d56-d0837d90fb78"],
+Cell[CellGroupData[{
+Cell[1842, 58, 7590, 193, 164, "Input",ExpressionUUID->"84cca47e-8519-456e-83ac-cb72d833e455"],
+Cell[9435, 253, 4329, 82, 330, "Output",ExpressionUUID->"bbacfefd-e4fb-4ebe-b4a8-5c2722566f60"],
+Cell[13767, 337, 334, 7, 31, "Message",ExpressionUUID->"89e99122-b958-48c6-b9b0-d95bd0806693"],
+Cell[14104, 346, 334, 7, 31, "Message",ExpressionUUID->"1a583886-e9f3-4869-bdd1-ee534d550b74"]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
