@@ -1,0 +1,435 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 13.2' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     17837,        427]
+NotebookOptionsPosition[     17243,        409]
+NotebookOutlinePosition[     17656,        425]
+CellTagsIndexPosition[     17613,        422]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Manipulate", "[", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"base", "=", 
+      RowBox[{"If", "[", 
+       RowBox[{
+        RowBox[{"baseSelecionada", "\[Equal]", "2"}], ",", "2", ",", "10"}], 
+       "]"}]}], ";", "\[IndentingNewLine]", 
+     RowBox[{"f", "=", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"Range", "[", 
+         RowBox[{"base", ",", 
+          RowBox[{
+           RowBox[{"base", "^", "t"}], "-", "1"}]}], "]"}], " ", 
+        RowBox[{"base", "^", 
+         RowBox[{"-", "t"}]}]}], "//", "N"}]}], ";", "\[IndentingNewLine]", 
+     RowBox[{"F", "=", 
+      RowBox[{"{", "}"}]}], ";", "\[IndentingNewLine]", 
+     RowBox[{"eps", "=", 
+      RowBox[{"base", "^", 
+       RowBox[{"(", 
+        RowBox[{"1", "-", "t"}], ")"}]}]}], ";", "\[IndentingNewLine]", 
+     RowBox[{"underflow", "=", 
+      RowBox[{"base", "^", 
+       RowBox[{"(", 
+        RowBox[{"emin", "-", "1"}], ")"}]}]}], ";", "\[IndentingNewLine]", 
+     RowBox[{"overflow", "=", 
+      RowBox[{
+       RowBox[{"(", 
+        RowBox[{"1", "-", 
+         RowBox[{"base", "^", 
+          RowBox[{"(", 
+           RowBox[{"-", "t"}], ")"}]}]}], ")"}], " ", 
+       RowBox[{"base", "^", "emax"}]}]}], ";", "\[IndentingNewLine]", 
+     RowBox[{"For", "[", 
+      RowBox[{
+       RowBox[{"e", "=", "emin"}], ",", 
+       RowBox[{"e", "\[LessEqual]", "emax"}], ",", 
+       RowBox[{"e", "++"}], ",", 
+       RowBox[{"F", "=", 
+        RowBox[{"Join", "[", 
+         RowBox[{"F", ",", 
+          RowBox[{"f", " ", 
+           RowBox[{"base", "^", "e"}]}]}], "]"}]}]}], "]"}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"numeros", "=", 
+      RowBox[{"Transpose", "[", 
+       RowBox[{"{", 
+        RowBox[{"F", ",", 
+         RowBox[{"0", " ", "F"}]}], "}"}], "]"}]}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"sistema", "=", 
+      RowBox[{"ListPlot", "[", 
+       RowBox[{"numeros", ",", 
+        RowBox[{"PlotMarkers", "\[Rule]", 
+         RowBox[{
+         "{", "\"\<\\!\\(\\*\n     \
+StyleBox[\\\"|\\\",\\nFontSize->14]\\)\>\"", "}"}]}], ",", 
+        RowBox[{"Ticks", "\[Rule]", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"First", "@", "F"}], ",", "1", ",", 
+              RowBox[{"Last", "@", "F"}]}], "}"}], "//", "N"}], ",", "None"}],
+           "}"}]}], ",", 
+        RowBox[{"PlotRange", "\[Rule]", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"First", "@", "F"}], "-", "1"}], ",", 
+             RowBox[{"1.1", " ", 
+              RowBox[{"Last", "@", "F"}]}]}], "}"}], ",", 
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"-", "0.4"}], ",", "0.4"}], "}"}]}], "}"}]}], ",", 
+        RowBox[{"Axes", "\[Rule]", 
+         RowBox[{"{", 
+          RowBox[{"False", ",", "False"}], "}"}]}], ",", 
+        RowBox[{"AspectRatio", "\[Rule]", 
+         RowBox[{"1", "/", "5"}]}]}], "]"}]}], ";", "\[IndentingNewLine]", 
+     RowBox[{"especiais1", "=", 
+      RowBox[{"ListPlot", "[", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"First", "@", "F"}], ",", "0"}], "}"}], ",", 
+          RowBox[{"{", 
+           RowBox[{"1", ",", "0"}], "}"}], ",", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"1", "+", "eps"}], ",", "0"}], "}"}], ",", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"Last", "@", "F"}], ",", "0"}], "}"}]}], "}"}], ",", 
+        RowBox[{"PlotMarkers", "\[Rule]", 
+         RowBox[{
+         "{", "\"\<\\!\\(\\*\n     \
+StyleBox[\\\"|\\\",\\nFontSize->16,\\nFontColor->RGBColor[1, 0.5, 0]]\\)\>\"",
+           "}"}]}]}], "]"}]}], ";", "\[IndentingNewLine]", 
+     RowBox[{"especiais2", "=", 
+      RowBox[{"Graphics", "[", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"Text", "[", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"First", "@", "F"}], "//", "N"}], ",", 
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"First", "@", "F"}], ",", 
+             RowBox[{"-", "0.2"}]}], "}"}]}], "]"}], ",", 
+         RowBox[{"Text", "[", 
+          RowBox[{"\"\<\[Omega]\>\"", ",", 
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"First", "@", "F"}], ",", "0.2"}], "}"}]}], "]"}], ",", 
+         RowBox[{"Text", "[", 
+          RowBox[{"\"\<1\>\"", ",", 
+           RowBox[{"{", 
+            RowBox[{"1", ",", "0.2"}], "}"}]}], "]"}], ",", 
+         RowBox[{"Text", "[", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"Last", "@", "F"}], "//", "N"}], ",", 
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"Last", "@", "F"}], ",", 
+             RowBox[{"-", "0.2"}]}], "}"}]}], "]"}], ",", 
+         RowBox[{"Text", "[", 
+          RowBox[{"\"\<\[CapitalOmega]\>\"", ",", 
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"Last", "@", "F"}], ",", "0.2"}], "}"}]}], "]"}]}], 
+        "}"}], "]"}]}], ";", "\[IndentingNewLine]", 
+     RowBox[{"Grid", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"Show", "[", 
+           RowBox[{"sistema", ",", "especiais1", ",", "especiais2", ",", 
+            RowBox[{"ImageSize", "\[Rule]", 
+             RowBox[{"{", 
+              RowBox[{"500", ",", "100"}], "}"}]}]}], "]"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"Row", "[", 
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"Column", "[", 
+              RowBox[{"{", 
+               RowBox[{
+                RowBox[{"Text", "@", 
+                 RowBox[{"Style", "[", 
+                  RowBox[{
+                   RowBox[{"Row", "[", 
+                    RowBox[{"{", 
+                    RowBox[{"\"\<Num. positivos = \>\"", ",", 
+                    RowBox[{"Length", "[", "F", "]"}]}], "}"}], "]"}], ",", 
+                   "Black", ",", "12"}], "]"}]}], ",", 
+                RowBox[{"Text", "@", 
+                 RowBox[{"Style", "[", 
+                  RowBox[{
+                   RowBox[{"Row", "[", 
+                    RowBox[{"{", 
+                    RowBox[{"\"\<Epsilon = \>\"", ",", 
+                    RowBox[{"eps", "//", "N"}]}], "}"}], "]"}], ",", "Red", 
+                   ",", "12"}], "]"}]}]}], "}"}], "]"}], ",", 
+             RowBox[{"Spacer", "[", "50", "]"}], ",", 
+             RowBox[{"Column", "[", 
+              RowBox[{"{", 
+               RowBox[{
+                RowBox[{"Text", "@", 
+                 RowBox[{"Style", "[", 
+                  RowBox[{
+                   RowBox[{"Row", "[", 
+                    RowBox[{"{", 
+                    RowBox[{"\"\<Underflow = \>\"", ",", 
+                    RowBox[{"underflow", "//", "N"}]}], "}"}], "]"}], ",", 
+                   "Purple", ",", "12"}], "]"}]}], ",", 
+                RowBox[{"Text", "@", 
+                 RowBox[{"Style", "[", 
+                  RowBox[{
+                   RowBox[{"Row", "[", 
+                    RowBox[{"{", 
+                    RowBox[{"\"\<Overflow = \>\"", ",", 
+                    RowBox[{"overflow", "//", "N"}]}], "}"}], "]"}], ",", 
+                   "Green", ",", "12"}], "]"}]}]}], "}"}], "]"}]}], "}"}], 
+           "]"}], "}"}]}], "}"}], ",", 
+       RowBox[{"Alignment", "\[Rule]", 
+        RowBox[{"{", 
+         RowBox[{"Left", ",", "Center"}], "}"}]}]}], "]"}]}], ",", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"t", ",", "2", ",", "\"\<t\>\""}], "}"}], ",", "2", ",", "6", 
+      ",", "1"}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"emin", ",", 
+        RowBox[{"-", "2"}], ",", "\"\<m\>\""}], "}"}], ",", 
+      RowBox[{"-", "5"}], ",", 
+      RowBox[{"-", "1"}], ",", "1"}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"emax", ",", "2", ",", "\"\<M\>\""}], "}"}], ",", "1", ",", 
+      "6", ",", "1"}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"baseSelecionada", ",", "2", ",", "\"\<Base\>\""}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"2", ",", "10"}], "}"}]}], "}"}]}], "]"}], "\n", "\n", 
+  "\n"}]], "Input",
+ CellChangeTimes->{{3.891002862245756*^9, 3.8910030279200916`*^9}, {
+   3.8910030793891144`*^9, 3.8910030862329283`*^9}, {3.891003116964201*^9, 
+   3.8910031484746003`*^9}, {3.8910032065397606`*^9, 
+   3.8910032174771028`*^9}, {3.891003670284212*^9, 3.8910036846544657`*^9}, {
+   3.891004505328477*^9, 3.891004506915315*^9}, {3.891005582565548*^9, 
+   3.891005587712234*^9}, {3.8910056872449675`*^9, 3.891005690202976*^9}, {
+   3.8910068094909534`*^9, 3.891006947191148*^9}, {3.8910070329590836`*^9, 
+   3.8910070367940187`*^9}, {3.8910070725892506`*^9, 
+   3.8910070783293877`*^9}, {3.8910073327567706`*^9, 3.891007405561417*^9}, {
+   3.8910074404206343`*^9, 3.891007515719922*^9}, 3.891008150816847*^9, {
+   3.891008230035395*^9, 3.8910082863167706`*^9}, {3.891008323206217*^9, 
+   3.891008325398287*^9}, {3.8910084415987406`*^9, 3.8910084440818663`*^9}, {
+   3.891008510841448*^9, 3.891008641264022*^9}, {3.8910086770911875`*^9, 
+   3.89100879648762*^9}, 3.891008874347706*^9, {3.891009187562672*^9, 
+   3.891009269130876*^9}, 3.891009349527854*^9, {3.891009381170344*^9, 
+   3.891009420853721*^9}, {3.8910094767962213`*^9, 3.8910096237204385`*^9}, {
+   3.8910096649028144`*^9, 3.891009780163138*^9}, {3.8910098122960105`*^9, 
+   3.891009846186062*^9}, {3.8910098824229865`*^9, 3.891009990757422*^9}, 
+   3.8910100232872844`*^9, {3.891010279193485*^9, 3.8910103183521786`*^9}, 
+   3.8910103907522783`*^9, {3.8910104348334*^9, 3.89101043767378*^9}, {
+   3.891010472895631*^9, 3.891010481454812*^9}, {3.8910106027031136`*^9, 
+   3.8910106032885566`*^9}, 3.8910106495879054`*^9, {3.8910106894806504`*^9, 
+   3.891010815216304*^9}, {3.8910108662498913`*^9, 3.8910109803870287`*^9}, {
+   3.891011012414852*^9, 3.891011095762195*^9}, 3.8910111552215743`*^9, {
+   3.891011209983838*^9, 3.8910112104469438`*^9}, {3.8910112833969555`*^9, 
+   3.8910112850770817`*^9}, {3.8910113500975127`*^9, 
+   3.8910113627977276`*^9}, {3.891011397440549*^9, 3.89101139999109*^9}, {
+   3.8910114333005333`*^9, 3.8910114591318502`*^9}, {3.8910114946190853`*^9, 
+   3.891011541456952*^9}, {3.891011574551369*^9, 3.891011604070504*^9}, {
+   3.891011665323803*^9, 3.8910116872431035`*^9}, 3.89101173963024*^9, {
+   3.891011784352956*^9, 3.8910117978019705`*^9}, {3.891011922894168*^9, 
+   3.8910119693790846`*^9}, {3.891012031769859*^9, 3.891012107581355*^9}, {
+   3.8910121405695405`*^9, 3.8910121766161947`*^9}, {3.891771696380625*^9, 
+   3.8917716973796387`*^9}, {3.8922220720549126`*^9, 
+   3.8922220849367633`*^9}, {3.8931545976327715`*^9, 3.8931546173238*^9}, {
+   3.893154699554756*^9, 3.893154707335797*^9}, {3.8931547849678*^9, 
+   3.893154864786439*^9}, {3.8931549028147097`*^9, 3.8931549028947325`*^9}, {
+   3.8931549982169247`*^9, 3.893155117209364*^9}, {3.893171210250348*^9, 
+   3.8931712112582054`*^9}, {3.8931712887142086`*^9, 3.893171298512839*^9}, {
+   3.893171563396594*^9, 3.893171606436*^9}, {3.8931716456411853`*^9, 
+   3.8931717033305283`*^9}, {3.893171868962539*^9, 3.893171981143056*^9}, {
+   3.8931720290540075`*^9, 3.8931720298694677`*^9}, {3.893172723315091*^9, 
+   3.8931727236250014`*^9}, 3.893172908236306*^9},
+ CellLabel->"In[8]:=",ExpressionUUID->"ee22520a-b550-4ea9-ab85-fbab46e7179c"],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   DynamicModuleBox[{$CellContext`baseSelecionada$$ = 2, $CellContext`emax$$ =
+     2, $CellContext`emin$$ = -2, $CellContext`t$$ = 2, Typeset`show$$ = True,
+     Typeset`bookmarkList$$ = {}, Typeset`bookmarkMode$$ = "Menu", 
+    Typeset`animator$$, Typeset`animvar$$ = 1, Typeset`name$$ = 
+    "\"untitled\"", Typeset`specs$$ = {{{
+       Hold[$CellContext`t$$], 2, "t"}, 2, 6, 1}, {{
+       Hold[$CellContext`emin$$], -2, "m"}, -5, -1, 1}, {{
+       Hold[$CellContext`emax$$], 2, "M"}, 1, 6, 1}, {{
+       Hold[$CellContext`baseSelecionada$$], 2, "Base"}, {2, 10}}}, 
+    Typeset`size$$ = {500., {68.9, 74.30000000000001}}, Typeset`update$$ = 0, 
+    Typeset`initDone$$, Typeset`skipInitDone$$ = True}, 
+    DynamicBox[Manipulate`ManipulateBoxes[
+     1, StandardForm, 
+      "Variables" :> {$CellContext`baseSelecionada$$ = 2, $CellContext`emax$$ = 
+        2, $CellContext`emin$$ = -2, $CellContext`t$$ = 2}, 
+      "ControllerVariables" :> {}, 
+      "OtherVariables" :> {
+       Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+        Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+        Typeset`specs$$, Typeset`size$$, Typeset`update$$, Typeset`initDone$$,
+         Typeset`skipInitDone$$}, 
+      "Body" :> ($CellContext`base = 
+        If[$CellContext`baseSelecionada$$ == 2, 2, 10]; $CellContext`f = 
+        N[Range[$CellContext`base, $CellContext`base^$CellContext`t$$ - 
+            1] $CellContext`base^(-$CellContext`t$$)]; $CellContext`F = {}; \
+$CellContext`eps = $CellContext`base^(
+          1 - $CellContext`t$$); $CellContext`underflow = \
+$CellContext`base^($CellContext`emin$$ - 1); $CellContext`overflow = (
+          1 - $CellContext`base^(-$CellContext`t$$)) \
+$CellContext`base^$CellContext`emax$$; 
+       For[$CellContext`e = $CellContext`emin$$, $CellContext`e <= \
+$CellContext`emax$$, 
+         Increment[$CellContext`e], $CellContext`F = 
+         Join[$CellContext`F, $CellContext`f \
+$CellContext`base^$CellContext`e]]; $CellContext`numeros = 
+        Transpose[{$CellContext`F, 0 $CellContext`F}]; $CellContext`sistema = 
+        ListPlot[$CellContext`numeros, 
+          PlotMarkers -> {"\!\(\*\n     StyleBox[\"|\",\nFontSize->14]\)"}, 
+          Ticks -> {
+            N[{
+              First[$CellContext`F], 1, 
+              Last[$CellContext`F]}], None}, 
+          PlotRange -> {{
+            First[$CellContext`F] - 1, 1.1 Last[$CellContext`F]}, {-0.4, 
+            0.4}}, Axes -> {False, False}, AspectRatio -> 
+          1/5]; $CellContext`especiais1 = ListPlot[{{
+            First[$CellContext`F], 0}, {1, 0}, {1 + $CellContext`eps, 0}, {
+            Last[$CellContext`F], 0}}, 
+          PlotMarkers -> {
+           "\!\(\*\n     StyleBox[\"|\",\nFontSize->16,\n\
+FontColor->RGBColor[1, 0.5, 0]]\)"}]; $CellContext`especiais2 = Graphics[{
+           Text[
+            N[
+             First[$CellContext`F]], {
+             First[$CellContext`F], -0.2}], 
+           Text["\[Omega]", {
+             First[$CellContext`F], 0.2}], 
+           Text["1", {1, 0.2}], 
+           Text[
+            N[
+             Last[$CellContext`F]], {
+             Last[$CellContext`F], -0.2}], 
+           Text["\[CapitalOmega]", {
+             Last[$CellContext`F], 0.2}]}]; Grid[{{
+           
+           Show[$CellContext`sistema, $CellContext`especiais1, \
+$CellContext`especiais2, ImageSize -> {500, 100}]}, {
+           Row[{
+             Column[{
+               Text[
+                Style[
+                 Row[{"Num. positivos = ", 
+                   Length[$CellContext`F]}], Black, 12]], 
+               Text[
+                Style[
+                 Row[{"Epsilon = ", 
+                   N[$CellContext`eps]}], Red, 12]]}], 
+             Spacer[50], 
+             Column[{
+               Text[
+                Style[
+                 Row[{"Underflow = ", 
+                   N[$CellContext`underflow]}], Purple, 12]], 
+               Text[
+                Style[
+                 Row[{"Overflow = ", 
+                   N[$CellContext`overflow]}], Green, 12]]}]}]}}, 
+         Alignment -> {Left, Center}]), 
+      "Specifications" :> {{{$CellContext`t$$, 2, "t"}, 2, 6, 
+         1}, {{$CellContext`emin$$, -2, "m"}, -5, -1, 
+         1}, {{$CellContext`emax$$, 2, "M"}, 1, 6, 
+         1}, {{$CellContext`baseSelecionada$$, 2, "Base"}, {2, 10}}}, 
+      "Options" :> {}, "DefaultOptions" :> {}],
+     ImageSizeCache->{784., {99.3, 104.7}},
+     SingleEvaluation->True],
+    Deinitialization:>None,
+    DynamicModuleValues:>{},
+    SynchronousInitialization->True,
+    UndoTrackedVariables:>{Typeset`show$$, Typeset`bookmarkMode$$},
+    UnsavedVariables:>{Typeset`initDone$$},
+    UntrackedVariables:>{Typeset`size$$}], "Manipulate",
+   Deployed->True,
+   StripOnInput->False],
+  Manipulate`InterpretManipulate[1]]], "Output",
+ CellChangeTimes->{
+  3.893171981941253*^9, {3.893172718620182*^9, 3.893172724359127*^9}, 
+   3.8931728374354506`*^9, 3.8931729225579395`*^9},
+ CellLabel->"Out[8]=",ExpressionUUID->"46618280-b9d1-494f-a279-890a0edac58e"]
+}, Open  ]],
+
+Cell[BoxData[""], "Input",
+ CellChangeTimes->{{3.893171977800187*^9, 
+  3.893171978573975*^9}},ExpressionUUID->"68655c44-c420-4864-b12b-\
+9e032b9bf1f6"]
+},
+WindowSize->{1141.2, 580.1999999999999},
+WindowMargins->{{0, Automatic}, {Automatic, 0}},
+FrontEndVersion->"12.1 for Microsoft Windows (64-bit) (June 19, 2020)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"92c01b7a-8fbe-4543-b5f2-bd2cacede4f1"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 11433, 267, 691, "Input",ExpressionUUID->"ee22520a-b550-4ea9-ab85-fbab46e7179c"],
+Cell[12016, 291, 5056, 110, 223, "Output",ExpressionUUID->"46618280-b9d1-494f-a279-890a0edac58e"]
+}, Open  ]],
+Cell[17087, 404, 152, 3, 28, "Input",ExpressionUUID->"68655c44-c420-4864-b12b-9e032b9bf1f6"]
+}
+]
+*)
+
