@@ -15,7 +15,3 @@
 - **HTML** / **CSS**
 - **Bootstrap** (front-end framework)
 
-Additional libraries (depending on your needs):
-- `matplotlib`
-- `numpy`
-- `pandas`
