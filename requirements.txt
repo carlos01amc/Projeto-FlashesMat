@@ -4,3 +4,4 @@ Flask-WTF
 WTForms
 email-validator
 gunicorn
+flask_mail
